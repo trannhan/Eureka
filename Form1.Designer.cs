@@ -874,8 +874,8 @@
             this.toolStripSystemofEqua.Name = "toolStripSystemofEqua";
             this.toolStripSystemofEqua.Size = new System.Drawing.Size(184, 25);
             this.toolStripSystemofEqua.Text = "System Of Equations";
-            this.toolStripSystemofEqua.MouseHover += new System.EventHandler(this.toolStripSystemofEqua_MouseHover);
             this.toolStripSystemofEqua.ButtonClick += new System.EventHandler(this.toolStripSystemofEqua_ButtonClick);
+            this.toolStripSystemofEqua.MouseHover += new System.EventHandler(this.toolStripSystemofEqua_MouseHover);
             // 
             // inputSystemToolStripMenuItem
             // 
@@ -1131,13 +1131,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1045, 574);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.pictureBox1);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
