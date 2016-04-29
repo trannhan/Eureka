@@ -114,6 +114,7 @@ namespace WindowsFormsApplication1
                 InitializeBitmap(sFilePath);
                 
                 this.richTextBox1.Visible = false;
+                this.pictureBox1.Visible = true;
                 Form1_Resize(sender, e);
             }
         }
@@ -678,23 +679,9 @@ namespace WindowsFormsApplication1
 
         private void RichText_Display(string s)
         {
-            this.richTextBox1.Width = this.pictureBox1.Width;
-            this.richTextBox1.Height = this.pictureBox1.Height;
-            this.richTextBox1.Top = this.pictureBox1.Top;
-            this.richTextBox1.Left = this.pictureBox1.Left;
-            this.richTextBox1.Visible = true;
-
             //this.richTextBox1.Text = s;
             richTextBox1.AppendText(s);
-        }
-
-        private void toolStripMatrix_ButtonClick(object sender, EventArgs e)
-        {
-            this.richTextBox1.Width = this.pictureBox1.Width;
-            this.richTextBox1.Height = this.pictureBox1.Height;
-            this.richTextBox1.Top = this.pictureBox1.Top;
-            this.richTextBox1.Left = this.pictureBox1.Left;
-            this.richTextBox1.Visible = true;
+            this.pictureBox1.Visible = false;
         }
 
         private void inputMatrixToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1210,21 +1197,13 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("System Of Equations Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-        private void toolStripSystemofEqua_ButtonClick(object sender, EventArgs e)
-        {
-            this.richTextBox1.Width = this.pictureBox1.Width;
-            this.richTextBox1.Height = this.pictureBox1.Height;
-            this.richTextBox1.Top = this.pictureBox1.Top;
-            this.richTextBox1.Left = this.pictureBox1.Left;
-            this.richTextBox1.Visible = true;
-        }
         #endregion
 
         #region Bitmap
         private void toolStripBitmap_Click(object sender, EventArgs e)
         {
             this.richTextBox1.Visible = false;
+            this.pictureBox1.Visible = true;
         }
 
         private void SetNewImage(Image Img)
@@ -1583,9 +1562,48 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-                 
-        #endregion           
 
-        
+
+        #endregion
+
+        private void toolStripBitmap_MouseHover(object sender, EventArgs e)
+        {
+            this.pictureBox1.Visible = true;
+            this.richTextBox1.Visible = false;
+        }
+
+        private void toolStripMatrix_MouseHover(object sender, EventArgs e)
+        {
+            this.richTextBox1.Visible = true;
+            this.pictureBox1.Visible = false;
+        }
+
+        private void toolStripSystemofEqua_MouseHover(object sender, EventArgs e)
+        {
+            this.richTextBox1.Visible = true;
+            this.pictureBox1.Visible = false;
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            this.richTextBox1.Width = this.pictureBox1.Width;
+            this.richTextBox1.Height = this.pictureBox1.Height;
+            this.richTextBox1.Top = this.pictureBox1.Top;
+            this.richTextBox1.Left = this.pictureBox1.Left;
+
+            this.buttonOK.Visible = false;
+        }
+
+        private void toolStripMatrix_ButtonClick(object sender, EventArgs e)
+        {
+            this.richTextBox1.Visible = true;
+            this.pictureBox1.Visible = false;
+        }
+
+        private void toolStripSystemofEqua_ButtonClick(object sender, EventArgs e)
+        {
+            this.richTextBox1.Visible = true;
+            this.pictureBox1.Visible = false;
+        }
     }
 }

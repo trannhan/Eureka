@@ -18,11 +18,8 @@ D:\Programming\C#\MATHEX\obj\x86\Release\WindowsApplication.exe
 D:\Programming\C#\MATHEX\obj\x86\Release\WindowsApplication.pdb
 D:\Programming\C#\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
 e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe.config
-e:\GitHub\MATHEX\obj\x86\Release\WindowsApplication.exe
-e:\GitHub\MATHEX\obj\x86\Release\WindowsApplication.pdb
 e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe
 e:\GitHub\MATHEX\bin\Release\WindowsApplication.pdb
-e:\GitHub\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.AboutBox1.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.Form1.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormGaussianSmooth.resources
@@ -35,4 +32,9 @@ e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormScalarInput.resour
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSharpening.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSVDBitmapDisplay.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSystemOfEquationsInput.resources
+e:\GitHub\MATHEX\obj\x86\Release\MATHEX.Properties.Resources.resources
 e:\GitHub\MATHEX\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
+e:\GitHub\MATHEX\obj\x86\Release\WindowsApplication.exe
+e:\GitHub\MATHEX\obj\x86\Release\WindowsApplication.pdb
+e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe.CodeAnalysisLog.xml
+e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe.lastcodeanalysissucceeded

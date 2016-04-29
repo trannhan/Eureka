@@ -655,6 +655,7 @@
             this.toolStripMatrix.Text = "Matrix Processing";
             this.toolStripMatrix.ButtonClick += new System.EventHandler(this.toolStripMatrix_ButtonClick);
             this.toolStripMatrix.Click += new System.EventHandler(this.toolStripBMatrix_Click);
+            this.toolStripMatrix.MouseHover += new System.EventHandler(this.toolStripMatrix_MouseHover);
             // 
             // inputMatrixToolStripMenuItem
             // 
@@ -873,6 +874,7 @@
             this.toolStripSystemofEqua.Name = "toolStripSystemofEqua";
             this.toolStripSystemofEqua.Size = new System.Drawing.Size(184, 25);
             this.toolStripSystemofEqua.Text = "System Of Equations";
+            this.toolStripSystemofEqua.MouseHover += new System.EventHandler(this.toolStripSystemofEqua_MouseHover);
             this.toolStripSystemofEqua.ButtonClick += new System.EventHandler(this.toolStripSystemofEqua_ButtonClick);
             // 
             // inputSystemToolStripMenuItem
@@ -930,6 +932,7 @@
             this.toolStripBitmap.Size = new System.Drawing.Size(170, 25);
             this.toolStripBitmap.Text = "Bitmap Processing";
             this.toolStripBitmap.ButtonClick += new System.EventHandler(this.toolStripBitmap_Click);
+            this.toolStripBitmap.MouseHover += new System.EventHandler(this.toolStripBitmap_MouseHover);
             // 
             // grayScaleToolStripMenuItem
             // 
@@ -1107,9 +1110,8 @@
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(41, 27);
-            this.richTextBox1.TabIndex = 7;
+            this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
-            this.richTextBox1.Visible = false;
             this.richTextBox1.WordWrap = false;
             // 
             // pictureBox1
@@ -1144,6 +1146,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MATHEX";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
