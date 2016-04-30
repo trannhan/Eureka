@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNoise));
             this.textBoxNoise = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -36,7 +37,7 @@
             // textBoxNoise
             // 
             this.textBoxNoise.Location = new System.Drawing.Point(129, 32);
-            this.textBoxNoise.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxNoise.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxNoise.Name = "textBoxNoise";
             this.textBoxNoise.Size = new System.Drawing.Size(165, 22);
             this.textBoxNoise.TabIndex = 8;
@@ -56,7 +57,7 @@
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Location = new System.Drawing.Point(129, 85);
-            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(89, 33);
             this.buttonOK.TabIndex = 6;
@@ -73,7 +74,8 @@
             this.Controls.Add(this.textBoxNoise);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonOK);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FormNoise";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

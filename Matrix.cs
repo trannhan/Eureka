@@ -395,11 +395,18 @@ namespace WindowsFormsApplication1
         private static MMatrix PowEntry(MMatrix A, int row, int column, double pow)
         {
             MMatrix B = new MMatrix(row, column);
-
-            for (int i = 0; i < row; i++)
+            if(pow==2)
+            {
+                for (int i = 0; i < row; i++)
+                    for (int j = 0; j < column; j++)
+                        B[i, j] = A[i, j]* A[i, j];
+            }
+            else
+            { 
+                for (int i = 0; i < row; i++)
                 for (int j = 0; j < column; j++)
                     B[i, j] = Math.Pow(A[i, j],pow);
-
+            }
             return B;
         }
 
@@ -1702,8 +1709,8 @@ namespace WindowsFormsApplication1
 
         public static MMatrix Gauss_Convolution(MMatrix Matrix, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
         {            
-            int halfKernelRows = rows / 2;
-            int halfKernelCols = cols / 2;
+            int halfKernelRows = Convert.ToInt16(rows * 0.5);
+            int halfKernelCols = Convert.ToInt16(cols * 0.5);
             int xMax = Matrix.row + halfKernelRows;
             int yMax = Matrix.col + halfKernelCols;
             double tmpBit;

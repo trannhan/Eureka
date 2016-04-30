@@ -6,7 +6,7 @@
     <ProjectGuid>{271C67C0-87DD-46CD-B37B-A7937680B969}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>MATHEX</AssemblyName>
+    <AssemblyName>Eureka</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -47,7 +47,7 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>MATHEX</RootNamespace>
+    <RootNamespace>Eureka</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>App.ico</ApplicationIcon>

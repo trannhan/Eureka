@@ -600,4 +600,17 @@
         cJWw3xX9u6JfoPW7on9X9Ku1flf074p+tdbviv5d0a/S+r//+/8BPTxUq6Ub7iwAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="textBoxDescription.Text" xml:space="preserve">
+    <value>Main functionalities and Descriptions:
+
+- Bitmap processing
+- Linear system solver
+- Matrix basic and advanced operations
+- Image Effects
+
+Contact: ttnhan@gmail.com
+
+GitHub: https://github.com/trannhan
+</value>
+  </data>
 </root>

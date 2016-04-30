@@ -1,7 +1,3 @@
-e:\GitHub\MATHEX\bin\Release\MATHEX.exe.config
-e:\GitHub\MATHEX\bin\Release\MATHEX.exe
-e:\GitHub\MATHEX\bin\Release\MATHEX.pdb
-e:\GitHub\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.AboutBox1.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.Form1.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormGaussianSmooth.resources
@@ -14,7 +10,11 @@ e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormScalarInput.resour
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSharpening.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSVDBitmapDisplay.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSystemOfEquationsInput.resources
-e:\GitHub\MATHEX\obj\x86\Release\MATHEX.Properties.Resources.resources
 e:\GitHub\MATHEX\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
-e:\GitHub\MATHEX\obj\x86\Release\MATHEX.exe
-e:\GitHub\MATHEX\obj\x86\Release\MATHEX.pdb
+e:\GitHub\MATHEX\bin\Release\Eureka.exe.config
+e:\GitHub\MATHEX\bin\Release\Eureka.exe
+e:\GitHub\MATHEX\bin\Release\Eureka.pdb
+e:\GitHub\MATHEX\obj\x86\Release\Eureka.Properties.Resources.resources
+e:\GitHub\MATHEX\obj\x86\Release\Eureka.exe
+e:\GitHub\MATHEX\obj\x86\Release\Eureka.pdb
+e:\GitHub\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache

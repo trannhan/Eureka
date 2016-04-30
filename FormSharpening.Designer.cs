@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSharpening));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numericUpDownStep = new System.Windows.Forms.NumericUpDown();
@@ -54,9 +55,9 @@
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(16, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(709, 315);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
@@ -71,9 +72,9 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(384, 26);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(304, 174);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
@@ -82,7 +83,7 @@
             // numericUpDownStep
             // 
             this.numericUpDownStep.Location = new System.Drawing.Point(141, 123);
-            this.numericUpDownStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericUpDownStep.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDownStep.Maximum = new decimal(new int[] {
             255,
             0,
@@ -115,7 +116,7 @@
             // numericUpDownThresholdHigh
             // 
             this.numericUpDownThresholdHigh.Location = new System.Drawing.Point(141, 33);
-            this.numericUpDownThresholdHigh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericUpDownThresholdHigh.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDownThresholdHigh.Maximum = new decimal(new int[] {
             255,
             0,
@@ -133,7 +134,7 @@
             // numericUpDownThresholdLow
             // 
             this.numericUpDownThresholdLow.Location = new System.Drawing.Point(141, 79);
-            this.numericUpDownThresholdLow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericUpDownThresholdLow.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDownThresholdLow.Maximum = new decimal(new int[] {
             255,
             0,
@@ -176,7 +177,7 @@
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(19, 26);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(343, 262);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -186,7 +187,7 @@
             // buttonSharpen
             // 
             this.buttonSharpen.Location = new System.Drawing.Point(395, 352);
-            this.buttonSharpen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSharpen.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSharpen.Name = "buttonSharpen";
             this.buttonSharpen.Size = new System.Drawing.Size(109, 34);
             this.buttonSharpen.TabIndex = 6;
@@ -198,7 +199,7 @@
             // 
             this.buttonApply.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonApply.Location = new System.Drawing.Point(233, 352);
-            this.buttonApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonApply.Margin = new System.Windows.Forms.Padding(4);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(109, 34);
             this.buttonApply.TabIndex = 5;
@@ -209,7 +210,7 @@
             // buttonReset
             // 
             this.buttonReset.Location = new System.Drawing.Point(73, 352);
-            this.buttonReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonReset.Margin = new System.Windows.Forms.Padding(4);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(109, 34);
             this.buttonReset.TabIndex = 7;
@@ -221,7 +222,7 @@
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(556, 352);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(109, 34);
             this.buttonCancel.TabIndex = 8;
@@ -241,7 +242,8 @@
             this.Controls.Add(this.buttonSharpen);
             this.Controls.Add(this.buttonApply);
             this.Controls.Add(this.buttonReset);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FormSharpening";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNoiseInput));
             this.textBoxNoise = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -37,27 +38,30 @@
             // 
             // textBoxNoise
             // 
-            this.textBoxNoise.Location = new System.Drawing.Point(97, 70);
+            this.textBoxNoise.Location = new System.Drawing.Point(129, 86);
+            this.textBoxNoise.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxNoise.Name = "textBoxNoise";
-            this.textBoxNoise.Size = new System.Drawing.Size(125, 20);
+            this.textBoxNoise.Size = new System.Drawing.Size(165, 22);
             this.textBoxNoise.TabIndex = 8;
             this.textBoxNoise.Text = "1";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 73);
+            this.label1.Location = new System.Drawing.Point(33, 90);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.Size = new System.Drawing.Size(44, 17);
             this.label1.TabIndex = 7;
             this.label1.Text = "Noise";
             // 
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(97, 113);
+            this.buttonOK.Location = new System.Drawing.Point(129, 139);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(67, 27);
+            this.buttonOK.Size = new System.Drawing.Size(89, 33);
             this.buttonOK.TabIndex = 6;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -66,9 +70,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 37);
+            this.label2.Location = new System.Drawing.Point(33, 46);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.Size = new System.Drawing.Size(55, 17);
             this.label2.TabIndex = 9;
             this.label2.Text = "Method";
             // 
@@ -78,27 +83,30 @@
             this.comboBoxMethod.Items.AddRange(new object[] {
             "Piecewise-Linear",
             "Piecewise-Smooth"});
-            this.comboBoxMethod.Location = new System.Drawing.Point(97, 34);
+            this.comboBoxMethod.Location = new System.Drawing.Point(129, 42);
+            this.comboBoxMethod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxMethod.Name = "comboBoxMethod";
-            this.comboBoxMethod.Size = new System.Drawing.Size(125, 21);
+            this.comboBoxMethod.Size = new System.Drawing.Size(165, 24);
             this.comboBoxMethod.TabIndex = 10;
             this.comboBoxMethod.SelectedIndexChanged += new System.EventHandler(this.comboBoxMethod_SelectedIndexChanged);
             // 
             // FormNoiseInput
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 160);
+            this.ClientSize = new System.Drawing.Size(345, 197);
             this.Controls.Add(this.comboBoxMethod);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxNoise);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonOK);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "FormNoiseInput";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Noise of Picture";
+            this.Text = "Estimate Noise of Picture";
             this.ResumeLayout(false);
             this.PerformLayout();
 

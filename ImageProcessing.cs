@@ -427,7 +427,7 @@ namespace WindowsFormsApplication1
                             //g.DrawLine(p, xj0, yj0, xj1, yj1);
                             //draw an ellipse to keep track the point found
                             //g.DrawEllipse(p,Math.Abs(xj0+xj1)/2, Math.Abs(yj0+yj1)/2, PointWidth, PointHeight); 
-                            tmpBmp.SetPixel(Math.Abs(xj0 + xj1) / 2, Math.Abs(yj0 + yj1) / 2, Color.FromArgb(0, 0, 0));
+                            tmpBmp.SetPixel(Convert.ToInt16(Math.Abs(xj0 + xj1) * 0.5), Convert.ToInt16(Math.Abs(yj0 + yj1) * 0.5), Color.Black);
                         }
                     }
                 }
@@ -478,7 +478,7 @@ namespace WindowsFormsApplication1
                             y_1 = i * h - h;
                             y_2 = i * h + 2 * h;
                             //g.DrawLine(p, x_1, y_1, x_2, y_2);
-                            tmpBmp.SetPixel(Math.Abs(x_1 + x_2) / 2, Math.Abs(y_1 + y_2) / 2, Color.FromArgb(0, 0, 0));
+                            tmpBmp.SetPixel(Convert.ToInt16(Math.Abs(x_1 + x_2) * 0.5), Convert.ToInt16(Math.Abs(y_1 + y_2) * 0.5), Color.FromArgb(0, 0, 0));
                         }
                     }
                 }
@@ -872,7 +872,7 @@ namespace WindowsFormsApplication1
             int Nx2=3;
             double Sigmax1 = 1.4;
             double Sigmax2 = 1.4;
-            double Theta1 = Math.PI / 2;
+            double Theta1 = Math.PI * 0.5;
             //   Y-axis direction filter:           
             int Ny1 = 3;
             int Ny2 = 3;
@@ -912,6 +912,71 @@ namespace WindowsFormsApplication1
             return tmpBmp;
         }
 
-        #endregion                        
-    }
+        public static Bitmap BitmapBitwise(Bitmap Bmp1, Bitmap Bmp2, string Operation)
+        {                        
+            int xMax = Bmp1.Width;
+            int yMax = Bmp1.Height;
+            Color P1, P2;           
+            Bitmap tmpBmp = new Bitmap(xMax, yMax);
+
+            if (Operation == "&")
+            {
+                for (int i = 0; i < xMax; i++)
+                {
+                    for (int j = 0; j < yMax; j++)
+                    {
+                        P1 = Bmp1.GetPixel(i, j);
+                        P2 = Bmp2.GetPixel(i, j);
+                        tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R & P2.R, P1.G & P2.G, P1.B & P2.B));
+                    }
+                }
+            }
+            else if (Operation == "|")
+            {
+                for (int i = 0; i < xMax; i++)
+                {
+                    for (int j = 0; j < yMax; j++)
+                    {
+                        P1 = Bmp1.GetPixel(i, j);
+                        P2 = Bmp2.GetPixel(i, j);
+                        tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R | P2.R, P1.G | P2.G, P1.B | P2.B));
+                    }
+                }
+            }
+            else if (Operation == "^")
+            {
+                for (int i = 0; i < xMax; i++)
+                {
+                    for (int j = 0; j < yMax; j++)
+                    {
+                        P1 = Bmp1.GetPixel(i, j);
+                        P2 = Bmp2.GetPixel(i, j);
+                        tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R ^ P2.R, P1.G ^ P2.G, P1.B ^ P2.B));
+                    }
+                }
+            }
+
+            return tmpBmp;
+        }
+
+        public static Bitmap BitmapMix(Bitmap Bmp1, Bitmap Bmp2)
+        {
+            int xMax = Bmp1.Width;
+            int yMax = Bmp1.Height;
+            Color P1, P2;
+            Bitmap tmpBmp = new Bitmap(xMax, yMax);
+
+            for (int i = 0; i < xMax; i++)
+            {
+                for (int j = 0; j < yMax; j++)
+                {
+                    P1 = Bmp1.GetPixel(i, j);
+                    P2 = Bmp2.GetPixel(i, j);
+                    tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R & P2.R, P1.G | P2.G, P1.B ^ P2.B));
+                }
+            }
+            return tmpBmp;
+        }
+            #endregion
+        }
 }

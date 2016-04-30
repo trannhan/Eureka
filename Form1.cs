@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        string sProjectTile = "MATHEX";
+        string sProjectTile = "Eureka";
         bool bSaveDone;
 
         //Matrix Processing
@@ -357,8 +357,8 @@ namespace WindowsFormsApplication1
             /*
             if (pictureBox1.SizeMode == PictureBoxSizeMode.CenterImage)
             {
-                x = (pictureBox1.Width - pictureBox1.Image.Width) / 2;
-                y = (pictureBox1.Height - pictureBox1.Image.Height) / 2;
+                x = (pictureBox1.Width - pictureBox1.Image.Width) * 0.5;
+                y = (pictureBox1.Height - pictureBox1.Image.Height) * 0.5;
             }
             */
             //g.Clear(Color.White);
@@ -391,8 +391,8 @@ namespace WindowsFormsApplication1
             {
                 this.hScrollBar1.Maximum += this.vScrollBar1.Width;
             }
-            this.hScrollBar1.LargeChange = this.hScrollBar1.Maximum / 2;
-            this.hScrollBar1.SmallChange = this.hScrollBar1.Maximum / 5;
+            this.hScrollBar1.LargeChange = Convert.ToInt16(this.hScrollBar1.Maximum * 0.5);
+            this.hScrollBar1.SmallChange = Convert.ToInt16(this.hScrollBar1.Maximum * 0.2);
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -411,8 +411,8 @@ namespace WindowsFormsApplication1
             {
                 this.vScrollBar1.Maximum += this.hScrollBar1.Height;
             }
-            this.vScrollBar1.LargeChange = this.vScrollBar1.Maximum / 2;
-            this.vScrollBar1.SmallChange = this.vScrollBar1.Maximum / 5;
+            this.vScrollBar1.LargeChange = Convert.ToInt16(this.vScrollBar1.Maximum * 0.5);
+            this.vScrollBar1.SmallChange = Convert.ToInt16(this.vScrollBar1.Maximum * 0.2);
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -1270,7 +1270,8 @@ namespace WindowsFormsApplication1
                         this.Cursor = Cursors.WaitCursor;
                         ImageProcessing ImgProcess = new ImageProcessing();                       
                         Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
-                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);
+                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                        tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "^");
                         this.Cursor = Cursors.Arrow;
 
                         FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
@@ -1561,5 +1562,76 @@ namespace WindowsFormsApplication1
             GlobalMath.DIGITS = Convert.ToInt16(toolStripComboBoxDigits.SelectedItem.ToString());
         }
 
+        private void amazingEffectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double Noise = 0;
+            int Method = -1;
+
+            this.richTextBox1.Visible = false;
+            try
+            {
+                if (this.OutputImage != null)
+                {
+                    if (NoiseForDiscontinuityForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Noise = NoiseForDiscontinuityForm.Noise;
+                        Method = NoiseForDiscontinuityForm.Method;
+                    }
+                    if (Method != -1)
+                    {
+                        this.Cursor = Cursors.WaitCursor;
+                        ImageProcessing ImgProcess = new ImageProcessing();
+                        Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                        tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "&");
+                        this.Cursor = Cursors.Arrow;
+
+                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                        if (ImageForm.ShowImage(tmpImage, Method, "", "") == DialogResult.OK)
+                            SetNewImage(tmpImage);
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void colorPaintingEffectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double Noise = 0;
+            int Method = -1;
+
+            this.richTextBox1.Visible = false;
+            try
+            {
+                if (this.OutputImage != null)
+                {
+                    if (NoiseForDiscontinuityForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Noise = NoiseForDiscontinuityForm.Noise;
+                        Method = NoiseForDiscontinuityForm.Method;
+                    }
+                    if (Method != -1)
+                    {
+                        this.Cursor = Cursors.WaitCursor;
+                        ImageProcessing ImgProcess = new ImageProcessing();
+                        Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                        tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "|");
+                        this.Cursor = Cursors.Arrow;
+
+                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                        if (ImageForm.ShowImage(tmpImage, Method, "", "") == DialogResult.OK)
+                            SetNewImage(tmpImage);
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }
