@@ -46,8 +46,7 @@ namespace WindowsFormsApplication1
         }
 
         private void buttonGenerateMatrix_Click(object sender, EventArgs e)
-        {                       
-            string sColHeader;            
+        {                                 
             Random rand = new Random();
             int rows = (int)numericUpDownRow.Value;
             int cols = (int)numericUpDownCol.Value;
@@ -75,22 +74,25 @@ namespace WindowsFormsApplication1
             }
 
             //Matrix A
+            this.dataGridViewMatrix.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewMatrix.SuspendLayout();
-            dataGridViewMatrix.Columns.Clear();            
+            dataGridViewMatrix.Columns.Clear();
+            DataGridViewColumn[] DCS = new DataGridViewColumn[cols];
             for (int i = 0; i < cols; i++)
             {
-                sColHeader = "A" + (i + 1).ToString();
-                this.dataGridViewMatrix.Columns.Add(sColHeader,sColHeader);
-                dataGridViewMatrix.Columns[i].Width = ColWidth;
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                column.HeaderText = string.Concat("A", (i + 1).ToString());
+                DCS[i] = column;
             }
-            
+            this.dataGridViewMatrix.Columns.AddRange(DCS);
             dataGridViewMatrix.Rows.Add(rows);
 
             //for DataGrid: [column, row]
-            for (int i = 0; i < MainMatrix.row; i++)            
-                for (int j = 0; j < MainMatrix.col; j++)
-                    dataGridViewMatrix[j,i].Value = MainMatrix[i, j];             
-            
+            for (int j = 0; j < MainMatrix.col; j++)
+                for (int i = 0; i < MainMatrix.row; i++)                            
+                    dataGridViewMatrix[j,i].Value = MainMatrix[i, j];
+
+            //this.dataGridViewMatrix.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dataGridViewMatrix.ResumeLayout();            
             numericUpDownCol.Value = cols;
 

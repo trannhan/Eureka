@@ -13,7 +13,7 @@ using System.IO;
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
-    {        
+    {
         string sProjectTile = "MATHEX";
         bool bSaveDone;
 
@@ -685,15 +685,12 @@ namespace WindowsFormsApplication1
         }
 
         private void inputMatrixToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
-
+        {            
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
                 {
-                    s = "\n\n\n";
-                    s += "Matrix A = \n" + InputMatrixForm.MainMatrix.PrintToString();
+                    string s = string.Concat("\n\n\nMatrix A = \n", InputMatrixForm.MainMatrix.PrintToString());
                     RichText_Display(s);
                     OutputMatrix = InputMatrixForm.MainMatrix;
                 }
@@ -794,7 +791,7 @@ namespace WindowsFormsApplication1
 
         private void eigenvectorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
+            StringBuilder sb = new StringBuilder("");
             Vector eigenvalues = new Vector();
             MMatrix eigenvectors = new MMatrix();            
             try
@@ -803,12 +800,16 @@ namespace WindowsFormsApplication1
                 {
                     MMatrix temp = OutputMatrix.Clone();
                     temp.Jacobi_Cyclic_Method(ref eigenvalues, ref eigenvectors);
-                    s = "\n\n\n";
-                    s += "Eigenvectors (A) = \n";
+                    sb.Append("\n\n\nEigenvectors (A) = \n");
                     for (int i = 0; i < eigenvectors.col; i++)
-                        s += "V" + (i + 1).ToString() + "\t";
-                    s += "\n" + eigenvectors.PrintToString();
-                    RichText_Display(s);
+                    {
+                        sb.Append("V");
+                        sb.Append(i + 1);
+                        sb.Append("\t\t");
+                    }
+                    sb.Append("\n");
+                    sb.Append(eigenvectors.PrintToString());
+                    RichText_Display(sb.ToString());
                 }
             }
             catch (MMatrixException exp)
@@ -1592,6 +1593,7 @@ namespace WindowsFormsApplication1
             this.richTextBox1.Left = this.pictureBox1.Left;
 
             this.buttonOK.Visible = false;
+            GlobalMath.DIGITS = 6;
         }
 
         private void toolStripMatrix_ButtonClick(object sender, EventArgs e)
@@ -1604,6 +1606,11 @@ namespace WindowsFormsApplication1
         {
             this.richTextBox1.Visible = true;
             this.pictureBox1.Visible = false;
+        }
+
+        private void toolStripComboBoxDigits_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalMath.DIGITS = Convert.ToInt16(toolStripComboBoxDigits.SelectedItem.ToString());
         }
     }
 }

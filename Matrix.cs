@@ -25,11 +25,6 @@ namespace WindowsFormsApplication1
         public double[,] SVD_S;
         public double[,] SVD_Vt;
 
-        //Math constants
-        public const int DIGITS = 3;
-        public const double ZERO = 1E-32;
-        public const double EPSILON = 1E-30;
-
         #region Constructors_Deconstructor
         public MMatrix()
         {
@@ -186,15 +181,18 @@ namespace WindowsFormsApplication1
 
         public static string PrintToString (MMatrix A)
         {
-            string s = "";            
+            StringBuilder sb = new StringBuilder("");                       
 
             for (int i = 0; i < A.row; i++)
             {
-                for (int j = 0; j < A.col; j++)   
-                    s += Math.Round(A[i, j],DIGITS).ToString() + "\t";                    
-                s += "\r\n";
+                for (int j = 0; j < A.col; j++)
+                {
+                    sb.Append(Math.Round(A[i, j], GlobalMath.DIGITS));
+                    sb.Append("\t\t");                    
+                }
+                sb.Append("\r\n");
             }
-            return s;
+            return sb.ToString();
         }
 
         public string PrintToString()
@@ -315,7 +313,7 @@ namespace WindowsFormsApplication1
             MMatrix B = A.Clone();
             for (int i = 0; i < B.row; i++)
                 for (int j = 0; j < B.col; j++)
-                    B[i, j] = Math.Round(B[i,j],DIGITS);
+                    B[i, j] = Math.Round(B[i,j], GlobalMath.DIGITS);
             
             return B;
         }
@@ -799,7 +797,7 @@ namespace WindowsFormsApplication1
 
             for (int i = 0; i < matrix1.row; i++)
                 for (int j = 0; j < matrix1.col; j++)
-                    if (Math.Round(matrix1[i, j], DIGITS) != Math.Round(matrix2[i, j], DIGITS))
+                    if (Math.Round(matrix1[i, j], GlobalMath.DIGITS) != Math.Round(matrix2[i, j], GlobalMath.DIGITS))
                         return false;
 
             return true;
@@ -1438,7 +1436,7 @@ namespace WindowsFormsApplication1
                     threshold += pAk[i, j] * pAk[i, j];
 
             threshold = Math.Sqrt(threshold + threshold);
-            threshold_norm = threshold * EPSILON;
+            threshold_norm = threshold * GlobalMath.EPSILON;
             max = threshold + 1.0;
 
             while (threshold > threshold_norm)

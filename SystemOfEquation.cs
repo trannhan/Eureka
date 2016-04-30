@@ -191,24 +191,25 @@ namespace WindowsFormsApplication1
 
         public static string PrintSystemOfEquations(MMatrix CoefficientMatrix, Vector b)
         {
-            string s = "";
-            string sign;
+            StringBuilder sb = new StringBuilder("");
 
             for (int i = 0; i < CoefficientMatrix.row; i++)
             {
                 for (int j = 0; j < CoefficientMatrix.col; j++)
                 {
-                    if (CoefficientMatrix[i, j] >= 0)
-                        sign = "+";
-                    else
-                        sign = "";
-                    s += sign + CoefficientMatrix[i, j].ToString() + " X" + (j + 1).ToString() + "\t";
+                    string sign = (CoefficientMatrix[i, j] >= 0) ? "+" : "";
+                    sb.Append(sign);
+                    sb.Append(CoefficientMatrix[i, j]);
+                    sb.Append(" X");
+                    sb.Append(j + 1);
+                    sb.Append("\t\t");                    
                 }
-                s += " = " + b[i].ToString();
-                s += "\r\n";
+                sb.Append(" = ");
+                sb.Append(b[i]);
+                sb.Append("\r\n");
             }
             
-            return s;
+            return sb.ToString();
         }
 
         public string PrintSystemOfEquations()
@@ -219,52 +220,56 @@ namespace WindowsFormsApplication1
         //After solving the system, Argument Matrix will contain the reduced system
         public static string PrintSystemOfEquations(MMatrix AugmentedMatrix)
         {
-            string s = "";
-            string sign;
+            StringBuilder sb = new StringBuilder("");
 
             for (int i = 0; i < AugmentedMatrix.row; i++)
             {
                 for (int j = 0; j < AugmentedMatrix.col - 1; j++)
                 {
-                    if (AugmentedMatrix[i, j] >= 0)
-                        sign = "+";
-                    else
-                        sign = "";
-                    s += sign + Math.Round(AugmentedMatrix[i, j], MMatrix.DIGITS).ToString() + " X" + (j + 1).ToString() + "\t";
+                    string sign = (AugmentedMatrix[i, j] >= 0) ? "+" : "";
+                    sb.Append(sign);
+                    sb.Append(Math.Round(AugmentedMatrix[i, j], GlobalMath.DIGITS));
+                    sb.Append(" X");
+                    sb.Append(j + 1);
+                    sb.Append("\t\t");                    
                 }
-                s += " = " + Math.Round(AugmentedMatrix[i, AugmentedMatrix.col - 1], MMatrix.DIGITS).ToString();
-                s += "\r\n";
+                sb.Append(" = ");
+                sb.Append(Math.Round(AugmentedMatrix[i, AugmentedMatrix.col - 1], GlobalMath.DIGITS));
+                sb.Append("\r\n");
             }
             
-            return s;
+            return sb.ToString();
         }
 
         public string PrintSolutions(Vector Solutions, bool InfiniteSolution)
         {
-            string s;
+            StringBuilder sb = new StringBuilder("");
 
             if (Solutions == null)
             {
-                s = "The system has no solution.";
-                return s;
+                return "The system has no solution.";
             }
             else
             {
                 if ((InfiniteSolution) || (this.CoefficientMatrix.row < this.CoefficientMatrix.col))
                 {
-                    s = "The system has infinitely many solutions:\r\n";
+                    sb.Append("The system has infinitely many solutions:\r\n");
                 }
                 else
                 {
-                    s = "The system has a unique solution:\r\n";
+                    sb.Append("The system has a unique solution:\r\n");
                 }
             }
             for (int i = 0; i < Solutions.Elements.Length; i++)
-            {
-                s += "X" + (i + 1).ToString() + " = " + Math.Round(Solutions[i],MMatrix.DIGITS).ToString() + "\r\n";
+            {                
+                sb.Append("X");
+                sb.Append(i + 1);
+                sb.Append(" = ");
+                sb.Append(Math.Round(Solutions[i], GlobalMath.DIGITS));
+                sb.Append("\r\n"); 
             }
 
-            return s;
+            return sb.ToString();
         }
 
         public string PrintSolutions()

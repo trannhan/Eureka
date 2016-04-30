@@ -14,9 +14,9 @@ namespace WindowsFormsApplication1
         public MMatrix MainMatrix;
         private int min = -9999999;
         private int max = 9999999;
-        private int MaxRow = 500;
-        private int MaxCol = 500;
-        private int ColWidth = 50;
+        const int MaxRow = 500;
+        const int MaxCol = 500;
+        const int ColWidth = 50;
 
         public FormMatrixInput()
         {
@@ -42,8 +42,7 @@ namespace WindowsFormsApplication1
         }
 
         private void buttonGenerateMatrix_Click(object sender, EventArgs e)
-        {                       
-            string sColHeader;            
+        {                                  
             Random rand = new Random();
             int rows = (int)numericUpDownRow.Value;
             int cols = (int)numericUpDownCol.Value;
@@ -78,27 +77,31 @@ namespace WindowsFormsApplication1
                 cols = rows;
             }
 
-            dataGridViewMatrix.SuspendLayout();
+            this.dataGridViewMatrix.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewMatrix.SuspendLayout();            
             dataGridViewMatrix.Columns.Clear();
             /*
             int ColCount = dataGridViewMatrix.Columns.Count;            
             for (int i = 0; i < ColCount; i++)
                 dataGridViewMatrix.Columns.RemoveAt(0);           
             */
+            DataGridViewColumn[] DCS = new DataGridViewColumn[cols];                                  
             for (int i = 0; i < cols; i++)
             {
-                sColHeader = "A" + (i + 1).ToString();
-                this.dataGridViewMatrix.Columns.Add(sColHeader,sColHeader);
-                dataGridViewMatrix.Columns[i].Width = ColWidth;
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                column.HeaderText = string.Concat("A", (i + 1).ToString());
+                DCS[i] = column;                
             }
+            this.dataGridViewMatrix.Columns.AddRange(DCS);
             dataGridViewMatrix.Rows.Add(rows);
-            
-            for (int i = 0; i < MainMatrix.row; i++)            
-                for (int j = 0; j < MainMatrix.col; j++)
-                    dataGridViewMatrix[j,i].Value = MainMatrix[i, j];                
-            
+
+            //for DataGrid: [column, row]
+            for (int j = 0; j < MainMatrix.col; j++)
+                for (int i = 0; i < MainMatrix.row; i++)                            
+                    dataGridViewMatrix[j,i].Value = MainMatrix[i, j];
+
+            //this.dataGridViewMatrix.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dataGridViewMatrix.ResumeLayout();
-            //dataGridViewMatrix.Refresh();
             numericUpDownCol.Value = cols;            
         }   
 

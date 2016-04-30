@@ -256,11 +256,14 @@ namespace WindowsFormsApplication1
 
         public string PrintToString()
         {
-            string s = "";
-            for (int i = 0; i < this.Elements.Length; i++)
-                s += Math.Round(this[i], MMatrix.DIGITS).ToString() + "\t";
+            StringBuilder sb = new StringBuilder("");
 
-            return s;
+            for (int i = 0; i < this.Elements.Length; i++)
+            {
+                sb.Append(Math.Round(this[i], GlobalMath.DIGITS));
+                sb.Append("\t\t");
+            }
+            return sb.ToString();
         }
 
         public static double[] Swap(ref double a, ref double b)

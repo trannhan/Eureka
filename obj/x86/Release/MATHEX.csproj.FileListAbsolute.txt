@@ -17,9 +17,6 @@ D:\Programming\C#\MATHEX\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
 D:\Programming\C#\MATHEX\obj\x86\Release\WindowsApplication.exe
 D:\Programming\C#\MATHEX\obj\x86\Release\WindowsApplication.pdb
 D:\Programming\C#\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
-e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe.config
-e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe
-e:\GitHub\MATHEX\bin\Release\WindowsApplication.pdb
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.AboutBox1.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.Form1.resources
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormGaussianSmooth.resources
@@ -34,27 +31,28 @@ e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSVDBitmapDisplay.r
 e:\GitHub\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSystemOfEquationsInput.resources
 e:\GitHub\MATHEX\obj\x86\Release\MATHEX.Properties.Resources.resources
 e:\GitHub\MATHEX\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
-e:\GitHub\MATHEX\obj\x86\Release\WindowsApplication.exe
-e:\GitHub\MATHEX\obj\x86\Release\WindowsApplication.pdb
-e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe.CodeAnalysisLog.xml
-e:\GitHub\MATHEX\bin\Release\WindowsApplication.exe.lastcodeanalysissucceeded
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\bin\Release\WindowsApplication.exe.config
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsApplication.exe
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsApplication.pdb
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\bin\Release\WindowsApplication.exe
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\bin\Release\WindowsApplication.pdb
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.AboutBox1.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.Form1.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormGaussianSmooth.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormHistogram.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormMatrixInput.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormNewRankInput.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormNoise.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormNoiseInput.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormScalarInput.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSharpening.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSVDBitmapDisplay.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSystemOfEquationsInput.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\MATHEX.Properties.Resources.resources
-D:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\bin\Release\WindowsApplication.exe.config
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\bin\Release\WindowsApplication.exe
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\bin\Release\WindowsApplication.pdb
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.AboutBox1.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.Form1.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormGaussianSmooth.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormHistogram.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormMatrixInput.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormNewRankInput.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormNoise.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormNoiseInput.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormScalarInput.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSharpening.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSVDBitmapDisplay.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsFormsApplication1.FormSystemOfEquationsInput.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\MATHEX.Properties.Resources.resources
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsApplication.exe
+d:\KANSAS\PhD Program\RESEARCH\Math Experiment\MATHEX\obj\x86\Release\WindowsApplication.pdb
+E:\GitHub\MATHEX\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
+E:\GitHub\MATHEX\bin\Release\MATHEX.exe.config
+E:\GitHub\MATHEX\bin\Release\MATHEX.exe
+E:\GitHub\MATHEX\bin\Release\MATHEX.pdb
+E:\GitHub\MATHEX\obj\x86\Release\MATHEX.exe
+E:\GitHub\MATHEX\obj\x86\Release\MATHEX.pdb

@@ -148,6 +148,7 @@
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolStripComboBoxDigits = new System.Windows.Forms.ToolStripComboBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -155,6 +156,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.filesToolStripMenuItem,
@@ -580,7 +582,8 @@
             this.toolStripBitmap,
             this.toolStripSeparator4,
             this.toolStripComboBoxPicMode,
-            this.toolStripComboBoxZoom});
+            this.toolStripComboBoxZoom,
+            this.toolStripComboBoxDigits});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1045, 28);
@@ -1126,6 +1129,31 @@
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
+            // toolStripComboBoxDigits
+            // 
+            this.toolStripComboBoxDigits.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"});
+            this.toolStripComboBoxDigits.Name = "toolStripComboBoxDigits";
+            this.toolStripComboBoxDigits.Size = new System.Drawing.Size(75, 28);
+            this.toolStripComboBoxDigits.Text = "Digits";
+            this.toolStripComboBoxDigits.ToolTipText = "Digits";
+            this.toolStripComboBoxDigits.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxDigits_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1280,6 +1308,7 @@
         private System.Windows.Forms.ToolStripMenuItem cannyEdgeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxPicMode;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxDigits;
     }
 }
 

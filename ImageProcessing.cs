@@ -115,12 +115,8 @@ namespace WindowsFormsApplication1
             for (int i = 0; i < BitmapMatrix.row; i++)
                 for (int j = 0; j < BitmapMatrix.col; j++)
                 {
-                    if (BitmapMatrix[i, j] > 255)
-                        BitmapMatrix[i, j] = 255;
-                    else if (double.IsNaN(BitmapMatrix[i, j]))
-                        BitmapMatrix[i, j] = MRed[i, j]; 
-                    else if (BitmapMatrix[i, j] < 0)
-                        BitmapMatrix[i, j] = 0;
+                    if (!(BitmapMatrix[i, j] >= 0) || !(BitmapMatrix[i, j] <= 255))
+                        BitmapMatrix[i, j] = MRed[i, j];
                 }
         }
 
