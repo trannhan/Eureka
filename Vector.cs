@@ -147,7 +147,7 @@ namespace WindowsFormsApplication1
             double buf = 0;
 
             for (int i = 0; i < A.Elements.Length; i++)
-                buf += Math.Pow((double)A[i], 2);
+                buf += A[i] * A[i];
 
             return Math.Sqrt(buf);
         }

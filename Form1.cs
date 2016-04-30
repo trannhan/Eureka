@@ -74,11 +74,6 @@ namespace WindowsFormsApplication1
                 vScrollBar1.Visible = false;
             }
             this.richTextBox1.Text = "";
-            if (OutputMatrix != null)
-            {
-                OutputMatrix.Dispose();
-                OutputMatrix = null;
-            }
             argumentMatrix = null;
             if (OutputImage != null)
             {
@@ -343,8 +338,7 @@ namespace WindowsFormsApplication1
             }
 
             // If the image is taller than the PictureBox, show the VScrollBar.
-            if (pictureBox1.Height >
-                pictureBox1.Image.Height - this.hScrollBar1.Height)
+            if (pictureBox1.Height > pictureBox1.Image.Height - this.hScrollBar1.Height)
             {
                 vScrollBar1.Visible = false;
             }
@@ -356,30 +350,24 @@ namespace WindowsFormsApplication1
 
         private void HandleScroll(Object sender, ScrollEventArgs se)
         {
-            /* Create a graphics object and draw a portion 
-               of the image in the PictureBox. */
             Graphics g = pictureBox1.CreateGraphics();
-            int v = 0, h = 0;
-            int x = 0, y = 0;
-
-            if (vScrollBar1.Visible == true)
-                v = 1;
-            if (hScrollBar1.Visible == true)
-                h = 1;
-
+            int x = 0, y = 0;           
+            int v = Convert.ToInt16(vScrollBar1.Visible);            
+            int h = Convert.ToInt16(hScrollBar1.Visible);
+            /*
             if (pictureBox1.SizeMode == PictureBoxSizeMode.CenterImage)
             {
                 x = (pictureBox1.Width - pictureBox1.Image.Width) / 2;
                 y = (pictureBox1.Height - pictureBox1.Image.Height) / 2;
             }
-
+            */
             //g.Clear(Color.White);
             g.DrawImage(pictureBox1.Image,
-              new Rectangle(x, y, pictureBox1.Right - v * vScrollBar1.Width+Math.Abs(x),
-              pictureBox1.Bottom - h * hScrollBar1.Height+Math.Abs(y)),
+              new Rectangle(x, y, pictureBox1.Right - v * vScrollBar1.Width+x,
+              pictureBox1.Bottom - h * hScrollBar1.Height+y),
               new Rectangle(hScrollBar1.Value, vScrollBar1.Value,
-              pictureBox1.Right - v * vScrollBar1.Width + Math.Abs(x),
-              pictureBox1.Bottom - h * hScrollBar1.Height + Math.Abs(y)),
+              pictureBox1.Right - v * vScrollBar1.Width + x,
+              pictureBox1.Bottom - h * hScrollBar1.Height + y),
               GraphicsUnit.Pixel);                       
         }
 
@@ -517,6 +505,7 @@ namespace WindowsFormsApplication1
         private void toolStripComboBoxPicMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.richTextBox1.Visible = false;
+            this.pictureBox1.Visible = true;
 
             if (OutputImage != null)
             {
@@ -524,6 +513,7 @@ namespace WindowsFormsApplication1
                 {
                     case 0:
                         pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+                        Form1_Resize(sender, e);
                         break;
                     case 1:
                         pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -531,18 +521,13 @@ namespace WindowsFormsApplication1
                         hScrollBar1.Visible = false;
                         break;
                     case 2:
-                        pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-                        //this.hScrollBar1.Value = (hScrollBar1.Maximum) / 2;
-                        //this.vScrollBar1.Value = (vScrollBar1.Maximum) / 2; 
-                        break;
-                    case 3:
                         pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                         vScrollBar1.Visible = false;
                         hScrollBar1.Visible = false;
                         break;
                     default:
                         break;
-                }
+                }                
             }
         }
         #endregion
@@ -682,6 +667,7 @@ namespace WindowsFormsApplication1
             //this.richTextBox1.Text = s;
             richTextBox1.AppendText(s);
             this.pictureBox1.Visible = false;
+            this.richTextBox1.Visible = true;
         }
 
         private void inputMatrixToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1210,8 +1196,7 @@ namespace WindowsFormsApplication1
         private void SetNewImage(Image Img)
         {
             OutputImage = Img;
-            this.pictureBox1.Image = OutputImage;
-            toolStripComboBoxZoom.Text = "Zoom";
+            this.pictureBox1.Image = OutputImage;            
         }
 
         private void PictureBox_PrintString(string s, int x, int y)
@@ -1221,8 +1206,7 @@ namespace WindowsFormsApplication1
 
         private void grayscale_Click(object sender, EventArgs e)
         {
-            this.richTextBox1.Visible = false;
-            pictureBox1.Refresh();
+            this.richTextBox1.Visible = false;            
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -1237,8 +1221,7 @@ namespace WindowsFormsApplication1
 
         private void toolStripBlackWhite_Click(object sender, EventArgs e)
         {
-            this.richTextBox1.Visible = false;
-            pictureBox1.Refresh();
+            this.richTextBox1.Visible = false;           
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -1253,8 +1236,7 @@ namespace WindowsFormsApplication1
 
         private void negatingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.richTextBox1.Visible = false;
-            pictureBox1.Refresh();
+            this.richTextBox1.Visible = false;         
 
             if (this.OutputImage != null)
             {
@@ -1286,11 +1268,9 @@ namespace WindowsFormsApplication1
                     if (Method != -1)
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        ImageProcessing ImgProcess = new ImageProcessing();
-                        pictureBox1.Refresh();
+                        ImageProcessing ImgProcess = new ImageProcessing();                       
                         Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
                         //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);
-                        ImgProcess.Dispose();
                         this.Cursor = Cursors.Arrow;
 
                         FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
@@ -1314,7 +1294,6 @@ namespace WindowsFormsApplication1
                     double Err = 0;
                     ImageProcessing ImgProcess = new ImageProcessing();
                     Image tmpImage = ImgProcess.Bitmap_SVD((Bitmap)(this.OutputImage), NewRank, ref Err);
-                    ImgProcess.Dispose();
 
                     FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SVD, NewRank.ToString(), Err.ToString()) == DialogResult.OK)
@@ -1339,8 +1318,7 @@ namespace WindowsFormsApplication1
                     (1 + OutputImage.Height + OutputImage.Width);
                 if (NewRankForm.ShowDialog() == DialogResult.OK)
                 {
-                    NewRank = NewRankForm.NewRank;
-                    pictureBox1.Refresh();  
+                    NewRank = NewRankForm.NewRank;                   
                   
                     this.Cursor = Cursors.WaitCursor;                    
                     SVDBitmap(NewRank);                    
@@ -1365,8 +1343,7 @@ namespace WindowsFormsApplication1
 
         private void borderTracingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.richTextBox1.Visible = false;
-            pictureBox1.Refresh();
+            this.richTextBox1.Visible = false;            
             try
             {
                 if (this.OutputImage != null)
@@ -1374,7 +1351,6 @@ namespace WindowsFormsApplication1
                     this.Cursor = Cursors.WaitCursor;
                     ImageProcessing ImgProcess = new ImageProcessing();                   
                     Image tmpImage = ImgProcess.Bitmap_BorderTracing(pictureBox1.CreateGraphics(), (Bitmap)(this.OutputImage));                    
-                    ImgProcess.Dispose();
                     this.Cursor = Cursors.Arrow;
 
                     FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
@@ -1409,10 +1385,8 @@ namespace WindowsFormsApplication1
                     {
                         color = colordlg.Color;
                     }
-                    this.Cursor = Cursors.WaitCursor;
-                    pictureBox1.Refresh();
+                    this.Cursor = Cursors.WaitCursor;                    
                     Image tmpImage = ImgProcess.Bitmap_Skeleton((Bitmap)(this.OutputImage), color, SkeletonDifference);                                       
-                    ImgProcess.Dispose();
                     this.Cursor = Cursors.Arrow;
 
                     FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
@@ -1424,11 +1398,6 @@ namespace WindowsFormsApplication1
             {
                 MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }                     
-        }
-
-        private void toolStripSkeletonDiff_Paint(object sender, PaintEventArgs e)
-        {
-            toolStripSkeletonDiff.Text = "Deviation"; 
         }
 
         private void rGEdgeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1448,11 +1417,9 @@ namespace WindowsFormsApplication1
                     }
                     if (Method != -1)
                     {
-                        ImageProcessing ImgProcess = new ImageProcessing();
-                        pictureBox1.Refresh();
+                        ImageProcessing ImgProcess = new ImageProcessing();               
                         //Apply Gaussian Smoothing first.....
                         Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);                        
-                        ImgProcess.Dispose();
 
                         FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_RG_EDGEDETECTION, "", "") == DialogResult.OK)
@@ -1480,10 +1447,8 @@ namespace WindowsFormsApplication1
                         Noise = CreateNoiseForm.Noise;
 
                         this.Cursor = Cursors.WaitCursor;
-                        ImageProcessing ImgProcess = new ImageProcessing();
-                        pictureBox1.Refresh();
+                        ImageProcessing ImgProcess = new ImageProcessing();                        
                         Image tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), Noise);
-                        ImgProcess.Dispose();
                         this.Cursor = Cursors.Arrow;
 
                         FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
@@ -1541,15 +1506,13 @@ namespace WindowsFormsApplication1
         private void cannyEdgeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.richTextBox1.Visible = false;
-            pictureBox1.Refresh();
             try
             {
                 if (this.OutputImage != null)
                 {
                     this.Cursor = Cursors.WaitCursor;
                     ImageProcessing ImgProcess = new ImageProcessing();
-                    Image tmpImage = ImgProcess.Canny((Bitmap)(this.OutputImage));                    
-                    ImgProcess.Dispose();                    
+                    Image tmpImage = ImgProcess.Canny((Bitmap)(this.OutputImage));                                   
                     this.Cursor = Cursors.Arrow;
 
                     FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
@@ -1567,24 +1530,6 @@ namespace WindowsFormsApplication1
 
         #endregion
 
-        private void toolStripBitmap_MouseHover(object sender, EventArgs e)
-        {
-            this.pictureBox1.Visible = true;
-            this.richTextBox1.Visible = false;
-        }
-
-        private void toolStripMatrix_MouseHover(object sender, EventArgs e)
-        {
-            this.richTextBox1.Visible = true;
-            this.pictureBox1.Visible = false;
-        }
-
-        private void toolStripSystemofEqua_MouseHover(object sender, EventArgs e)
-        {
-            this.richTextBox1.Visible = true;
-            this.pictureBox1.Visible = false;
-        }
-
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.richTextBox1.Width = this.pictureBox1.Width;
@@ -1593,7 +1538,10 @@ namespace WindowsFormsApplication1
             this.richTextBox1.Left = this.pictureBox1.Left;
 
             this.buttonOK.Visible = false;
-            GlobalMath.DIGITS = 6;
+            GlobalMath.DIGITS = 3;
+            this.toolStripComboBoxDigits.SelectedIndex = GlobalMath.DIGITS;
+            this.toolStripComboBoxZoom.SelectedIndex = toolStripComboBoxZoom.Items.Count - 1;
+            this.toolStripComboBoxPicMode.SelectedIndex = 0;            
         }
 
         private void toolStripMatrix_ButtonClick(object sender, EventArgs e)
@@ -1612,5 +1560,6 @@ namespace WindowsFormsApplication1
         {
             GlobalMath.DIGITS = Convert.ToInt16(toolStripComboBoxDigits.SelectedItem.ToString());
         }
+
     }
 }

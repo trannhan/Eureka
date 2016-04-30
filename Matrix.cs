@@ -104,39 +104,12 @@ namespace WindowsFormsApplication1
 
         ~MMatrix()
         {
-            Dispose();            
+                     
         }
 
         public void Dispose()
         {
-            //Array.Clear(this.MArray, 0, MArray.Length);              
-            if (MArray != null) 
-                MArray = null;            
-
-            if (LDL_D1 != null)
-                LDL_D1 = null;
-            if (LDL_L != null)
-                LDL_L = null;
-            if (LDL_D1 != null)
-                LDL_D1 = null;
-            if (LDL_D != null)
-                LDL_D = null;
-
-            if (LU_P != null)
-                LU_P = null;
-            if (LU_U != null)
-                LU_U = null;
-            if (LU_L != null)
-                LU_L = null;
-
-            if (SVD_U != null)
-                SVD_U = null;
-            if (SVD_S != null)
-                SVD_S = null;
-            if (SVD_Vt != null)
-                SVD_Vt = null;
-
-            GC.SuppressFinalize(this);         
+                    
         }
 
         public override int GetHashCode()
@@ -1102,14 +1075,14 @@ namespace WindowsFormsApplication1
             {
                 q = 0;
                 for (int j = k + 1; j < n; j++)
-                    q += Math.Pow(A[j, k],2);
+                    q += A[j, k]* A[j, k];
 
                 if (A[k + 1, k] == 0)
                     alpha = -Math.Sqrt(q);
                 else
                     alpha = -Math.Sqrt(q) * A[k + 1, k] / Math.Abs(A[k + 1, k]);
 
-                RSQ = Math.Pow(alpha, 2) - alpha * A[k + 1, k];
+                RSQ = alpha * alpha - alpha * A[k + 1, k];
                 
                 V[k] = 0;
                 V[k + 1] = A[k + 1, k] - alpha;
@@ -1232,7 +1205,7 @@ namespace WindowsFormsApplication1
                 }
                 */
                 b = -(A[n - 2] + A[n - 1]);
-                c = A[n - 1] * A[n - 2] - Math.Pow(B[n - 1],2);
+                c = A[n - 1] * A[n - 2] - B[n - 1]* B[n - 1];
                 d = Math.Sqrt(b * b - 4 * c);
 
                 if(b > 0)
@@ -1614,9 +1587,13 @@ namespace WindowsFormsApplication1
             //err = MMatrix.LInfinitiveNorm(MActual - MApproximate) / MMatrix.LInfinitiveNorm(MActual);            
                         
             double sum = 0;
+            double diff;
             for (int i = 0; i < MActual.row; i++)
                 for (int j = 0; j < MActual.col; j++)
-                    sum += Math.Pow(MActual[i, j] - MApproximate[i, j], 2);
+                {
+                    diff = MActual[i, j] - MApproximate[i, j];
+                    sum += diff * diff;
+                }
             err = Math.Sqrt(sum / (MActual.row * MActual.col));
             
             return err;
@@ -1715,12 +1692,12 @@ namespace WindowsFormsApplication1
 
         public static double Gauss(double x, double stdDeviation)
         {
-            return Math.Exp(-Math.Pow(x, 2) / (2 * Math.Pow(stdDeviation, 2))) / (stdDeviation * Math.Sqrt(2 * Math.PI));
+            return Math.Exp(-x * x / (2 * stdDeviation * stdDeviation)) / (stdDeviation * Math.Sqrt(2 * Math.PI));
         }
 
         public static double DGauss(double x, double stdDeviation)
         {
-            return (-x) * Gauss(x, stdDeviation) / Math.Pow(stdDeviation, 2);
+            return (-x) * Gauss(x, stdDeviation) / (stdDeviation * stdDeviation);
         }        
 
         public static MMatrix Gauss_Convolution(MMatrix Matrix, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
@@ -1771,8 +1748,6 @@ namespace WindowsFormsApplication1
                     newMatrix[i - halfKernelRows, j - halfKernelCols] = conMatrix[i, j];
                 }
             }
-            conMatrix.Dispose();
-            conMatrix = null;
 
             return newMatrix;
         }

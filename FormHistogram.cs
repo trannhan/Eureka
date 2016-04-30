@@ -13,6 +13,8 @@ namespace WindowsFormsApplication1
     {
         public Bitmap Picture;
         private Bitmap OldPic;
+        const int step = 4;
+        int maxValue = 255 - step;
 
         public FormHistogram()
         {
@@ -178,11 +180,12 @@ namespace WindowsFormsApplication1
 
         private void buttonBrighter_Click(object sender, EventArgs e)
         {
-            if ((numericUpDownR.Value > 254) || (numericUpDownG.Value > 254) || (numericUpDownB.Value > 254))
+            
+            if ((numericUpDownR.Value > maxValue) || (numericUpDownG.Value > maxValue) || (numericUpDownB.Value > maxValue))
                 return;
-            numericUpDownR.Value += 1;
-            numericUpDownG.Value += 1;
-            numericUpDownB.Value += 1;
+            numericUpDownR.Value += step;
+            numericUpDownG.Value += step;
+            numericUpDownB.Value += step;
             this.trackBarR.Value = (int)this.numericUpDownR.Value + 255;
             this.trackBarG.Value = (int)this.numericUpDownG.Value + 255;
             this.trackBarB.Value = (int)this.numericUpDownB.Value + 255;
@@ -191,11 +194,11 @@ namespace WindowsFormsApplication1
 
         private void buttonDarker_Click(object sender, EventArgs e)
         {
-            if ((numericUpDownR.Value < -254) || (numericUpDownG.Value < -254) || (numericUpDownB.Value < -254))
+            if ((numericUpDownR.Value < -maxValue) || (numericUpDownG.Value < -maxValue) || (numericUpDownB.Value < -maxValue))
                 return;
-            numericUpDownR.Value -= 1;
-            numericUpDownG.Value -= 1;
-            numericUpDownB.Value -= 1;
+            numericUpDownR.Value -= step;
+            numericUpDownG.Value -= step;
+            numericUpDownB.Value -= step;
             this.trackBarR.Value = (int)this.numericUpDownR.Value + 255;
             this.trackBarG.Value = (int)this.numericUpDownG.Value + 255;
             this.trackBarB.Value = (int)this.numericUpDownB.Value + 255;

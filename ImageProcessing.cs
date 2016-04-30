@@ -36,18 +36,12 @@ namespace WindowsFormsApplication1
 
         ~ImageProcessing()
         {
-            Dispose();                   
+                
         }
 
         public void Dispose()
         {
-            if (MRed != null)
-                MRed.Dispose();
-            if(MGreen != null)
-                MGreen.Dispose();
-            if(MBlue != null)
-                MBlue.Dispose();
-            GC.SuppressFinalize(this);
+            
         }
 
         #region Pixel Processing
@@ -115,8 +109,16 @@ namespace WindowsFormsApplication1
             for (int i = 0; i < BitmapMatrix.row; i++)
                 for (int j = 0; j < BitmapMatrix.col; j++)
                 {
-                    if (!(BitmapMatrix[i, j] >= 0) || !(BitmapMatrix[i, j] <= 255))
-                        BitmapMatrix[i, j] = MRed[i, j];
+                    if (BitmapMatrix[i, j] < 0)
+                    {
+                        BitmapMatrix[i, j] = 0;
+                    }
+                    else if (BitmapMatrix[i, j] > 255)
+                    {
+                        BitmapMatrix[i, j] = 255;
+                    }
+                    else if (Double.IsNaN(BitmapMatrix[i, j]))
+                        BitmapMatrix[i, j] = 255;
                 }
         }
 
@@ -289,13 +291,6 @@ namespace WindowsFormsApplication1
             newVtMatrix = new MMatrix(matrix.SVD_Vt, newrank, matrix.col);
 
             matrix = newUMatrix * newSMatrix * newVtMatrix;
-
-            newUMatrix.Dispose();
-            newSMatrix.Dispose();
-            newVtMatrix.Dispose();
-            newUMatrix = null;
-            newSMatrix = null;
-            newVtMatrix = null;
         }
 
         public Image Bitmap_SVD(Bitmap bmp, int newRank, ref double RootMeanSquareError)
@@ -339,18 +334,12 @@ namespace WindowsFormsApplication1
                         MatrixOfMatrices[k, m].Dispose();
                         MatrixOfMatrices[k, m] = null;
                     }
-                    MatrixOfMatrices[k, 0].Dispose();
-                    MatrixOfMatrices[k, 0] = null;
                 }
                 B = C[0];
                 for (int k = 1; k < numx; k++)
                 {
                     B = MMatrix.Concat_Vertical(B, C[k]);
-                    C[k].Dispose();
-                    C[k] = null;
                 }
-                C[0].Dispose();
-                C[0] = null;
                 
                 FloorToBitmap(ref B);
                 RootMeanSquareError = MMatrix.RootMeanSquareError(newMatrix, B);
@@ -671,9 +660,9 @@ namespace WindowsFormsApplication1
         {                        
             int xMax = bmp.Width; //colume wrt to matrix
             int yMax = bmp.Height; //row wrt to matrix
-            Bitmap tmpBmp = new Bitmap(xMax, yMax);
-            Graphics g1 = Graphics.FromImage((Image)tmpBmp);
-            g1.FillRectangle(Brushes.White, 0, 0, xMax, yMax);
+            Bitmap tmpBmp = bmp;
+            //Graphics g1 = Graphics.FromImage((Image)tmpBmp);
+            //g1.FillRectangle(Brushes.White, 0, 0, xMax, yMax);
 
             int DirMax = 8; //search in 8 directions
             int[] xDir = new int[8] { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
@@ -889,32 +878,36 @@ namespace WindowsFormsApplication1
             int Ny2 = 3;
             double Sigmay1 = 1.4;
             double Sigmay2 = 1.4;
-            double Theta2 = 0;                
+            double Theta2 = 0;
             //2. The thresholding parameter alfa:
-            //double alfa=0.1;                                 
+            //double alfa=0.1;                 
+
+            Bitmap tmpBmp = Bmp;
+            int xMax = Bmp.Width;
+            int yMax = Bmp.Height;
 
             if (!IsGrayScale(Bmp))
                 Bmp = (Bitmap)GrayScale(Bmp);
-
-            //Bitmap tmpBmpx = Gauss_Convolution(Bmp, true, Nx1, Sigmax1, Nx2, Sigmax2, Theta1);
-            //Bitmap tmpBmpy = Gauss_Convolution(Bmp, true, Ny1, Sigmay1, Ny2, Sigmay2, Theta2);
             
             MatrixFromBitmap(Bmp);
 
             MMatrix Mx = MMatrix.Gauss_Convolution(MRed, true, Nx1, Sigmax1, Nx2, Sigmax2, Theta1);
-            //FloorToBitmap(ref Mx);
-
             MMatrix My = MMatrix.Gauss_Convolution(MRed, true, Ny1, Sigmay1, Ny2, Sigmay2, Theta2);
             My = My / MMatrix.Sum(My);
             //My = My + MMatrix.ScalarMatrix(My.row, My.col, 125);
-            //FloorToBitmap(ref My);
 
             MMatrix Norm = MMatrix.PowEntry(MMatrix.PowEntry(Mx,2) + MMatrix.PowEntry(My,2),0.5);            
             FloorToBitmap(ref Norm);
 
-            //Bitmap tmpBmp = BitmapFromMatrix(Mx, Mx, Mx);
-            //Bitmap tmpBmp = BitmapFromMatrix(My, My, My);
-            Bitmap tmpBmp = BitmapFromMatrix(Norm, Norm, Norm);
+            //tmpBmp = BitmapFromMatrix(Norm, Norm, Norm);
+            for (int i = 0; i < xMax; i++)
+            {
+                for (int j = 0; j < yMax; j++)
+                {
+                    if(MRed[i, j]<50)
+                        tmpBmp.SetPixel(i, j, Color.FromArgb((int)Norm[i, j], (int)Norm[i, j], (int)Norm[i, j]));
+                }
+            }
 
             return tmpBmp;
         }

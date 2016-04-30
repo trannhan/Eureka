@@ -13,6 +13,9 @@ namespace WindowsFormsApplication1
     {              
         private Image OldPic;
         public Image Picture;
+        int Threshold_High = 0;
+        int Threshold_Low = 0;
+        int ChangeStep = 0;
 
         public FormSharpening()
         {
@@ -25,13 +28,20 @@ namespace WindowsFormsApplication1
             numericUpDownStep.Value = 2;
             numericUpDownThresholdHigh.Value = 175;
             numericUpDownThresholdLow.Value = 100;
+
+            Threshold_High = (int)numericUpDownThresholdHigh.Value;
+            Threshold_Low = (int)numericUpDownThresholdLow.Value;
+            ChangeStep = 0;
         }
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            Picture = ImageProcessing.Sharpen((Bitmap)Picture, (int)numericUpDownThresholdHigh.Value,
-                (int)numericUpDownThresholdLow.Value, (int)numericUpDownStep.Value);
+            Threshold_High = (int)numericUpDownThresholdHigh.Value;
+            Threshold_Low = (int)numericUpDownThresholdLow.Value;
+            if(ChangeStep< (int)numericUpDownStep.Value)
+                ChangeStep = (int)numericUpDownStep.Value;
+            Picture = ImageProcessing.Sharpen((Bitmap)Picture, Threshold_High, Threshold_Low, ChangeStep);
             this.Cursor = Cursors.Arrow;
 
             OldPic.Dispose();
@@ -41,7 +51,8 @@ namespace WindowsFormsApplication1
 
         private void buttonSharpen_Click(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
+            this.Cursor = Cursors.WaitCursor;            
+            ChangeStep += (int)numericUpDownStep.Value/4;
             this.pictureBox1.Image = ImageProcessing.Sharpen((Bitmap)pictureBox1.Image, (int)numericUpDownThresholdHigh.Value,
                 (int)numericUpDownThresholdLow.Value, (int)numericUpDownStep.Value);
             this.pictureBox1.Refresh();

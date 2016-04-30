@@ -14,11 +14,15 @@ namespace WindowsFormsApplication1
         private ImageProcessing ImgProcess;        
         private Image OldPic;
         public Image Picture;
+        int rows = 0;
+        int cols = 0;
+        double sigma1 = 0;        
+        double sigma2 = 0;
+        double theta = 0;
 
         public FormGaussianSmooth()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
             ImgProcess = new ImageProcessing();
         }
 
@@ -29,26 +33,32 @@ namespace WindowsFormsApplication1
             numericUpDownCol.Value = 5;
             textBoxSigma1.Text = "0.4";
             textBoxSigma2.Text = "0.4";
-            textBoxTheta.Text = "0";      
+            textBoxTheta.Text = "0";
+
+            rows = (int)numericUpDownRow.Value;
+            cols = (int)numericUpDownCol.Value;
+            sigma1 = Convert.ToDouble(textBoxSigma1.Text);
+            sigma2 = Convert.ToDouble(textBoxSigma2.Text);
+            theta = Convert.ToDouble(textBoxTheta.Text);
         }
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            Picture = ImgProcess.Gauss_Convolution((Bitmap)Picture, false, (int)numericUpDownRow.Value,
-                Convert.ToDouble(this.textBoxSigma1.Text), (int)numericUpDownCol.Value,
-                Convert.ToDouble(this.textBoxSigma2.Text), Convert.ToDouble(this.textBoxTheta.Text));
+            rows = (int)numericUpDownRow.Value;
+            cols = (int)numericUpDownCol.Value;
+            Picture = ImgProcess.Gauss_Convolution((Bitmap)Picture, false, rows, sigma1, cols, sigma2, theta);
             this.Cursor = Cursors.Arrow;
 
-            OldPic.Dispose();
-            OldPic = null;
-            ImgProcess.Dispose(); 
             this.Close();                       
         }
 
         private void buttonRunGaussian_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
+            sigma1 += Convert.ToDouble(textBoxSigma1.Text)/50;
+            sigma2 += Convert.ToDouble(textBoxSigma2.Text)/50;
+            theta += Convert.ToDouble(textBoxTheta.Text)/50;
             this.pictureBox1.Image = ImgProcess.Gauss_Convolution((Bitmap)pictureBox1.Image, false,
                 (int)numericUpDownRow.Value, Convert.ToDouble(textBoxSigma1.Text),
                 (int)numericUpDownCol.Value, Convert.ToDouble(textBoxSigma2.Text), 
@@ -59,9 +69,6 @@ namespace WindowsFormsApplication1
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {            
-            OldPic.Dispose();
-            OldPic = null;
-            ImgProcess.Dispose();
             this.Close();            
         }
 
@@ -82,7 +89,13 @@ namespace WindowsFormsApplication1
             numericUpDownCol.Value = 5;
             textBoxSigma1.Text = "0.4";
             textBoxSigma2.Text = "0.4";
-            textBoxTheta.Text = "0";             
+            textBoxTheta.Text = "0";
+
+            rows = (int)numericUpDownRow.Value;
+            cols = (int)numericUpDownCol.Value;
+            sigma1 = Convert.ToDouble(textBoxSigma1.Text);
+            sigma2 = Convert.ToDouble(textBoxSigma2.Text);
+            theta = Convert.ToDouble(textBoxTheta.Text);
         }
     }
 }

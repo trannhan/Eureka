@@ -35,27 +35,30 @@
             // 
             // textBoxNoise
             // 
-            this.textBoxNoise.Location = new System.Drawing.Point(97, 26);
+            this.textBoxNoise.Location = new System.Drawing.Point(129, 32);
+            this.textBoxNoise.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxNoise.Name = "textBoxNoise";
-            this.textBoxNoise.Size = new System.Drawing.Size(125, 20);
+            this.textBoxNoise.Size = new System.Drawing.Size(165, 22);
             this.textBoxNoise.TabIndex = 8;
-            this.textBoxNoise.Text = "0.01";
+            this.textBoxNoise.Text = "0.08";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 29);
+            this.label1.Location = new System.Drawing.Point(33, 36);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.Size = new System.Drawing.Size(84, 17);
             this.label1.TabIndex = 7;
             this.label1.Text = "Noise Value";
             // 
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(97, 69);
+            this.buttonOK.Location = new System.Drawing.Point(129, 85);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(67, 27);
+            this.buttonOK.Size = new System.Drawing.Size(89, 33);
             this.buttonOK.TabIndex = 6;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -64,12 +67,13 @@
             // FormNoise
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 115);
+            this.ClientSize = new System.Drawing.Size(345, 142);
             this.Controls.Add(this.textBoxNoise);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonOK);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "FormNoise";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

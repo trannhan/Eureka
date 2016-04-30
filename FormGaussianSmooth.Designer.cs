@@ -56,9 +56,11 @@
             // 
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(532, 256);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(709, 315);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             // 
@@ -75,16 +77,19 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(288, 21);
+            this.groupBox2.Location = new System.Drawing.Point(384, 26);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(228, 213);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(304, 262);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Gaussian Parameters";
             // 
             // numericUpDownRow
             // 
-            this.numericUpDownRow.Location = new System.Drawing.Point(106, 28);
+            this.numericUpDownRow.Location = new System.Drawing.Point(141, 34);
+            this.numericUpDownRow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownRow.Maximum = new decimal(new int[] {
             255,
             0,
@@ -96,7 +101,7 @@
             0,
             0});
             this.numericUpDownRow.Name = "numericUpDownRow";
-            this.numericUpDownRow.Size = new System.Drawing.Size(100, 20);
+            this.numericUpDownRow.Size = new System.Drawing.Size(133, 22);
             this.numericUpDownRow.TabIndex = 32;
             this.numericUpDownRow.Value = new decimal(new int[] {
             5,
@@ -106,7 +111,8 @@
             // 
             // numericUpDownCol
             // 
-            this.numericUpDownCol.Location = new System.Drawing.Point(106, 65);
+            this.numericUpDownCol.Location = new System.Drawing.Point(141, 80);
+            this.numericUpDownCol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownCol.Maximum = new decimal(new int[] {
             255,
             0,
@@ -118,7 +124,7 @@
             0,
             0});
             this.numericUpDownCol.Name = "numericUpDownCol";
-            this.numericUpDownCol.Size = new System.Drawing.Size(100, 20);
+            this.numericUpDownCol.Size = new System.Drawing.Size(133, 22);
             this.numericUpDownCol.TabIndex = 31;
             this.numericUpDownCol.Value = new decimal(new int[] {
             5,
@@ -128,70 +134,78 @@
             // 
             // textBoxTheta
             // 
-            this.textBoxTheta.Location = new System.Drawing.Point(106, 172);
+            this.textBoxTheta.Location = new System.Drawing.Point(141, 212);
+            this.textBoxTheta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxTheta.Name = "textBoxTheta";
-            this.textBoxTheta.Size = new System.Drawing.Size(100, 20);
+            this.textBoxTheta.Size = new System.Drawing.Size(132, 22);
             this.textBoxTheta.TabIndex = 30;
             this.textBoxTheta.Text = "0";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(22, 176);
+            this.label6.Location = new System.Drawing.Point(29, 217);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.Size = new System.Drawing.Size(45, 17);
             this.label6.TabIndex = 29;
             this.label6.Text = "Theta";
             // 
             // textBoxSigma2
             // 
-            this.textBoxSigma2.Location = new System.Drawing.Point(106, 137);
+            this.textBoxSigma2.Location = new System.Drawing.Point(141, 169);
+            this.textBoxSigma2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxSigma2.Name = "textBoxSigma2";
-            this.textBoxSigma2.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSigma2.Size = new System.Drawing.Size(132, 22);
             this.textBoxSigma2.TabIndex = 28;
             this.textBoxSigma2.Text = "0.4";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 141);
+            this.label3.Location = new System.Drawing.Point(29, 174);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.Size = new System.Drawing.Size(59, 17);
             this.label3.TabIndex = 27;
             this.label3.Text = "Sigma 2";
             // 
             // textBoxSigma1
             // 
-            this.textBoxSigma1.Location = new System.Drawing.Point(106, 101);
+            this.textBoxSigma1.Location = new System.Drawing.Point(141, 124);
+            this.textBoxSigma1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxSigma1.Name = "textBoxSigma1";
-            this.textBoxSigma1.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSigma1.Size = new System.Drawing.Size(132, 22);
             this.textBoxSigma1.TabIndex = 26;
             this.textBoxSigma1.Text = "0.4";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 105);
+            this.label4.Location = new System.Drawing.Point(29, 129);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.Size = new System.Drawing.Size(59, 17);
             this.label4.TabIndex = 25;
             this.label4.Text = "Sigma 1";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 68);
+            this.label2.Location = new System.Drawing.Point(29, 84);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.Size = new System.Drawing.Size(107, 17);
             this.label2.TabIndex = 23;
             this.label2.Text = "Kernel Columns";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 32);
+            this.label1.Location = new System.Drawing.Point(29, 39);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.Size = new System.Drawing.Size(87, 17);
             this.label1.TabIndex = 21;
             this.label1.Text = "Kernel Rows";
             // 
@@ -202,29 +216,32 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(14, 21);
+            this.pictureBox1.Location = new System.Drawing.Point(19, 26);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(258, 213);
+            this.pictureBox1.Size = new System.Drawing.Size(343, 262);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
             // buttonRunGaussian
             // 
-            this.buttonRunGaussian.Location = new System.Drawing.Point(296, 286);
+            this.buttonRunGaussian.Location = new System.Drawing.Point(395, 352);
+            this.buttonRunGaussian.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRunGaussian.Name = "buttonRunGaussian";
-            this.buttonRunGaussian.Size = new System.Drawing.Size(82, 28);
+            this.buttonRunGaussian.Size = new System.Drawing.Size(109, 34);
             this.buttonRunGaussian.TabIndex = 6;
-            this.buttonRunGaussian.Text = "Blur";
+            this.buttonRunGaussian.Text = "Smooth";
             this.buttonRunGaussian.UseVisualStyleBackColor = true;
             this.buttonRunGaussian.Click += new System.EventHandler(this.buttonRunGaussian_Click);
             // 
             // buttonApply
             // 
             this.buttonApply.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonApply.Location = new System.Drawing.Point(175, 286);
+            this.buttonApply.Location = new System.Drawing.Point(233, 352);
+            this.buttonApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonApply.Name = "buttonApply";
-            this.buttonApply.Size = new System.Drawing.Size(82, 28);
+            this.buttonApply.Size = new System.Drawing.Size(109, 34);
             this.buttonApply.TabIndex = 5;
             this.buttonApply.Text = "Apply";
             this.buttonApply.UseVisualStyleBackColor = true;
@@ -232,9 +249,10 @@
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(55, 286);
+            this.buttonReset.Location = new System.Drawing.Point(73, 352);
+            this.buttonReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(82, 28);
+            this.buttonReset.Size = new System.Drawing.Size(109, 34);
             this.buttonReset.TabIndex = 7;
             this.buttonReset.Text = "Reset";
             this.buttonReset.UseVisualStyleBackColor = true;
@@ -243,9 +261,10 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(417, 286);
+            this.buttonCancel.Location = new System.Drawing.Point(556, 352);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(82, 28);
+            this.buttonCancel.Size = new System.Drawing.Size(109, 34);
             this.buttonCancel.TabIndex = 8;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -254,15 +273,16 @@
             // FormGaussianSmooth
             // 
             this.AcceptButton = this.buttonApply;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(556, 331);
+            this.ClientSize = new System.Drawing.Size(741, 407);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonRunGaussian);
             this.Controls.Add(this.buttonApply);
             this.Controls.Add(this.buttonReset);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "FormGaussianSmooth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

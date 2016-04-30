@@ -133,22 +133,27 @@
             this.sharpeningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem37 = new System.Windows.Forms.ToolStripSeparator();
             this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findingDiscontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singularValueDecompositionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.findingDiscontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderTracingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.skeletonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSkeletonDiff = new System.Windows.Forms.ToolStripComboBox();
             this.rGEdgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cannyEdgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxPicMode = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxZoom = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBoxDigits = new System.Windows.Forms.ToolStripComboBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.toolStripComboBoxDigits = new System.Windows.Forms.ToolStripComboBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -167,7 +172,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1045, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1061, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -246,8 +251,8 @@
             this.toolStripMenuItem10,
             this.toolStripMenuItem16});
             this.matrixToolStripMenuItem.Name = "matrixToolStripMenuItem";
-            this.matrixToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
-            this.matrixToolStripMenuItem.Text = "Matrix";
+            this.matrixToolStripMenuItem.Size = new System.Drawing.Size(140, 24);
+            this.matrixToolStripMenuItem.Text = "Matrix Operations";
             // 
             // toolStripMenuItem1
             // 
@@ -457,8 +462,8 @@
             this.reducedSystemToolStripMenuItem,
             this.solutionsToolStripMenuItem1});
             this.systemOfEquationsToolStripMenuItem.Name = "systemOfEquationsToolStripMenuItem";
-            this.systemOfEquationsToolStripMenuItem.Size = new System.Drawing.Size(155, 24);
-            this.systemOfEquationsToolStripMenuItem.Text = "System of Equations";
+            this.systemOfEquationsToolStripMenuItem.Size = new System.Drawing.Size(189, 24);
+            this.systemOfEquationsToolStripMenuItem.Text = "Linear System Operations";
             // 
             // inputSystemToolStripMenuItem1
             // 
@@ -495,8 +500,8 @@
             this.singularValueDecompositionToolStripMenuItem,
             this.findingDiscontinuitiesToolStripMenuItem});
             this.bitmapToolStripMenuItem.Name = "bitmapToolStripMenuItem";
-            this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
-            this.bitmapToolStripMenuItem.Text = "Bitmap";
+            this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.bitmapToolStripMenuItem.Text = "Bitmap Operations";
             // 
             // convertToGrayScaleToolStripMenuItem
             // 
@@ -569,6 +574,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.AutoSize = false;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripBNew,
@@ -581,12 +587,17 @@
             this.toolStripSeparator5,
             this.toolStripBitmap,
             this.toolStripSeparator4,
+            this.toolStripLabel3,
             this.toolStripComboBoxPicMode,
+            this.toolStripSeparator9,
+            this.toolStripLabel2,
             this.toolStripComboBoxZoom,
+            this.toolStripSeparator8,
+            this.toolStripLabel1,
             this.toolStripComboBoxDigits});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1045, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(1061, 32);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "SVD Toolbar";
@@ -597,7 +608,7 @@
             this.toolStripBNew.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBNew.Image")));
             this.toolStripBNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBNew.Name = "toolStripBNew";
-            this.toolStripBNew.Size = new System.Drawing.Size(24, 25);
+            this.toolStripBNew.Size = new System.Drawing.Size(24, 29);
             this.toolStripBNew.Text = "New";
             this.toolStripBNew.Click += new System.EventHandler(this.toolStripBNew_Click);
             // 
@@ -607,7 +618,7 @@
             this.toolStripBSaveMatrix.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBSaveMatrix.Image")));
             this.toolStripBSaveMatrix.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBSaveMatrix.Name = "toolStripBSaveMatrix";
-            this.toolStripBSaveMatrix.Size = new System.Drawing.Size(24, 25);
+            this.toolStripBSaveMatrix.Size = new System.Drawing.Size(24, 29);
             this.toolStripBSaveMatrix.Text = "Save File";
             this.toolStripBSaveMatrix.Click += new System.EventHandler(this.toolStripBSave_Click);
             // 
@@ -617,14 +628,14 @@
             this.OpenFile.Image = ((System.Drawing.Image)(resources.GetObject("OpenFile.Image")));
             this.OpenFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OpenFile.Name = "OpenFile";
-            this.OpenFile.Size = new System.Drawing.Size(24, 25);
+            this.OpenFile.Size = new System.Drawing.Size(24, 29);
             this.OpenFile.Text = "Open File";
             this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 32);
             // 
             // toolStripMatrix
             // 
@@ -654,11 +665,10 @@
             this.toolStripMatrix.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMatrix.Image")));
             this.toolStripMatrix.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMatrix.Name = "toolStripMatrix";
-            this.toolStripMatrix.Size = new System.Drawing.Size(164, 25);
+            this.toolStripMatrix.Size = new System.Drawing.Size(164, 29);
             this.toolStripMatrix.Text = "Matrix Processing";
             this.toolStripMatrix.ButtonClick += new System.EventHandler(this.toolStripMatrix_ButtonClick);
             this.toolStripMatrix.Click += new System.EventHandler(this.toolStripBMatrix_Click);
-            this.toolStripMatrix.MouseHover += new System.EventHandler(this.toolStripMatrix_MouseHover);
             // 
             // inputMatrixToolStripMenuItem
             // 
@@ -863,7 +873,7 @@
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 32);
             // 
             // toolStripSystemofEqua
             // 
@@ -875,10 +885,9 @@
             this.toolStripSystemofEqua.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSystemofEqua.Image")));
             this.toolStripSystemofEqua.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSystemofEqua.Name = "toolStripSystemofEqua";
-            this.toolStripSystemofEqua.Size = new System.Drawing.Size(184, 25);
-            this.toolStripSystemofEqua.Text = "System Of Equations";
+            this.toolStripSystemofEqua.Size = new System.Drawing.Size(139, 29);
+            this.toolStripSystemofEqua.Text = "Linear System";
             this.toolStripSystemofEqua.ButtonClick += new System.EventHandler(this.toolStripSystemofEqua_ButtonClick);
-            this.toolStripSystemofEqua.MouseHover += new System.EventHandler(this.toolStripSystemofEqua_MouseHover);
             // 
             // inputSystemToolStripMenuItem
             // 
@@ -909,7 +918,7 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 32);
             // 
             // toolStripBitmap
             // 
@@ -922,9 +931,9 @@
             this.sharpeningToolStripMenuItem,
             this.toolStripMenuItem37,
             this.histogramToolStripMenuItem,
+            this.findingDiscontToolStripMenuItem,
             this.singularValueDecompositionToolStripMenuItem1,
             this.toolStripSeparator6,
-            this.findingDiscontToolStripMenuItem,
             this.borderTracingToolStripMenuItem,
             this.skeletonToolStripMenuItem,
             this.rGEdgeDetectionToolStripMenuItem,
@@ -932,90 +941,89 @@
             this.toolStripBitmap.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBitmap.Image")));
             this.toolStripBitmap.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBitmap.Name = "toolStripBitmap";
-            this.toolStripBitmap.Size = new System.Drawing.Size(170, 25);
-            this.toolStripBitmap.Text = "Bitmap Processing";
+            this.toolStripBitmap.Size = new System.Drawing.Size(164, 29);
+            this.toolStripBitmap.Text = "Image Processing";
             this.toolStripBitmap.ButtonClick += new System.EventHandler(this.toolStripBitmap_Click);
-            this.toolStripBitmap.MouseHover += new System.EventHandler(this.toolStripBitmap_MouseHover);
             // 
             // grayScaleToolStripMenuItem
             // 
             this.grayScaleToolStripMenuItem.Name = "grayScaleToolStripMenuItem";
-            this.grayScaleToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
+            this.grayScaleToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
             this.grayScaleToolStripMenuItem.Text = "Gray Scale Image";
             this.grayScaleToolStripMenuItem.Click += new System.EventHandler(this.grayscale_Click);
             // 
             // blackWhiteToolStripMenuItem
             // 
             this.blackWhiteToolStripMenuItem.Name = "blackWhiteToolStripMenuItem";
-            this.blackWhiteToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
+            this.blackWhiteToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
             this.blackWhiteToolStripMenuItem.Text = "Black White Image";
             this.blackWhiteToolStripMenuItem.Click += new System.EventHandler(this.toolStripBlackWhite_Click);
             // 
             // negatingToolStripMenuItem
             // 
             this.negatingToolStripMenuItem.Name = "negatingToolStripMenuItem";
-            this.negatingToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
+            this.negatingToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
             this.negatingToolStripMenuItem.Text = "Negative Image";
             this.negatingToolStripMenuItem.Click += new System.EventHandler(this.negatingToolStripMenuItem_Click);
             // 
             // noiseGeneratorToolStripMenuItem
             // 
             this.noiseGeneratorToolStripMenuItem.Name = "noiseGeneratorToolStripMenuItem";
-            this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
+            this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
             this.noiseGeneratorToolStripMenuItem.Text = "Noise Generator";
             this.noiseGeneratorToolStripMenuItem.Click += new System.EventHandler(this.noiseGeneratorToolStripMenuItem_Click);
             // 
             // gaussianSmoothToolStripMenuItem
             // 
             this.gaussianSmoothToolStripMenuItem.Name = "gaussianSmoothToolStripMenuItem";
-            this.gaussianSmoothToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.gaussianSmoothToolStripMenuItem.Text = "Gaussian Smoothing";
+            this.gaussianSmoothToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.gaussianSmoothToolStripMenuItem.Text = "Smoothing - Gaussian";
             this.gaussianSmoothToolStripMenuItem.Click += new System.EventHandler(this.gaussianSmoothToolStripMenuItem_Click);
             // 
             // sharpeningToolStripMenuItem
             // 
             this.sharpeningToolStripMenuItem.Name = "sharpeningToolStripMenuItem";
-            this.sharpeningToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
+            this.sharpeningToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
             this.sharpeningToolStripMenuItem.Text = "Color Sharpening";
             this.sharpeningToolStripMenuItem.Click += new System.EventHandler(this.sharpeningToolStripMenuItem_Click);
             // 
             // toolStripMenuItem37
             // 
             this.toolStripMenuItem37.Name = "toolStripMenuItem37";
-            this.toolStripMenuItem37.Size = new System.Drawing.Size(281, 6);
+            this.toolStripMenuItem37.Size = new System.Drawing.Size(255, 6);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.histogramToolStripMenuItem.Text = "Red-Green-Blue Histogram";
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.histogramToolStripMenuItem.Text = "Brightness - Histogram";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
-            // 
-            // singularValueDecompositionToolStripMenuItem1
-            // 
-            this.singularValueDecompositionToolStripMenuItem1.Name = "singularValueDecompositionToolStripMenuItem1";
-            this.singularValueDecompositionToolStripMenuItem1.Size = new System.Drawing.Size(284, 26);
-            this.singularValueDecompositionToolStripMenuItem1.Text = "Singular Value Decomposition";
-            this.singularValueDecompositionToolStripMenuItem1.Click += new System.EventHandler(this.singularValueDecompositionToolStripMenuItem1_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(281, 6);
             // 
             // findingDiscontToolStripMenuItem
             // 
             this.findingDiscontToolStripMenuItem.Name = "findingDiscontToolStripMenuItem";
             this.findingDiscontToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.findingDiscontToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.findingDiscontToolStripMenuItem.Text = "Discontinuities Finding";
+            this.findingDiscontToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.findingDiscontToolStripMenuItem.Text = "Edge Detection";
             this.findingDiscontToolStripMenuItem.Click += new System.EventHandler(this.findingDiscontToolStripMenuItem_Click);
+            // 
+            // singularValueDecompositionToolStripMenuItem1
+            // 
+            this.singularValueDecompositionToolStripMenuItem1.Name = "singularValueDecompositionToolStripMenuItem1";
+            this.singularValueDecompositionToolStripMenuItem1.Size = new System.Drawing.Size(258, 26);
+            this.singularValueDecompositionToolStripMenuItem1.Text = "Image Compression - SVD";
+            this.singularValueDecompositionToolStripMenuItem1.Click += new System.EventHandler(this.singularValueDecompositionToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(255, 6);
             // 
             // borderTracingToolStripMenuItem
             // 
             this.borderTracingToolStripMenuItem.Name = "borderTracingToolStripMenuItem";
-            this.borderTracingToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.borderTracingToolStripMenuItem.Text = "Border Tracing";
+            this.borderTracingToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.borderTracingToolStripMenuItem.Text = "Border Sketching Effect";
             this.borderTracingToolStripMenuItem.Click += new System.EventHandler(this.borderTracingToolStripMenuItem_Click);
             // 
             // skeletonToolStripMenuItem
@@ -1023,51 +1031,69 @@
             this.skeletonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSkeletonDiff});
             this.skeletonToolStripMenuItem.Name = "skeletonToolStripMenuItem";
-            this.skeletonToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.skeletonToolStripMenuItem.Text = "Skeleton Creator";
+            this.skeletonToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.skeletonToolStripMenuItem.Text = "Cartoon Effect - Skeleton";
             // 
             // toolStripSkeletonDiff
             // 
             this.toolStripSkeletonDiff.Name = "toolStripSkeletonDiff";
             this.toolStripSkeletonDiff.Size = new System.Drawing.Size(100, 28);
-            this.toolStripSkeletonDiff.Text = "Deviation";
+            this.toolStripSkeletonDiff.Text = "20";
+            this.toolStripSkeletonDiff.ToolTipText = "Light";
             this.toolStripSkeletonDiff.SelectedIndexChanged += new System.EventHandler(this.toolStripSkeletonDiff_SelectedIndexChanged);
-            this.toolStripSkeletonDiff.Paint += new System.Windows.Forms.PaintEventHandler(this.toolStripSkeletonDiff_Paint);
             // 
             // rGEdgeDetectionToolStripMenuItem
             // 
             this.rGEdgeDetectionToolStripMenuItem.Name = "rGEdgeDetectionToolStripMenuItem";
-            this.rGEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.rGEdgeDetectionToolStripMenuItem.Text = "R-G Edge Detection";
+            this.rGEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.rGEdgeDetectionToolStripMenuItem.Text = "Pencil Sketching Effect";
             this.rGEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.rGEdgeDetectionToolStripMenuItem_Click);
             // 
             // cannyEdgeDetectionToolStripMenuItem
             // 
             this.cannyEdgeDetectionToolStripMenuItem.Name = "cannyEdgeDetectionToolStripMenuItem";
-            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(284, 26);
-            this.cannyEdgeDetectionToolStripMenuItem.Text = "Canny Edge Detection";
+            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.cannyEdgeDetectionToolStripMenuItem.Text = "Mirror Effect - Canny";
             this.cannyEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.cannyEdgeDetectionToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 32);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(84, 29);
+            this.toolStripLabel3.Text = "View Mode";
             // 
             // toolStripComboBoxPicMode
             // 
+            this.toolStripComboBoxPicMode.AutoSize = false;
             this.toolStripComboBoxPicMode.Items.AddRange(new object[] {
             "Normal",
             "Stretch Image",
-            "Center Image",
             "Fit Image"});
             this.toolStripComboBoxPicMode.Name = "toolStripComboBoxPicMode";
-            this.toolStripComboBoxPicMode.Size = new System.Drawing.Size(119, 28);
+            this.toolStripComboBoxPicMode.Size = new System.Drawing.Size(120, 28);
             this.toolStripComboBoxPicMode.Text = "View Mode";
             this.toolStripComboBoxPicMode.ToolTipText = "Picture Mode";
             this.toolStripComboBoxPicMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxPicMode_SelectedIndexChanged);
             // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 32);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(49, 29);
+            this.toolStripLabel2.Text = "Zoom";
+            // 
             // toolStripComboBoxZoom
             // 
+            this.toolStripComboBoxZoom.AutoSize = false;
             this.toolStripComboBoxZoom.Items.AddRange(new object[] {
             "10%",
             "20%",
@@ -1080,57 +1106,25 @@
             "90%",
             "100%"});
             this.toolStripComboBoxZoom.Name = "toolStripComboBoxZoom";
-            this.toolStripComboBoxZoom.Size = new System.Drawing.Size(90, 28);
+            this.toolStripComboBoxZoom.Size = new System.Drawing.Size(60, 28);
             this.toolStripComboBoxZoom.Text = "Zoom";
             this.toolStripComboBoxZoom.ToolTipText = "Zoom";
             this.toolStripComboBoxZoom.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxZoom_SelectedIndexChanged);
             // 
-            // hScrollBar1
+            // toolStripSeparator8
             // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 557);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(1045, 17);
-            this.hScrollBar1.TabIndex = 5;
-            this.hScrollBar1.Visible = false;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 32);
             // 
-            // vScrollBar1
+            // toolStripLabel1
             // 
-            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.vScrollBar1.Location = new System.Drawing.Point(1028, 56);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 501);
-            this.vScrollBar1.TabIndex = 6;
-            this.vScrollBar1.Visible = false;
-            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BackColor = System.Drawing.Color.White;
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(1004, 31);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(41, 27);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.WordWrap = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 56);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1045, 544);
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(116, 20);
+            this.toolStripLabel1.Text = "Rounding Mode";
             // 
             // toolStripComboBoxDigits
             // 
+            this.toolStripComboBoxDigits.AutoSize = false;
             this.toolStripComboBoxDigits.Items.AddRange(new object[] {
             "0",
             "1",
@@ -1149,16 +1143,60 @@
             "14",
             "15"});
             this.toolStripComboBoxDigits.Name = "toolStripComboBoxDigits";
-            this.toolStripComboBoxDigits.Size = new System.Drawing.Size(75, 28);
+            this.toolStripComboBoxDigits.Size = new System.Drawing.Size(40, 28);
             this.toolStripComboBoxDigits.Text = "Digits";
             this.toolStripComboBoxDigits.ToolTipText = "Digits";
             this.toolStripComboBoxDigits.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxDigits_SelectedIndexChanged);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 557);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(1061, 17);
+            this.hScrollBar1.TabIndex = 5;
+            this.hScrollBar1.Visible = false;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Location = new System.Drawing.Point(1044, 60);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 497);
+            this.vScrollBar1.TabIndex = 6;
+            this.vScrollBar1.Visible = false;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.Color.White;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(401, 1);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(532, 27);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.WordWrap = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 56);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1045, 544);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1045, 574);
+            this.ClientSize = new System.Drawing.Size(1061, 574);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
@@ -1309,6 +1347,11 @@
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxPicMode;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxDigits;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
     }
 }
 

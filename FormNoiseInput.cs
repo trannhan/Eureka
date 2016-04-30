@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1
         {
             Method = comboBoxMethod.SelectedIndex;
             if (Method == 0)
-                textBoxNoise.Text = "1";
+                textBoxNoise.Text = "5";
             else
                 textBoxNoise.Text = "0.01";
         }
