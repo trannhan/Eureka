@@ -1119,7 +1119,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(116, 20);
+            this.toolStripLabel1.Size = new System.Drawing.Size(116, 29);
             this.toolStripLabel1.Text = "Rounding Mode";
             // 
             // toolStripComboBoxDigits

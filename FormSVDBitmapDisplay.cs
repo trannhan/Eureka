@@ -212,8 +212,8 @@ namespace WindowsFormsApplication1
             {
                 this.hScrollBar1.Maximum += this.vScrollBar1.Width;
             }
-            this.hScrollBar1.LargeChange = this.hScrollBar1.Maximum / 10;
-            this.hScrollBar1.SmallChange = this.hScrollBar1.Maximum / 20;
+            this.hScrollBar1.LargeChange = this.hScrollBar1.Maximum / 2;
+            this.hScrollBar1.SmallChange = this.hScrollBar1.Maximum / 5;
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -232,8 +232,8 @@ namespace WindowsFormsApplication1
             {
                 this.vScrollBar1.Maximum += this.hScrollBar1.Height;
             }
-            this.vScrollBar1.LargeChange = this.vScrollBar1.Maximum / 10;
-            this.vScrollBar1.SmallChange = this.vScrollBar1.Maximum / 20;
+            this.vScrollBar1.LargeChange = this.vScrollBar1.Maximum / 2;
+            this.vScrollBar1.SmallChange = this.vScrollBar1.Maximum / 5;
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.

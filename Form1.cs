@@ -391,8 +391,8 @@ namespace WindowsFormsApplication1
             {
                 this.hScrollBar1.Maximum += this.vScrollBar1.Width;
             }
-            this.hScrollBar1.LargeChange = this.hScrollBar1.Maximum / 10;
-            this.hScrollBar1.SmallChange = this.hScrollBar1.Maximum / 20;
+            this.hScrollBar1.LargeChange = this.hScrollBar1.Maximum / 2;
+            this.hScrollBar1.SmallChange = this.hScrollBar1.Maximum / 5;
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -411,8 +411,8 @@ namespace WindowsFormsApplication1
             {
                 this.vScrollBar1.Maximum += this.hScrollBar1.Height;
             }
-            this.vScrollBar1.LargeChange = this.vScrollBar1.Maximum / 10;
-            this.vScrollBar1.SmallChange = this.vScrollBar1.Maximum / 20;
+            this.vScrollBar1.LargeChange = this.vScrollBar1.Maximum / 2;
+            this.vScrollBar1.SmallChange = this.vScrollBar1.Maximum / 5;
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -1365,13 +1365,12 @@ namespace WindowsFormsApplication1
         }
 
         private void toolStripSkeletonDiff_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SkeletonDifference = toolStripSkeletonDiff.SelectedIndex + 1;              
-            toolStripSkeletonDiff.PerformClick();
-
+        {            
             this.richTextBox1.Visible = false;            
             try
             {
+                SkeletonDifference = toolStripSkeletonDiff.SelectedIndex + 1;
+                toolStripSkeletonDiff.PerformClick();
                 if (this.OutputImage != null)
                 {
                     ImageProcessing ImgProcess = new ImageProcessing();
@@ -1384,14 +1383,15 @@ namespace WindowsFormsApplication1
                     if (colordlg.ShowDialog() == DialogResult.OK)
                     {
                         color = colordlg.Color;
-                    }
-                    this.Cursor = Cursors.WaitCursor;                    
-                    Image tmpImage = ImgProcess.Bitmap_Skeleton((Bitmap)(this.OutputImage), color, SkeletonDifference);                                       
-                    this.Cursor = Cursors.Arrow;
 
-                    FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
-                    if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
-                        SetNewImage(tmpImage);                     
+                        this.Cursor = Cursors.WaitCursor;
+                        Image tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
+                        this.Cursor = Cursors.Arrow;
+
+                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                        if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
+                            SetNewImage(tmpImage);                        
+                    }              
                 }
             }
             catch (Exception exp)
@@ -1512,7 +1512,7 @@ namespace WindowsFormsApplication1
                 {
                     this.Cursor = Cursors.WaitCursor;
                     ImageProcessing ImgProcess = new ImageProcessing();
-                    Image tmpImage = ImgProcess.Canny((Bitmap)(this.OutputImage));                                   
+                    Image tmpImage = ImgProcess.Canny(new Bitmap(this.OutputImage));                                   
                     this.Cursor = Cursors.Arrow;
 
                     FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
