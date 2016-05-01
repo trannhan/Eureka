@@ -42,11 +42,13 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return (double)this.Elements.GetValue(i);
+                //return (double)this.Elements.GetValue(i);
+                return Elements[i];
             }
             set
             {
-                this.Elements.SetValue(value,i);
+                //this.Elements.SetValue(value,i);
+                Elements[i] = value;
             }
         }
 
@@ -95,9 +97,7 @@ namespace WindowsFormsApplication1
 
             double c = 0;
             for (int i = 0; i < A.Elements.Length; i++)
-            {
                 c += A[i] * B[i];
-            }
 
             return c;
         }
@@ -125,31 +125,12 @@ namespace WindowsFormsApplication1
 
         public static double DotProduct(Vector A, Vector B)
         {
-            int m = A.Elements.Length;
-            int n = B.Elements.Length;
-
-            if (m == 0 || n == 0)
-                throw new ArgumentException("Arguments need to be vectors.");
-            else if (m != n)
-                throw new ArgumentException("Vectors must be of the same length.");
-
-            double buf = 0;
-            for (int i = 0; i < m; i++)
-            {
-                buf += (double)A[i] * (double)B[i];
-            }
-
-            return buf;
+            return A*B;
         }
 
         public static double L2Norm(Vector A)
         {
-            double buf = 0;
-
-            for (int i = 0; i < A.Elements.Length; i++)
-                buf += A[i] * A[i];
-
-            return Math.Sqrt(buf);
+            return Math.Sqrt(A*A);
         }
 
         public double L2Norm()
@@ -158,38 +139,39 @@ namespace WindowsFormsApplication1
         }
 
         public static double LInfinitiveNorm(Vector A)
-        {
-            int m = A.Elements.Length;
-            double Max;
+        {            
+            Vector B = A.Abs();
+            double Max = B[0];
 
-            Max = A[0];
-            for (int j = 1; j < m; j++)
-            {
-                if (Max < A[j])
-                    Max = A[j];
-            }
+            for (int j = 1; j < B.Elements.Length; j++)
+                if (Max < B[j])
+                    Max = B[j];
 
             return Max;
         }
 
-        public static double Abs(Vector A)
+        public static Vector Abs(Vector A)
         {
-            return L2Norm(A);
+            Vector B = new Vector(A.Elements.Length);
+            for (int i = 0; i < A.Elements.Length; i++)
+                B[i] = Math.Abs(A[i]);
+
+            return B;
         }
 
-        public double Abs()
+        public Vector Abs()
         {
             return Abs(this);
         }
 
         public static Vector Normalize(Vector A)
         {
-            return A / Abs(A);
+            return A / L2Norm(A);
         }
 
         public Vector Normalize()
         {
-            return this / Abs(this);
+            return Normalize(this);
         }
 
         public static Vector Orthonormalize(Vector A, Vector OrthonormalVector)
@@ -211,7 +193,7 @@ namespace WindowsFormsApplication1
         {
             int m = A.Elements.Length;
             double temp;
-
+            
             for (int i = 0; i < m; i++)
                 for (int j = i + 1; j < m; j++)
                 {
@@ -243,10 +225,12 @@ namespace WindowsFormsApplication1
 
         public static void Sort(Vector A, bool bDescending)
         {
+            Array.Sort(A.Elements);
             if (bDescending)
-                Sort_Descending(A);
-            else
-                Sort_Ascending(A);
+                //Sort_Descending(A);
+                Array.Reverse(A.Elements);
+            //else
+                //Sort_Ascending(A);                
         }
 
         public void Sort(bool bDescending)

@@ -34,6 +34,8 @@ namespace WindowsFormsApplication1
         FormNoise CreateNoiseForm;
         FormGaussianSmooth GaussForm;
         FormSharpening SharpenForm;
+        FormSVDBitmapDisplay ImageForm;
+        FormHistogram FormHis;
         int SkeletonDifference = 15; //for Skeleton algorithm        
         
         public Form1()
@@ -50,11 +52,11 @@ namespace WindowsFormsApplication1
             CreateNoiseForm = new FormNoise();
             GaussForm = new FormGaussianSmooth();
             SharpenForm = new FormSharpening();
+            ImageForm = new FormSVDBitmapDisplay();
+            FormHis = new FormHistogram();
 
             for (int i = 1; i < 256; i++)
-            {
-                toolStripSkeletonDiff.Items.Add(i);
-            }                       
+                toolStripSkeletonDiff.Items.Add(i);                 
         }
 
         #region Administration
@@ -68,8 +70,8 @@ namespace WindowsFormsApplication1
         {            
             if (this.pictureBox1.Image != null)
             {
-                this.pictureBox1.Image.Dispose();
-                this.pictureBox1.Image = null;
+                pictureBox1.Image.Dispose();
+                pictureBox1.Image = null;
                 hScrollBar1.Visible = false;
                 vScrollBar1.Visible = false;
             }
@@ -327,31 +329,34 @@ namespace WindowsFormsApplication1
         #region ScrollBar
         public void DisplayScrollBars()
         {
-            // If the image is wider than the PictureBox, show the HScrollBar.
-            if (pictureBox1.Width > pictureBox1.Image.Width - this.vScrollBar1.Width)
+            if (this.toolStripComboBoxPicMode.SelectedIndex == 0)
             {
-                hScrollBar1.Visible = false;
-            }
-            else
-            {
-                hScrollBar1.Visible = true;
-            }
+                // If the image is wider than the PictureBox, show the HScrollBar.
+                if (pictureBox1.Width > pictureBox1.Image.Width - this.vScrollBar1.Width)
+                {
+                    hScrollBar1.Visible = false;
+                }
+                else
+                {
+                    hScrollBar1.Visible = true;
+                }
 
-            // If the image is taller than the PictureBox, show the VScrollBar.
-            if (pictureBox1.Height > pictureBox1.Image.Height - this.hScrollBar1.Height)
-            {
-                vScrollBar1.Visible = false;
-            }
-            else
-            {
-                vScrollBar1.Visible = true;
+                // If the image is taller than the PictureBox, show the VScrollBar.
+                if (pictureBox1.Height > pictureBox1.Image.Height - this.hScrollBar1.Height)
+                {
+                    vScrollBar1.Visible = false;
+                }
+                else
+                {
+                    vScrollBar1.Visible = true;
+                }
             }
         }
 
         private void HandleScroll(Object sender, ScrollEventArgs se)
         {
             Graphics g = pictureBox1.CreateGraphics();
-            int x = 0, y = 0;           
+            const int x = 0, y = 0;           
             int v = Convert.ToInt16(vScrollBar1.Visible);            
             int h = Convert.ToInt16(hScrollBar1.Visible);
             /*
@@ -391,8 +396,8 @@ namespace WindowsFormsApplication1
             {
                 this.hScrollBar1.Maximum += this.vScrollBar1.Width;
             }
-            this.hScrollBar1.LargeChange = Convert.ToInt16(this.hScrollBar1.Maximum * 0.5);
-            this.hScrollBar1.SmallChange = Convert.ToInt16(this.hScrollBar1.Maximum * 0.2);
+            this.hScrollBar1.LargeChange = this.hScrollBar1.Maximum / 2;
+            this.hScrollBar1.SmallChange = this.hScrollBar1.Maximum / 5;
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -411,8 +416,8 @@ namespace WindowsFormsApplication1
             {
                 this.vScrollBar1.Maximum += this.hScrollBar1.Height;
             }
-            this.vScrollBar1.LargeChange = Convert.ToInt16(this.vScrollBar1.Maximum * 0.5);
-            this.vScrollBar1.SmallChange = Convert.ToInt16(this.vScrollBar1.Maximum * 0.2);
+            this.vScrollBar1.LargeChange = this.vScrollBar1.Maximum / 2;
+            this.vScrollBar1.SmallChange = this.vScrollBar1.Maximum / 5;
 
             // Adjust the Maximum value to make the raw Maximum value 
             // attainable by user interaction.
@@ -1212,8 +1217,7 @@ namespace WindowsFormsApplication1
                 this.Cursor = Cursors.WaitCursor;
                 Image tmpImage = ImageProcessing.GrayScale(new Bitmap(this.OutputImage));
                 this.Cursor = Cursors.Arrow;
-
-                FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+           
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_GRAYSCALE, "", "") == DialogResult.OK)
                     SetNewImage(tmpImage);                 
             }
@@ -1227,8 +1231,7 @@ namespace WindowsFormsApplication1
                 this.Cursor = Cursors.WaitCursor;
                 Image tmpImage = ImageProcessing.BlackWhite(new Bitmap(this.OutputImage));
                 this.Cursor = Cursors.Arrow;
-
-                FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+         
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_BLACKWHITE, "", "") == DialogResult.OK)
                     SetNewImage(tmpImage);   
             }
@@ -1243,8 +1246,7 @@ namespace WindowsFormsApplication1
                 this.Cursor = Cursors.WaitCursor;
                 Image tmpImage = ImageProcessing.Negate((Bitmap)this.OutputImage);
                 this.Cursor = Cursors.Arrow;
-
-                FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+            
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_NEGATING, "", "") == DialogResult.OK)
                     SetNewImage(tmpImage);
             }
@@ -1273,8 +1275,7 @@ namespace WindowsFormsApplication1
                         //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "^");
                         this.Cursor = Cursors.Arrow;
-
-                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                        
                         if (ImageForm.ShowImage(tmpImage, Method, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);                        
                     }
@@ -1295,8 +1296,7 @@ namespace WindowsFormsApplication1
                     double Err = 0;
                     ImageProcessing ImgProcess = new ImageProcessing();
                     Image tmpImage = ImgProcess.Bitmap_SVD((Bitmap)(this.OutputImage), NewRank, ref Err);
-
-                    FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+               
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SVD, NewRank.ToString(), Err.ToString()) == DialogResult.OK)
                         SetNewImage(tmpImage);                                        
                 }
@@ -1308,23 +1308,28 @@ namespace WindowsFormsApplication1
         }
 
         private void singularValueDecompositionToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            int NewRank;
-
+        {            
             this.richTextBox1.Visible = false;
             if (this.OutputImage != null)
             {
+                /*                
                 NewRankForm.NewRank = Math.Min(OutputImage.Width, OutputImage.Height);
                 NewRankForm.BestRank = (OutputImage.Height * OutputImage.Width) /
                     (1 + OutputImage.Height + OutputImage.Width);
                 if (NewRankForm.ShowDialog() == DialogResult.OK)
                 {
-                    NewRank = NewRankForm.NewRank;                   
-                  
                     this.Cursor = Cursors.WaitCursor;                    
-                    SVDBitmap(NewRank);                    
+                    SVDBitmap(NewRankForm.NewRank);                    
                     this.Cursor = Cursors.Arrow;
                 }
+                */
+                this.Cursor = Cursors.WaitCursor;
+                ImageProcessing ImgProcess = new ImageProcessing();
+                Image tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), 0.3);
+                this.Cursor = Cursors.Arrow;
+              
+                if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_NOISEGENERATOR, "", "") == DialogResult.OK)
+                    SetNewImage(tmpImage);
             }            
         }
 
@@ -1332,8 +1337,7 @@ namespace WindowsFormsApplication1
         {
             this.richTextBox1.Visible = false;
             if (this.OutputImage != null)
-            {
-                FormHistogram FormHis = new FormHistogram();
+            {                
                 FormHis.Picture = (Bitmap)this.OutputImage;
                 if (FormHis.ShowDialog() == DialogResult.OK)
                 {                    
@@ -1353,8 +1357,7 @@ namespace WindowsFormsApplication1
                     ImageProcessing ImgProcess = new ImageProcessing();                   
                     Image tmpImage = ImgProcess.Bitmap_BorderTracing(pictureBox1.CreateGraphics(), (Bitmap)(this.OutputImage));                    
                     this.Cursor = Cursors.Arrow;
-
-                    FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+              
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_BORDERTRACING, "", "") == DialogResult.OK)
                         SetNewImage(tmpImage);                    
                 }
@@ -1388,8 +1391,7 @@ namespace WindowsFormsApplication1
                         this.Cursor = Cursors.WaitCursor;
                         Image tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
                         this.Cursor = Cursors.Arrow;
-
-                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                   
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);                        
                     }              
@@ -1421,8 +1423,7 @@ namespace WindowsFormsApplication1
                         ImageProcessing ImgProcess = new ImageProcessing();               
                         //Apply Gaussian Smoothing first.....
                         Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);                        
-
-                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                      
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_RG_EDGEDETECTION, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);                         
                     }
@@ -1451,8 +1452,7 @@ namespace WindowsFormsApplication1
                         ImageProcessing ImgProcess = new ImageProcessing();                        
                         Image tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), Noise);
                         this.Cursor = Cursors.Arrow;
-
-                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                      
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_NOISEGENERATOR, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);
                     }
@@ -1515,11 +1515,9 @@ namespace WindowsFormsApplication1
                     ImageProcessing ImgProcess = new ImageProcessing();
                     Image tmpImage = ImgProcess.Canny(new Bitmap(this.OutputImage));                                   
                     this.Cursor = Cursors.Arrow;
-
-                    FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+               
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_CANNY, "", "") == DialogResult.OK)
-                        SetNewImage(tmpImage);
-                    ImageForm.Dispose();
+                        SetNewImage(tmpImage);                    
                 }
             }
             catch (Exception exp)
@@ -1585,8 +1583,7 @@ namespace WindowsFormsApplication1
                         //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "&");
                         this.Cursor = Cursors.Arrow;
-
-                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                      
                         if (ImageForm.ShowImage(tmpImage, Method, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);
                     }
@@ -1621,8 +1618,7 @@ namespace WindowsFormsApplication1
                         //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "|");
                         this.Cursor = Cursors.Arrow;
-
-                        FormSVDBitmapDisplay ImageForm = new FormSVDBitmapDisplay();
+                     
                         if (ImageForm.ShowImage(tmpImage, Method, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);
                     }

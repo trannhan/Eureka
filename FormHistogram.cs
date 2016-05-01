@@ -43,28 +43,30 @@ namespace WindowsFormsApplication1
 
         private Bitmap UpdateRGB(Bitmap Old)
         {
-            int R = 0, G = 0, B = 0;            
+            int R = 0, G = 0, B = 0;
+            Color P;      
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
 
             for (int i = 0; i < Old.Width; i++)
             {
                 for (int j = 0; j < Old.Height; j++)
                 {
-                    R = Old.GetPixel(i, j).R + (int)this.numericUpDownR.Value;
+                    P = Old.GetPixel(i, j);
+                    R = P.R + (int)this.numericUpDownR.Value;
                     if (R > 255)
                         R = 255;
                     else
                         if (R < 0)
                             R = 0;
 
-                    G = Old.GetPixel(i, j).G + (int)this.numericUpDownG.Value;
+                    G = P.G + (int)this.numericUpDownG.Value;
                     if (G > 255)
                         G = 255;
                     else
                         if (G < 0)
                             G = 0;
 
-                    B = Old.GetPixel(i, j).B + (int)this.numericUpDownB.Value;
+                    B = P.B + (int)this.numericUpDownB.Value;
                     if (B > 255)
                         B = 255;
                     else

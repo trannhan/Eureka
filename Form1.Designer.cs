@@ -131,7 +131,6 @@
             this.noiseGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gaussianSmoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sharpeningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findingDiscontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderTracingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.skeletonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,6 +138,9 @@
             this.rGEdgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cannyEdgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singularValueDecompositionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.amazingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorPaintingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findingDiscontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxPicMode = new System.Windows.Forms.ToolStripComboBox();
@@ -152,8 +154,6 @@
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.amazingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorPaintingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -948,64 +948,56 @@
             // grayScaleToolStripMenuItem
             // 
             this.grayScaleToolStripMenuItem.Name = "grayScaleToolStripMenuItem";
-            this.grayScaleToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.grayScaleToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.grayScaleToolStripMenuItem.Text = "Gray Scale Image";
             this.grayScaleToolStripMenuItem.Click += new System.EventHandler(this.grayscale_Click);
             // 
             // blackWhiteToolStripMenuItem
             // 
             this.blackWhiteToolStripMenuItem.Name = "blackWhiteToolStripMenuItem";
-            this.blackWhiteToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.blackWhiteToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.blackWhiteToolStripMenuItem.Text = "Black White Image";
             this.blackWhiteToolStripMenuItem.Click += new System.EventHandler(this.toolStripBlackWhite_Click);
             // 
             // negatingToolStripMenuItem
             // 
             this.negatingToolStripMenuItem.Name = "negatingToolStripMenuItem";
-            this.negatingToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.negatingToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.negatingToolStripMenuItem.Text = "Negative Image";
             this.negatingToolStripMenuItem.Click += new System.EventHandler(this.negatingToolStripMenuItem_Click);
             // 
             // noiseGeneratorToolStripMenuItem
             // 
             this.noiseGeneratorToolStripMenuItem.Name = "noiseGeneratorToolStripMenuItem";
-            this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.noiseGeneratorToolStripMenuItem.Text = "Noise Generator";
             this.noiseGeneratorToolStripMenuItem.Click += new System.EventHandler(this.noiseGeneratorToolStripMenuItem_Click);
             // 
             // gaussianSmoothToolStripMenuItem
             // 
             this.gaussianSmoothToolStripMenuItem.Name = "gaussianSmoothToolStripMenuItem";
-            this.gaussianSmoothToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.gaussianSmoothToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.gaussianSmoothToolStripMenuItem.Text = "Smoothing";
             this.gaussianSmoothToolStripMenuItem.Click += new System.EventHandler(this.gaussianSmoothToolStripMenuItem_Click);
             // 
             // sharpeningToolStripMenuItem
             // 
             this.sharpeningToolStripMenuItem.Name = "sharpeningToolStripMenuItem";
-            this.sharpeningToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.sharpeningToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.sharpeningToolStripMenuItem.Text = "Color Sharpening";
             this.sharpeningToolStripMenuItem.Click += new System.EventHandler(this.sharpeningToolStripMenuItem_Click);
-            // 
-            // findingDiscontToolStripMenuItem
-            // 
-            this.findingDiscontToolStripMenuItem.Name = "findingDiscontToolStripMenuItem";
-            this.findingDiscontToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.findingDiscontToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
-            this.findingDiscontToolStripMenuItem.Text = "Sculpture Effect";
-            this.findingDiscontToolStripMenuItem.Click += new System.EventHandler(this.findingDiscontToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.histogramToolStripMenuItem.Text = "Lighting Effect";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // borderTracingToolStripMenuItem
             // 
             this.borderTracingToolStripMenuItem.Name = "borderTracingToolStripMenuItem";
-            this.borderTracingToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.borderTracingToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.borderTracingToolStripMenuItem.Text = "Border Sketching Effect";
             this.borderTracingToolStripMenuItem.Click += new System.EventHandler(this.borderTracingToolStripMenuItem_Click);
             // 
@@ -1014,7 +1006,7 @@
             this.skeletonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSkeletonDiff});
             this.skeletonToolStripMenuItem.Name = "skeletonToolStripMenuItem";
-            this.skeletonToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.skeletonToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.skeletonToolStripMenuItem.Text = "Cartoon Effect";
             // 
             // toolStripSkeletonDiff
@@ -1028,23 +1020,45 @@
             // rGEdgeDetectionToolStripMenuItem
             // 
             this.rGEdgeDetectionToolStripMenuItem.Name = "rGEdgeDetectionToolStripMenuItem";
-            this.rGEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.rGEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.rGEdgeDetectionToolStripMenuItem.Text = "Pencil Sketching Effect";
             this.rGEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.rGEdgeDetectionToolStripMenuItem_Click);
             // 
             // cannyEdgeDetectionToolStripMenuItem
             // 
             this.cannyEdgeDetectionToolStripMenuItem.Name = "cannyEdgeDetectionToolStripMenuItem";
-            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
+            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.cannyEdgeDetectionToolStripMenuItem.Text = "Mirror Effect";
             this.cannyEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.cannyEdgeDetectionToolStripMenuItem_Click);
             // 
             // singularValueDecompositionToolStripMenuItem1
             // 
             this.singularValueDecompositionToolStripMenuItem1.Name = "singularValueDecompositionToolStripMenuItem1";
-            this.singularValueDecompositionToolStripMenuItem1.Size = new System.Drawing.Size(239, 26);
+            this.singularValueDecompositionToolStripMenuItem1.Size = new System.Drawing.Size(276, 26);
             this.singularValueDecompositionToolStripMenuItem1.Text = "Old Image Effect";
             this.singularValueDecompositionToolStripMenuItem1.Click += new System.EventHandler(this.singularValueDecompositionToolStripMenuItem1_Click);
+            // 
+            // amazingEffectToolStripMenuItem
+            // 
+            this.amazingEffectToolStripMenuItem.Name = "amazingEffectToolStripMenuItem";
+            this.amazingEffectToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.amazingEffectToolStripMenuItem.Text = "3D Fabric Painting Effect";
+            this.amazingEffectToolStripMenuItem.Click += new System.EventHandler(this.amazingEffectToolStripMenuItem_Click);
+            // 
+            // colorPaintingEffectToolStripMenuItem
+            // 
+            this.colorPaintingEffectToolStripMenuItem.Name = "colorPaintingEffectToolStripMenuItem";
+            this.colorPaintingEffectToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.colorPaintingEffectToolStripMenuItem.Text = "Color Painting-Printing Effect";
+            this.colorPaintingEffectToolStripMenuItem.Click += new System.EventHandler(this.colorPaintingEffectToolStripMenuItem_Click);
+            // 
+            // findingDiscontToolStripMenuItem
+            // 
+            this.findingDiscontToolStripMenuItem.Name = "findingDiscontToolStripMenuItem";
+            this.findingDiscontToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.findingDiscontToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.findingDiscontToolStripMenuItem.Text = "Sculpture Effect";
+            this.findingDiscontToolStripMenuItem.Click += new System.EventHandler(this.findingDiscontToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1181,20 +1195,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(1061, 542);
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
-            // 
-            // amazingEffectToolStripMenuItem
-            // 
-            this.amazingEffectToolStripMenuItem.Name = "amazingEffectToolStripMenuItem";
-            this.amazingEffectToolStripMenuItem.Size = new System.Drawing.Size(245, 26);
-            this.amazingEffectToolStripMenuItem.Text = "3D Fabric Painting Effect";
-            this.amazingEffectToolStripMenuItem.Click += new System.EventHandler(this.amazingEffectToolStripMenuItem_Click);
-            // 
-            // colorPaintingEffectToolStripMenuItem
-            // 
-            this.colorPaintingEffectToolStripMenuItem.Name = "colorPaintingEffectToolStripMenuItem";
-            this.colorPaintingEffectToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.colorPaintingEffectToolStripMenuItem.Text = "Color Painting-Printing Effect";
-            this.colorPaintingEffectToolStripMenuItem.Click += new System.EventHandler(this.colorPaintingEffectToolStripMenuItem_Click);
             // 
             // Form1
             // 

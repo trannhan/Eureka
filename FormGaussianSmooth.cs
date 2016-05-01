@@ -29,11 +29,6 @@ namespace WindowsFormsApplication1
         private void buttonReset_Click(object sender, EventArgs e)
         {
             this.pictureBox1.Image = OldPic;
-            numericUpDownRow.Value = 5;
-            numericUpDownCol.Value = 5;
-            textBoxSigma1.Text = "0.4";
-            textBoxSigma2.Text = "0.4";
-            textBoxTheta.Text = "0";
 
             rows = (int)numericUpDownRow.Value;
             cols = (int)numericUpDownCol.Value;
@@ -85,11 +80,6 @@ namespace WindowsFormsApplication1
 
                 this.pictureBox1.Image = OldPic;
             }
-            numericUpDownRow.Value = 5;
-            numericUpDownCol.Value = 5;
-            textBoxSigma1.Text = "0.4";
-            textBoxSigma2.Text = "0.4";
-            textBoxTheta.Text = "0";
 
             rows = (int)numericUpDownRow.Value;
             cols = (int)numericUpDownCol.Value;

@@ -40,7 +40,7 @@ namespace WindowsFormsApplication1
         public MMatrix(MMatrix A, int row, int column)
         {
             if ((row > A.row) || (column > A.col))
-                throw new MMatrixException("Cannot create matrix. Wrong indices");
+                throw new MMatrixException("Cannot create matrix. Exceed the number of row and/or column.");
 
             this.row = row;
             this.col = column;
@@ -85,7 +85,7 @@ namespace WindowsFormsApplication1
         public MMatrix(double[,] ValueArray, int row, int column)
         {
             if ((row > ValueArray.GetLength(0)) || (column > ValueArray.GetLength(1)))
-                throw new MMatrixException("Cannot create matrix. Wrong indices");
+                throw new MMatrixException("Cannot create matrix. Exceed the number of row and/or column.");
 
             this.row = row;
             this.col = column;
@@ -121,19 +121,39 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return GetElement(row, col);
-                //return this.MArray[row, col];
+                //return GetElement(row, col);
+                return this.MArray[row, col];
             }
             set
             {
-                SetElement(row, col, value);
-                //this.MArray[row, col] = value;
+                //SetElement(row, col, value);
+                this.MArray[row, col] = value;
             }
         }
 
         public MMatrix Clone()
         {
             return new MMatrix(this);
+        }
+
+        public void Copy(MMatrix A, int FromRow, int ToRow, int FromColumn, int ToColumn)
+        {
+            if ((FromRow > A.row) || (FromColumn > A.col))
+                throw new MMatrixException("Cannot create matrix. Wrong indices");
+
+            if (ToRow > A.row)
+                ToRow = A.row;
+            if (ToColumn > A.col)
+                ToColumn = A.col;
+
+            if ((FromRow > ToRow) || (FromColumn > ToColumn))
+                throw new MMatrixException("Cannot create matrix. Wrong indices");
+
+            this.row = ToRow - FromRow;
+            this.col = ToColumn - FromColumn;
+            for (int i = FromRow; i < ToRow; i++)
+                for (int j = FromColumn; j < ToColumn; j++)
+                    this.MArray[i - FromRow, j - FromColumn] = A.MArray[i, j];
         }
         #endregion
 
@@ -207,6 +227,8 @@ namespace WindowsFormsApplication1
         {            
             if(dbl == 0)
                 return new MMatrix(matrix.row, matrix.col);
+            if (dbl == 1)
+                return matrix;
 
             MMatrix result = new MMatrix(matrix.row, matrix.col);
             for (int i = 0; i < matrix.row; i++)
@@ -245,7 +267,7 @@ namespace WindowsFormsApplication1
             MMatrix A = new MMatrix(row, column);
             for (int i = 0; i < row; i++)
                 for (int j = 0; j < column; j++)
-                A[i, j] = Scalar;
+                    A[i, j] = Scalar;
 
             return A;
         }
@@ -286,7 +308,7 @@ namespace WindowsFormsApplication1
             MMatrix B = A.Clone();
             for (int i = 0; i < B.row; i++)
                 for (int j = 0; j < B.col; j++)
-                    B[i, j] = Math.Round(B[i,j], GlobalMath.DIGITS);
+                    B[i, j] = Math.Floor(B[i,j]);
             
             return B;
         }
@@ -395,17 +417,23 @@ namespace WindowsFormsApplication1
         private static MMatrix PowEntry(MMatrix A, int row, int column, double pow)
         {
             MMatrix B = new MMatrix(row, column);
-            if(pow==2)
+            if(pow == 2)
             {
                 for (int i = 0; i < row; i++)
                     for (int j = 0; j < column; j++)
                         B[i, j] = A[i, j]* A[i, j];
             }
-            else
-            { 
+            else if (pow == 0.5)
+            {
                 for (int i = 0; i < row; i++)
-                for (int j = 0; j < column; j++)
-                    B[i, j] = Math.Pow(A[i, j],pow);
+                    for (int j = 0; j < column; j++)
+                        B[i, j] = Math.Sqrt(A[i, j]);
+            }
+            else
+            {
+                for (int i = 0; i < row; i++)
+                    for (int j = 0; j < column; j++)
+                        B[i, j] = Math.Pow(A[i, j], pow);
             }
             return B;
         }
@@ -417,14 +445,10 @@ namespace WindowsFormsApplication1
 
         private static MMatrix Average(MMatrix A, int row, int column)
         {
-            MMatrix B = new MMatrix(row, column);
+            MMatrix B = new MMatrix(A);
             double sum = Sum(A);
 
-            for (int i = 0; i < row; i++)
-                for (int j = 0; j < column; j++)
-                    B[i, j] = A[i, j]/sum;
-
-            return B;
+            return B/sum;
         }
 
         public static MMatrix Average(MMatrix A)
@@ -486,7 +510,7 @@ namespace WindowsFormsApplication1
             {
                 if (A[0, j] == 0)
                     continue;
-                det += (A[0, j] * Determinant(MMatrix.Minor(A, 0, j)) * System.Math.Pow(-1, 0 + j));
+                det += (A[0, j] * Determinant(Minor(A, 0, j)) * Math.Pow(-1, j));
             }
             return det;
         }
@@ -507,14 +531,15 @@ namespace WindowsFormsApplication1
 
         public double Determinant()
         {
-            return Determinant_NonRecursive(this);
+            return Determinant(this);
         }        
 
         public static MMatrix Inverse(MMatrix A)
         {
-            if (!IsInvertible(A))
-                throw new MMatrixException("Inverse of a singular A is not possible");
-            return (Adjoint(A) / Determinant(A));
+            double detA = Determinant(A);
+            if (detA == 0)
+                throw new MMatrixException("Matrix is not invertible.");
+            return (Adjoint(A) / detA);
         }
         
         public MMatrix Inverse()
@@ -579,8 +604,8 @@ namespace WindowsFormsApplication1
                     /*Overcome round-off error to approximate values
                     for (int j = 0; j < EchelonMatrix.row; j++)
                         for (int k = 0 ; k < EchelonMatrix.col; k++)
-                        if (Math.Abs(EchelonMatrix[j, k]) <= ZERO)
-                            EchelonMatrix[j, k] = 0;
+                            if (Math.Abs(EchelonMatrix[j, k]) <= ZERO)
+                                EchelonMatrix[j, k] = 0;
                     */
                     if (i < EchelonMatrix.col)
                     {
@@ -987,6 +1012,7 @@ namespace WindowsFormsApplication1
         //A*At = U*S^2*Ut
         //At*A = V*S^2*Vt
         //A*At = (At*A)t
+        //This method is not right
         public static void FactorSVD_LDLt(MMatrix A)
         {            
             MMatrix AA = new MMatrix();
@@ -1004,15 +1030,13 @@ namespace WindowsFormsApplication1
                 Eigenvalues[i] = AA.LDL_D[i, i];
             SortEigen(ref Eigenvalues, ref Eigenvectors);
             A.SVD_U = Eigenvectors.MArray;
-            
-            
-            A.SVD_S = new double[A.row, A.col];
+
+            if (A.SVD_S == null)
+                A.SVD_S = new double[A.row, A.col];
             for (int i = 0; i < index; i++)
-            {
                 A.SVD_S[i, i] = Math.Sqrt(Eigenvalues[i]);
-            }
-                       
-            AA = A.Transpose() * A;
+
+            AA = AA.Transpose();
             AA.FactorLDLt();
             Eigenvectors = new MMatrix(AA.LDL_L);
             Eigenvalues = new Vector(AA.row);
@@ -1023,46 +1047,38 @@ namespace WindowsFormsApplication1
         }        
         
         //A = U*S*Vt
+        //This method is not right
         public static void FactorSVD(MMatrix A)
         {            
             MMatrix B = new MMatrix();
-            MMatrix C = new MMatrix(); 
-            Vector EigenvaluesU = new Vector();
-            Vector EigenvaluesV = new Vector();
-            MMatrix EigenvectorsU = new MMatrix();
-            MMatrix EigenvectorsV = new MMatrix();   
+            Vector Eigenvalues = new Vector();
+            MMatrix Eigenvectors = new MMatrix();
             int index;
             
             //U
             B = A * A.Transpose();
-            B.Jacobi_Cyclic_Method(ref EigenvaluesU,ref EigenvectorsU);
-            SortEigen(ref EigenvaluesU,ref EigenvectorsU);
-            A.SVD_U = EigenvectorsU.MArray;
+            B.Jacobi_Cyclic_Method(ref Eigenvalues,ref Eigenvectors);
+            SortEigen(ref Eigenvalues,ref Eigenvectors);
+            A.SVD_U = Eigenvectors.MArray;
 
-            if (A.row < A.col)
-                index = A.row;
-            else
-                index = A.col;
             //S
-            A.SVD_S = new double[A.row, A.col];            
+            if(A.SVD_S == null)
+                A.SVD_S = new double[A.row, A.col];
+            index = (A.row < A.col) ? (A.row) : (A.col);
             for (int i = 0; i < index; i++)
-            {
-                A.SVD_S[i, i] = Math.Sqrt(EigenvaluesU[i]);
-            }  
-                                  
+                A.SVD_S[i, i] = Math.Sqrt(Eigenvalues[i]);
+                                               
             //V
-            C = A.Transpose() * A;
-            C.Jacobi_Cyclic_Method(ref EigenvaluesV,ref EigenvectorsV);
-            SortEigen(ref EigenvaluesV,ref EigenvectorsV);
-            A.SVD_Vt = EigenvectorsV.Transpose().MArray;
-
-            B = C = null;
-            EigenvectorsU = EigenvectorsV = null;
+            B = B.Transpose();
+            B.Jacobi_Cyclic_Method(ref Eigenvalues,ref Eigenvectors);
+            SortEigen(ref Eigenvalues,ref Eigenvectors);
+            A.SVD_Vt = Eigenvectors.Transpose().MArray;
         }
 
         public void FactorSVD()
         {
-            FactorSVD(this);            
+            FactorSVD(this);
+            //FactorSVD_LDLt(this);             
         }
         
         #endregion     
@@ -1404,10 +1420,7 @@ namespace WindowsFormsApplication1
             // Initialize the eigenvalues to the identity matrix.
             for (p_e = eigenvectors, i = 0; i < n; i++)
                 for (j = 0; j < n; j++)
-                    if (i == j)
-                        p_e[i, j] = 1.0;
-                    else
-                        p_e[i, j] = 0.0;
+                    p_e[i, j] = (i == j) ? 1.0 : 0.0;
 
             // Calculate the threshold and threshold_norm.
 
@@ -1545,10 +1558,8 @@ namespace WindowsFormsApplication1
 
         #region Matrix Norm
         public static double L2Norm(MMatrix A)
-        {
-            double SpectralRadius = MMatrix.SpectralRadius(A.Transpose() * A);
-
-            return Math.Sqrt(SpectralRadius);
+        {           
+            return Math.Sqrt(MMatrix.SpectralRadius(A.Transpose() * A));
         }
 
         public double L2Norm()
@@ -1556,14 +1567,23 @@ namespace WindowsFormsApplication1
             return L2Norm(this);
         }
 
+        public static double Frobenius(MMatrix A)
+        {            
+            return Math.Sqrt(Sum(PowEntry(A, 2)));
+        }
+
+        public double Frobenius()
+        {
+            return Frobenius(this);
+        }        
+
         public static double LInfinitiveNorm(MMatrix A)
         {
             double MaxRow = 0;
-            double sum = 0;
 
             for (int i = 0; i < A.row; i++)
             {
-                sum = 0;
+                double sum = 0;
                 for (int j = 0; j < A.col; j++)
                     sum += Math.Abs(A[i, j]);
                 if (MaxRow < sum)
@@ -1652,21 +1672,23 @@ namespace WindowsFormsApplication1
             MMatrix u = new MMatrix(2, 1);
             MMatrix h = new MMatrix();
             MMatrix g = new MMatrix(cols, rows);
+            int hrows = rows / 2;
+            int hcols = cols / 2;
 
             r[0, 0] = Math.Cos(theta);
             r[0, 1] = -Math.Sin(theta);
-            r[1, 0] = Math.Sin(theta);
-            r[1, 1] = Math.Cos(theta);
+            r[1, 0] = -r[0, 1];
+            r[1, 1] = r[0, 0];
 
             for (int i = 0; i < cols; i++)
                 for (int j = 0; j < rows; j++)
                 {
-                    u[0, 0] = j - (rows / 2);
-                    u[1, 0] = i - (cols / 2);
+                    u[0, 0] = j - hrows;
+                    u[1, 0] = i - hcols;
                     h = r * u;
                     g[i, j] = Gauss(h[0, 0], stdDeviation1) * Gauss(h[1, 0], stdDeviation2);
                 }
-            g = g / Math.Sqrt(MMatrix.Sum(MMatrix.PowEntry(g,2)));
+            g = g / g.Frobenius();
 
             return g;
         }
@@ -1677,29 +1699,30 @@ namespace WindowsFormsApplication1
             MMatrix u = new MMatrix(2, 1);
             MMatrix h = new MMatrix();
             MMatrix g = new MMatrix(cols, rows);
+            int hrows = rows / 2;
+            int hcols = cols / 2;
 
             r[0, 0] = Math.Cos(theta);
             r[0, 1] = -Math.Sin(theta);
-            r[1, 0] = Math.Sin(theta);
-            r[1, 1] = Math.Cos(theta);
+            r[1, 0] = -r[0, 1];
+            r[1, 1] = r[0, 0];
 
             for (int i = 0; i < cols; i++)
                 for (int j = 0; j < rows; j++)
                 {
-                    u[0, 0] = j - (rows / 2);
-                    u[1, 0] = i - (cols / 2);
+                    u[0, 0] = j - hrows;
+                    u[1, 0] = i - hcols;
                     h = r * u;
                     g[i, j] = Gauss(h[0, 0], stdDeviation1) * DGauss(h[1, 0], stdDeviation2);
                 }
-            MMatrix ag = Abs(g);
-            g = g / Math.Sqrt(MMatrix.Sum(MMatrix.PowEntry(ag,2)));
+            g = g / g.Frobenius();
 
             return g;
         }
 
         public static double Gauss(double x, double stdDeviation)
         {
-            return Math.Exp(-x * x / (2 * stdDeviation * stdDeviation)) / (stdDeviation * Math.Sqrt(2 * Math.PI));
+            return Math.Exp(-x * x / (2 * stdDeviation * stdDeviation)) / (stdDeviation * GlobalMath.SQRT2PI);
         }
 
         public static double DGauss(double x, double stdDeviation)
@@ -1709,8 +1732,8 @@ namespace WindowsFormsApplication1
 
         public static MMatrix Gauss_Convolution(MMatrix Matrix, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
         {            
-            int halfKernelRows = Convert.ToInt16(rows * 0.5);
-            int halfKernelCols = Convert.ToInt16(cols * 0.5);
+            int halfKernelRows = rows / 2;
+            int halfKernelCols = cols / 2;
             int xMax = Matrix.row + halfKernelRows;
             int yMax = Matrix.col + halfKernelCols;
             double tmpBit;

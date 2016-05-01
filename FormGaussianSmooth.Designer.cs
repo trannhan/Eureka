@@ -105,7 +105,7 @@
             this.numericUpDownRow.Size = new System.Drawing.Size(133, 22);
             this.numericUpDownRow.TabIndex = 32;
             this.numericUpDownRow.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
             0});
@@ -128,7 +128,7 @@
             this.numericUpDownCol.Size = new System.Drawing.Size(133, 22);
             this.numericUpDownCol.TabIndex = 31;
             this.numericUpDownCol.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
             0});
