@@ -281,11 +281,8 @@ namespace WindowsFormsApplication1
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (this.pictureBox1.Image != null)
-            {                
-                pictureBox1.Image = null;
-            }
-            GC.SuppressFinalize(this);
+            //if (this.pictureBox1.Image != null)              
+                //pictureBox1.Image = null;
         }
 
         private void FormSVDBitmapDisplay_SizeChanged(object sender, EventArgs e)
@@ -295,8 +292,8 @@ namespace WindowsFormsApplication1
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            Picture.Dispose();
-            Picture = null;
+            //Picture.Dispose();
+            //Picture = null;
             this.Close();
         }
 

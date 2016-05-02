@@ -36,8 +36,11 @@ namespace WindowsFormsApplication1
         FormSharpening SharpenForm;
         FormSVDBitmapDisplay ImageForm;
         FormHistogram FormHis;
-        int SkeletonDifference = 15; //for Skeleton algorithm        
-        
+        ImageProcessing ImgProcess;
+        int SkeletonDifference = 15; //for Skeleton algorithm  
+        Image tmpImage;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -55,6 +58,8 @@ namespace WindowsFormsApplication1
             ImageForm = new FormSVDBitmapDisplay();
             FormHis = new FormHistogram();
 
+            ImgProcess = new ImageProcessing();
+
             for (int i = 1; i < 256; i++)
                 toolStripSkeletonDiff.Items.Add(i);                 
         }
@@ -62,7 +67,7 @@ namespace WindowsFormsApplication1
         #region Administration
         private void toolStripBNew_Click(object sender, EventArgs e)
         {
-            GC.SuppressFinalize(this);            
+            GC.Collect();            
             newToolStripMenuItem_Click(sender, e);
         }
 
@@ -102,6 +107,7 @@ namespace WindowsFormsApplication1
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            GC.Collect();
             String sFilePath;
             this.openFileDialog1.Filter = "Image Files(*.BMP;*.JPEG;*.GIF)|*.BMP;*.JPEG;*.JPG;*.GIF|All files (*.*)|*.*";
 
@@ -1215,7 +1221,7 @@ namespace WindowsFormsApplication1
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
-                Image tmpImage = ImageProcessing.GrayScale(new Bitmap(this.OutputImage));
+                tmpImage = ImageProcessing.GrayScale(new Bitmap(this.OutputImage));
                 this.Cursor = Cursors.Arrow;
            
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_GRAYSCALE, "", "") == DialogResult.OK)
@@ -1229,7 +1235,7 @@ namespace WindowsFormsApplication1
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
-                Image tmpImage = ImageProcessing.BlackWhite(new Bitmap(this.OutputImage));
+                tmpImage = ImageProcessing.BlackWhite(new Bitmap(this.OutputImage));
                 this.Cursor = Cursors.Arrow;
          
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_BLACKWHITE, "", "") == DialogResult.OK)
@@ -1244,7 +1250,7 @@ namespace WindowsFormsApplication1
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
-                Image tmpImage = ImageProcessing.Negate((Bitmap)this.OutputImage);
+                tmpImage = ImageProcessing.Negate((Bitmap)this.OutputImage);
                 this.Cursor = Cursors.Arrow;
             
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_NEGATING, "", "") == DialogResult.OK)
@@ -1270,9 +1276,9 @@ namespace WindowsFormsApplication1
                     if (Method != -1)
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        ImageProcessing ImgProcess = new ImageProcessing();                       
-                        Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
-                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                                               
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        //tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "^");
                         this.Cursor = Cursors.Arrow;
                         
@@ -1294,8 +1300,8 @@ namespace WindowsFormsApplication1
                 if (this.OutputImage != null)
                 {
                     double Err = 0;
-                    ImageProcessing ImgProcess = new ImageProcessing();
-                    Image tmpImage = ImgProcess.Bitmap_SVD((Bitmap)(this.OutputImage), NewRank, ref Err);
+                    
+                    tmpImage = ImgProcess.Bitmap_SVD((Bitmap)(this.OutputImage), NewRank, ref Err);
                
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SVD, NewRank.ToString(), Err.ToString()) == DialogResult.OK)
                         SetNewImage(tmpImage);                                        
@@ -1324,8 +1330,8 @@ namespace WindowsFormsApplication1
                 }
                 */
                 this.Cursor = Cursors.WaitCursor;
-                ImageProcessing ImgProcess = new ImageProcessing();
-                Image tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), 0.3);
+                
+                tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), 0.3);
                 this.Cursor = Cursors.Arrow;
               
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_NOISEGENERATOR, "", "") == DialogResult.OK)
@@ -1354,8 +1360,8 @@ namespace WindowsFormsApplication1
                 if (this.OutputImage != null)
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    ImageProcessing ImgProcess = new ImageProcessing();                   
-                    Image tmpImage = ImgProcess.Bitmap_BorderTracing(pictureBox1.CreateGraphics(), (Bitmap)(this.OutputImage));                    
+                                       
+                    tmpImage = ImgProcess.Bitmap_BorderTracing(pictureBox1.CreateGraphics(), (Bitmap)(this.OutputImage));                    
                     this.Cursor = Cursors.Arrow;
               
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_BORDERTRACING, "", "") == DialogResult.OK)
@@ -1377,7 +1383,7 @@ namespace WindowsFormsApplication1
                 toolStripSkeletonDiff.PerformClick();
                 if (this.OutputImage != null)
                 {
-                    ImageProcessing ImgProcess = new ImageProcessing();
+                    
                     Color color = Color.Black;
                     ColorDialog colordlg = new ColorDialog();
 
@@ -1389,7 +1395,7 @@ namespace WindowsFormsApplication1
                         color = colordlg.Color;
 
                         this.Cursor = Cursors.WaitCursor;
-                        Image tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
+                        tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
                         this.Cursor = Cursors.Arrow;
                    
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
@@ -1420,9 +1426,9 @@ namespace WindowsFormsApplication1
                     }
                     if (Method != -1)
                     {
-                        ImageProcessing ImgProcess = new ImageProcessing();               
+                                       
                         //Apply Gaussian Smoothing first.....
-                        Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);                        
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);                        
                       
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_RG_EDGEDETECTION, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);                         
@@ -1449,8 +1455,8 @@ namespace WindowsFormsApplication1
                         Noise = CreateNoiseForm.Noise;
 
                         this.Cursor = Cursors.WaitCursor;
-                        ImageProcessing ImgProcess = new ImageProcessing();                        
-                        Image tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), Noise);
+                                                
+                        tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), Noise);
                         this.Cursor = Cursors.Arrow;
                       
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_NOISEGENERATOR, "", "") == DialogResult.OK)
@@ -1512,8 +1518,8 @@ namespace WindowsFormsApplication1
                 if (this.OutputImage != null)
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    ImageProcessing ImgProcess = new ImageProcessing();
-                    Image tmpImage = ImgProcess.Canny(new Bitmap(this.OutputImage));                                   
+                    
+                    tmpImage = ImgProcess.Canny(new Bitmap(this.OutputImage));                                   
                     this.Cursor = Cursors.Arrow;
                
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_CANNY, "", "") == DialogResult.OK)
@@ -1540,7 +1546,7 @@ namespace WindowsFormsApplication1
             GlobalMath.DIGITS = 3;
             this.toolStripComboBoxDigits.SelectedIndex = GlobalMath.DIGITS;
             this.toolStripComboBoxZoom.SelectedIndex = toolStripComboBoxZoom.Items.Count - 1;
-            this.toolStripComboBoxPicMode.SelectedIndex = 0;            
+            this.toolStripComboBoxPicMode.SelectedIndex = 0;                            
         }
 
         private void toolStripMatrix_ButtonClick(object sender, EventArgs e)
@@ -1578,9 +1584,9 @@ namespace WindowsFormsApplication1
                     if (Method != -1)
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        ImageProcessing ImgProcess = new ImageProcessing();
-                        Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
-                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                        
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        //tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "&");
                         this.Cursor = Cursors.Arrow;
                       
@@ -1613,9 +1619,9 @@ namespace WindowsFormsApplication1
                     if (Method != -1)
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        ImageProcessing ImgProcess = new ImageProcessing();
-                        Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
-                        //Image tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                        
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        //tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "|");
                         this.Cursor = Cursors.Arrow;
                      

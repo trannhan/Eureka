@@ -96,8 +96,8 @@ namespace WindowsFormsApplication1
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {            
-            OldPic.Dispose();
-            OldPic = null;
+            //OldPic.Dispose();
+            //OldPic = null;
             this.Close();
         }
 
@@ -107,8 +107,8 @@ namespace WindowsFormsApplication1
             Picture = UpdateRGB(Picture);
             this.Cursor = Cursors.Arrow;
             
-            OldPic.Dispose();
-            OldPic = null;
+            //OldPic.Dispose();
+            //OldPic = null;
             this.Close();
         }
 

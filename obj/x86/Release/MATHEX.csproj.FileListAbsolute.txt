@@ -37,3 +37,4 @@ e:\GitHub\Eureka\obj\x86\Release\Eureka.Properties.Resources.resources
 e:\GitHub\Eureka\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
 e:\GitHub\Eureka\obj\x86\Release\Eureka.exe
 e:\GitHub\Eureka\obj\x86\Release\Eureka.pdb
+e:\GitHub\Eureka\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
