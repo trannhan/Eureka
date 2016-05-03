@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>MATHEX</name>
+        <name>Eureka</name>
     </assembly>
     <members>
         <member name="F:WindowsFormsApplication1.AboutBox1.components">
