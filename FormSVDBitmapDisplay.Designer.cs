@@ -180,6 +180,7 @@
             this.Name = "FormSVDBitmapDisplay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Algorithm:";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form2_FormClosed);
             this.SizeChanged += new System.EventHandler(this.FormSVDBitmapDisplay_SizeChanged);
             this.Resize += new System.EventHandler(this.Form2_Resize);

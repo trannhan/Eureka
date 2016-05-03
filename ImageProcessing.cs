@@ -47,33 +47,25 @@ namespace WindowsFormsApplication1
         {                        
             Color PixelColor;
             bGrayScale = IsGrayScale(ref bmp);
-            //unsafe
+            MRed = new MMatrix(bmp.Width, bmp.Height);
+
+            if (bGrayScale)                
+                for (int i = 0; i < bmp.Width; i++)
+                    for (int j = 0; j < bmp.Height; j++)
+                        MRed[i, j] = bmp.GetPixel(i, j).R;
+            else
             {
-                if (bGrayScale)
-                {
-                    MRed = new MMatrix(bmp.Width, bmp.Height);
-                    for (int i = 0; i < bmp.Width; i++)
-                        for (int j = 0; j < bmp.Height; j++)
-                        {
-                            PixelColor = bmp.GetPixel(i, j);
-                            MRed[i, j] = PixelColor.R;
-                        }
-                }
-                else
-                {
-                    MRed = new MMatrix(bmp.Width, bmp.Height);
-                    MGreen = new MMatrix(bmp.Width, bmp.Height);
-                    MBlue = new MMatrix(bmp.Width, bmp.Height);
-                    for (int i = 0; i < bmp.Width; i++)
-                        for (int j = 0; j < bmp.Height; j++)
-                        {
-                            PixelColor = bmp.GetPixel(i, j);
-                            MRed[i, j] = PixelColor.R;
-                            MGreen[i, j] = PixelColor.G;
-                            MBlue[i, j] = PixelColor.B;
-                        }
-                }
-            }    
+                MGreen = new MMatrix(bmp.Width, bmp.Height);
+                MBlue = new MMatrix(bmp.Width, bmp.Height);
+                for (int i = 0; i < bmp.Width; i++)
+                    for (int j = 0; j < bmp.Height; j++)
+                    {
+                        PixelColor = bmp.GetPixel(i, j);
+                        MRed[i, j] = PixelColor.R;
+                        MGreen[i, j] = PixelColor.G;
+                        MBlue[i, j] = PixelColor.B;
+                    }
+            }            
         }
 
         public static Bitmap BitmapFromMatrix(ref MMatrix MRed, ref MMatrix MGreen, ref MMatrix MBlue)
@@ -81,12 +73,8 @@ namespace WindowsFormsApplication1
             Bitmap tmpBmp = new Bitmap(MRed.row,MRed.col);
 
             for (int i = 0; i < MRed.row; i++)
-            {
                 for (int j = 0; j < MRed.col; j++)
-                {
                     tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
-                }
-            }
 
             return tmpBmp;
         }
@@ -108,8 +96,6 @@ namespace WindowsFormsApplication1
                     if (BitmapMatrix[i, j] < 0)
                         BitmapMatrix[i, j] = 0;
                     else if (BitmapMatrix[i, j] > 255)
-                        BitmapMatrix[i, j] = 255;
-                    else if (Double.IsNaN(BitmapMatrix[i, j]))
                         BitmapMatrix[i, j] = 255;
                 }
         }
@@ -667,12 +653,10 @@ namespace WindowsFormsApplication1
             int xMax = bmp.Width; //colume wrt to matrix
             int yMax = bmp.Height; //row wrt to matrix
             Bitmap tmpBmp = new Bitmap(xMax, yMax);
-            MMatrix RandMatrix = MMatrix.RandomMatrix(xMax, yMax, 0, 255);
+            MMatrix RandMatrix = MMatrix.RandomMatrix(xMax, yMax, 0, (int)(255*Noise));
             int NewRGB;                        
             
-            MatrixFromBitmap(ref bmp);
-            RandMatrix *= Noise;
-            
+            MatrixFromBitmap(ref bmp);      
             MRed += RandMatrix;
             FloorToBitmap(ref MRed);
 
@@ -703,9 +687,8 @@ namespace WindowsFormsApplication1
             Bitmap NewBmp = new Bitmap(bmp);            
             int NewR, NewG, NewB;            
             Color PixelColor;
-            bool bGrayScale = IsGrayScale(ref bmp);
 
-            if (bGrayScale)
+            if (IsGrayScale(ref bmp))
                 for (int i = 0; i < bmp.Width; i++)
                     for (int j = 0; j < bmp.Height; j++)
                     {
@@ -790,7 +773,7 @@ namespace WindowsFormsApplication1
             const int Nx2 = 3;
             const double Sigmax1 = 1.4;
             const double Sigmax2 = 1.4;
-            const double Theta1 = Math.PI * 0.5;
+            const double Theta1 = GlobalMath.HALFPI;
             //   Y-axis direction filter:           
             //const int Ny1 = 3;
             //const int Ny2 = 3;

@@ -195,7 +195,12 @@ namespace WindowsFormsApplication1
 
         private static MMatrix Negate(MMatrix matrix)
         {
-            return MMatrix.Multiply(matrix, -1);
+            for (int i = 0; i < matrix.row; i++)
+                for (int j = 0; j < matrix.col; j++)
+                    matrix[i, j] = -matrix[i, j];
+
+            return matrix;
+            //return MMatrix.Multiply(matrix, -1); //slower
         }        
 
         private static MMatrix Add(MMatrix matrix1, MMatrix matrix2)
@@ -417,24 +422,19 @@ namespace WindowsFormsApplication1
         private static MMatrix PowEntry(MMatrix A, int row, int column, double pow)
         {
             MMatrix B = new MMatrix(row, column);
-            if(pow == 2)
-            {
+            if (pow == 2)
                 for (int i = 0; i < row; i++)
                     for (int j = 0; j < column; j++)
-                        B[i, j] = A[i, j]* A[i, j];
-            }
+                        B[i, j] = A[i, j] * A[i, j];
             else if (pow == 0.5)
-            {
                 for (int i = 0; i < row; i++)
                     for (int j = 0; j < column; j++)
                         B[i, j] = Math.Sqrt(A[i, j]);
-            }
             else
-            {
                 for (int i = 0; i < row; i++)
                     for (int j = 0; j < column; j++)
                         B[i, j] = Math.Pow(A[i, j], pow);
-            }
+            
             return B;
         }
 
@@ -443,17 +443,14 @@ namespace WindowsFormsApplication1
             return PowEntry(A, A.row, A.col, pow);
         }
 
-        private static MMatrix Average(MMatrix A, int row, int column)
+        private static double Average(MMatrix A)
         {
-            MMatrix B = new MMatrix(A);
-            double sum = Sum(A);
-
-            return B/sum;
+            return Sum(A) / (A.row * A.col);
         }
 
-        public static MMatrix Average(MMatrix A)
+        public double Average()
         {
-            return Average(A, A.row, A.col);
+            return Average(this);
         }
 
         private static MMatrix Transpose(MMatrix A, int row, int column)
@@ -1681,17 +1678,18 @@ namespace WindowsFormsApplication1
             r[1, 1] = r[0, 0];
 
             for (int i = 0; i < cols; i++)
+            {
+                u[1, 0] = i - hcols;
                 for (int j = 0; j < rows; j++)
                 {
-                    u[0, 0] = j - hrows;
-                    u[1, 0] = i - hcols;
+                    u[0, 0] = j - hrows;                    
                     h = r * u;
                     g[i, j] = Gauss(h[0, 0], stdDeviation1) * Gauss(h[1, 0], stdDeviation2);
                 }
-            g = g / g.Frobenius();
-
-            return g;
+            }
+            return g / g.Frobenius();
         }
+
         //Create Sobel kernel for Canny
         public static MMatrix D2Gauss_Canny(int rows, double stdDeviation1, int cols, double stdDeviation2, double theta)
         {
@@ -1708,16 +1706,16 @@ namespace WindowsFormsApplication1
             r[1, 1] = r[0, 0];
 
             for (int i = 0; i < cols; i++)
+            {
+                u[1, 0] = i - hcols;
                 for (int j = 0; j < rows; j++)
                 {
                     u[0, 0] = j - hrows;
-                    u[1, 0] = i - hcols;
                     h = r * u;
                     g[i, j] = Gauss(h[0, 0], stdDeviation1) * DGauss(h[1, 0], stdDeviation2);
                 }
-            g = g / g.Frobenius();
-
-            return g;
+            }
+            return g / g.Frobenius();
         }
 
         public static double Gauss(double x, double stdDeviation)
@@ -1741,43 +1739,29 @@ namespace WindowsFormsApplication1
             MMatrix conMatrix = new MMatrix(Matrix.row + rows, Matrix.col + cols);
 
             //Create Gaussian matrix
-            if(bCanny)
-                Filter = D2Gauss_Canny(rows, sigma1, cols, sigma2, theta);
-            else
-                Filter = D2Gauss(rows, sigma1, cols, sigma2, theta);
-
+            Filter = (bCanny)? D2Gauss_Canny(rows, sigma1, cols, sigma2, theta): D2Gauss(rows, sigma1, cols, sigma2, theta);
+            
             //Create a larger matrix to do convolution
             for (int i = halfKernelRows; i < xMax; i++)
-            {
                 for (int j = halfKernelCols; j < yMax; j++)
-                {
                     conMatrix[i, j] = Matrix[i - halfKernelRows, j - halfKernelCols];                   
-                }
-            }
+                
             //Do convolution on the bigger matrix
             for (int i = halfKernelRows; i < xMax; i++)
-            {
                 for (int j = halfKernelCols; j < yMax; j++)
                 {
                     tmpBit = 0;
                     for (int k = 0; k < rows; k++)
                         for (int l = 0; l < cols; l++)
-                        {
                             tmpBit += conMatrix[i - halfKernelRows + k, j - halfKernelCols + l] * Filter[k, l];                            
-                        }
                     conMatrix[i, j] = tmpBit;
                 }
-            }
+
             //Copy back to the original-size matrix
             MMatrix newMatrix = new MMatrix(Matrix.row, Matrix.col);
-
             for (int i = halfKernelRows; i < xMax; i++)
-            {
                 for (int j = halfKernelCols; j < yMax; j++)
-                {
                     newMatrix[i - halfKernelRows, j - halfKernelCols] = conMatrix[i, j];
-                }
-            }
 
             return newMatrix;
         }

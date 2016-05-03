@@ -158,14 +158,11 @@ namespace WindowsFormsApplication1
         {
             try
             {
-                if (richTextBox1.Visible == true)
+                if (bSaveDone)
                 {
-                    if (bSaveDone)
+                    if (richTextBox1.Visible == true)
                         SaveMatrixText(OutputMatrix);
-                }
-                else
-                {
-                    if (bSaveDone)
+                    else
                         SaveBitmap();
                 }
             }
@@ -363,8 +360,13 @@ namespace WindowsFormsApplication1
         {
             Graphics g = pictureBox1.CreateGraphics();
             const int x = 0, y = 0;           
-            int v = Convert.ToInt16(vScrollBar1.Visible);            
-            int h = Convert.ToInt16(hScrollBar1.Visible);
+            int v = 0;            
+            int h = 0;
+
+            if (vScrollBar1.Visible == true)
+                v = 1;
+            if (hScrollBar1.Visible == true)
+                h = 1;
             /*
             if (pictureBox1.SizeMode == PictureBoxSizeMode.CenterImage)
             {
