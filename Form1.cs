@@ -335,7 +335,7 @@ namespace WindowsFormsApplication1
         #region ScrollBar
         public void DisplayScrollBars()
         {
-            if (this.toolStripComboBoxPicMode.SelectedIndex == 0)
+            if (pictureBox1.SizeMode == PictureBoxSizeMode.Normal)
             {
                 // If the image is wider than the PictureBox, show the HScrollBar.
                 if (pictureBox1.Width > pictureBox1.Image.Width - this.vScrollBar1.Width)
@@ -434,7 +434,7 @@ namespace WindowsFormsApplication1
         {
             // If the PictureBox has an image, see if it needs 
             // scrollbars and refresh the image. 
-            if (pictureBox1.Image != null)
+            if ((pictureBox1.Image != null) && (pictureBox1.SizeMode == PictureBoxSizeMode.Normal))
             {
                 this.DisplayScrollBars();
                 this.SetScrollBarValues();
@@ -503,9 +503,8 @@ namespace WindowsFormsApplication1
                         }
                     }
                     break;
-            }
-            //pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
-            if ((this.richTextBox1.Visible == false) && (OutputImage != null))
+            }            
+            if ((this.richTextBox1.Visible == false) && (OutputImage != null) && (pictureBox1.SizeMode == PictureBoxSizeMode.Normal))
             {
                 this.DisplayScrollBars();
                 this.SetScrollBarValues();
@@ -518,7 +517,7 @@ namespace WindowsFormsApplication1
             this.richTextBox1.Visible = false;
             this.pictureBox1.Visible = true;
 
-            if (OutputImage != null)
+            //if (OutputImage != null)
             {
                 switch (toolStripComboBoxPicMode.SelectedIndex)
                 {
@@ -1276,9 +1275,7 @@ namespace WindowsFormsApplication1
                     if (Method != -1)
                     {
                         this.Cursor = Cursors.WaitCursor;
-                                               
-                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
-                        //tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities((Bitmap)(OutputImage), Noise, Method);                                              
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "^");
                         this.Cursor = Cursors.Arrow;
                         
@@ -1330,7 +1327,9 @@ namespace WindowsFormsApplication1
                 }
                 */
                 this.Cursor = Cursors.WaitCursor;
-                
+                //These 2 lines are slow:
+                //MMatrix RandMatrix = MMatrix.RandomMatrix(OutputImage.Width, OutputImage.Height, 0, 100);
+                //tmpImage = ImageProcessing.BitmapBitwise((Bitmap)(OutputImage), ImageProcessing.BitmapFromMatrix(ref RandMatrix, ref RandMatrix, ref RandMatrix), "|");
                 tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), 0.3);
                 this.Cursor = Cursors.Arrow;
               
@@ -1426,10 +1425,10 @@ namespace WindowsFormsApplication1
                     }
                     if (Method != -1)
                     {
-                                       
+                        this.Cursor = Cursors.WaitCursor;
                         //Apply Gaussian Smoothing first.....
-                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);                        
-                      
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities((Bitmap)(OutputImage), Noise, Method);
+                        this.Cursor = Cursors.Arrow;
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_RG_EDGEDETECTION, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);                         
                     }
@@ -1583,9 +1582,8 @@ namespace WindowsFormsApplication1
                     }
                     if (Method != -1)
                     {
-                        this.Cursor = Cursors.WaitCursor;
-                        
-                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        this.Cursor = Cursors.WaitCursor;                        
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities((Bitmap)(OutputImage), Noise, Method);
                         //tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "&");
                         this.Cursor = Cursors.Arrow;
@@ -1620,7 +1618,7 @@ namespace WindowsFormsApplication1
                     {
                         this.Cursor = Cursors.WaitCursor;
                         
-                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(pictureBox1.CreateGraphics(), (Bitmap)(OutputImage), Noise, Method);
+                        tmpImage = ImgProcess.Bitmap_FindingDiscontinuities((Bitmap)(OutputImage), Noise, Method);
                         //tmpImage = ImgProcess.Bitmap_FindingDiscontinuities(Graphics.FromImage(pictureBox1.Image), (Bitmap)(OutputImage), Noise, Method);                        
                         tmpImage = ImageProcessing.BitmapBitwise((Bitmap)tmpImage, (Bitmap)pictureBox1.Image, "|");
                         this.Cursor = Cursors.Arrow;

@@ -56,22 +56,22 @@ namespace WindowsFormsApplication1
                     }
                 case ImageProcessing.A_BORDERTRACING:
                     {                        
-                        Title = "BORDER TRACING";
-                        this.Text += "Border Tracing";
+                        Title = "BORDER SKETCHING EFFECT";
+                        this.Text += "Border sketching effect";
                         this.DisplayStatistic(Img, AlgType, Title, Report, RootMeanSquareError);
                         break;
                     }
                 case ImageProcessing.A_SKELETON:
                     {                        
-                        Title = "FINDING SKELETON";
-                        this.Text += "Finding Skeleton";
+                        Title = "CARTOON EFFECT";
+                        this.Text += "Cartoon effect";
                         this.DisplayStatistic(Img, AlgType, Title, Report, RootMeanSquareError);
                         break;
                     }
                 case ImageProcessing.A_RG_EDGEDETECTION:
                     {                        
-                        Title = "R-G EDGE DETECTION";
-                        this.Text += "R-G Edge Detection";
+                        Title = "PENCIL SKETCHING EFFECT";
+                        this.Text += "Pencil sketching effect";
                         this.DisplayStatistic(Img, AlgType, Title, Report, RootMeanSquareError);
                         break;
                     }
@@ -105,8 +105,8 @@ namespace WindowsFormsApplication1
                     }
                 case ImageProcessing.A_CANNY:
                     {
-                        Title = "MIRROR EFFECT";
-                        this.Text += "Mirror Effect";
+                        Title = "EVAPOTRANSPIRATIONAL-ICING EFFECT";
+                        this.Text += "Evapotranspiration-Icing Effect";
                         this.DisplayStatistic(Img, AlgType, Title, Report, RootMeanSquareError);
                         break;
                     }

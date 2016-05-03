@@ -1027,8 +1027,8 @@
             // cannyEdgeDetectionToolStripMenuItem
             // 
             this.cannyEdgeDetectionToolStripMenuItem.Name = "cannyEdgeDetectionToolStripMenuItem";
-            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.cannyEdgeDetectionToolStripMenuItem.Text = "Mirror Effect";
+            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.cannyEdgeDetectionToolStripMenuItem.Text = "Evapotranspiration-Icing Effect";
             this.cannyEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.cannyEdgeDetectionToolStripMenuItem_Click);
             // 
             // singularValueDecompositionToolStripMenuItem1
@@ -1042,7 +1042,7 @@
             // 
             this.amazingEffectToolStripMenuItem.Name = "amazingEffectToolStripMenuItem";
             this.amazingEffectToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.amazingEffectToolStripMenuItem.Text = "3D Fabric Painting Effect";
+            this.amazingEffectToolStripMenuItem.Text = "Zombie Effect";
             this.amazingEffectToolStripMenuItem.Click += new System.EventHandler(this.amazingEffectToolStripMenuItem_Click);
             // 
             // colorPaintingEffectToolStripMenuItem
@@ -1057,7 +1057,7 @@
             this.findingDiscontToolStripMenuItem.Name = "findingDiscontToolStripMenuItem";
             this.findingDiscontToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.findingDiscontToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.findingDiscontToolStripMenuItem.Text = "Sculpture Effect";
+            this.findingDiscontToolStripMenuItem.Text = "Ceramic Effect";
             this.findingDiscontToolStripMenuItem.Click += new System.EventHandler(this.findingDiscontToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
