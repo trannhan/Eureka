@@ -1059,8 +1059,7 @@ namespace WindowsFormsApplication1
             A.SVD_U = Eigenvectors.MArray;
 
             //S
-            if(A.SVD_S == null)
-                A.SVD_S = new double[A.row, A.col];
+            A.SVD_S = new double[A.row, A.col];
             index = (A.row < A.col) ? (A.row) : (A.col);
             for (int i = 0; i < index; i++)
                 A.SVD_S[i, i] = Math.Sqrt(Eigenvalues[i]);
@@ -1365,7 +1364,7 @@ namespace WindowsFormsApplication1
         public Vector Eigenvalues_Householder()
         {
             this.Householder();
-            return new Vector(this.QR(1E-20, 1000).ToArray());
+            return new Vector(this.QR(1E-16, 1000).ToArray());
         }
 
         //Jacobi Cyclic Method is not correct enough
@@ -1398,11 +1397,11 @@ namespace WindowsFormsApplication1
             double max;
 
             eigenvalues = new Vector(n);
-            eigenvectors = new MMatrix(n, n);
+            eigenvectors = DiagonalMatrix(n, 1);
             pAk = new MMatrix();
             pAm = new MMatrix();
             p_r = new MMatrix();
-            p_e = new MMatrix();
+            p_e = eigenvectors;
 
             // Take care of trivial cases
             if (n < 1)
@@ -1415,12 +1414,11 @@ namespace WindowsFormsApplication1
             }
 
             // Initialize the eigenvalues to the identity matrix.
-            for (p_e = eigenvectors, i = 0; i < n; i++)
+            /*for (p_e = eigenvectors, i = 0; i < n; i++)
                 for (j = 0; j < n; j++)
-                    p_e[i, j] = (i == j) ? 1.0 : 0.0;
+                    p_e[i, j] = (i == j) ? 1.0 : 0.0;  */                   
 
             // Calculate the threshold and threshold_norm.
-
             for (threshold = 0.0, pAk = A, i = 0; i < (n - 1); i++)
                 for (j = i + 1; j < n; j++)
                     threshold += pAk[i, j] * pAk[i, j];

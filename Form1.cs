@@ -37,9 +37,9 @@ namespace WindowsFormsApplication1
         FormSVDBitmapDisplay ImageForm;
         FormHistogram FormHis;
         ImageProcessing ImgProcess;
+        ColorDialog colordlg;
         int SkeletonDifference = 15; //for Skeleton algorithm  
         Image tmpImage;
-
 
         public Form1()
         {
@@ -57,11 +57,17 @@ namespace WindowsFormsApplication1
             SharpenForm = new FormSharpening();
             ImageForm = new FormSVDBitmapDisplay();
             FormHis = new FormHistogram();
-
+            colordlg = new ColorDialog();
             ImgProcess = new ImageProcessing();
 
             for (int i = 1; i < 256; i++)
-                toolStripSkeletonDiff.Items.Add(i);                 
+            {
+                toolStripSkeletonDiff.Items.Add(i);
+                toolStripComboBoxSkeletonDiff.Items.Add(i);
+            }
+            colordlg.FullOpen = true;
+            colordlg.ShowHelp = true;
+            colordlg.AnyColor = true;
         }
 
         #region Administration
@@ -1383,14 +1389,8 @@ namespace WindowsFormsApplication1
                 SkeletonDifference = toolStripSkeletonDiff.SelectedIndex + 1;
                 toolStripSkeletonDiff.PerformClick();
                 if (this.OutputImage != null)
-                {
-                    
+                {                   
                     Color color = Color.Black;
-                    ColorDialog colordlg = new ColorDialog();
-
-                    colordlg.FullOpen = true;
-                    colordlg.ShowHelp = true;
-                    colordlg.AnyColor = true;
                     if (colordlg.ShowDialog() == DialogResult.OK)
                     {
                         color = colordlg.Color;
@@ -1415,7 +1415,7 @@ namespace WindowsFormsApplication1
             double Noise = 0;
             int Method = -1;
 
-            this.richTextBox1.Visible = false;            
+                        
             try
             {
                 if (this.OutputImage != null)
@@ -1532,8 +1532,6 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-
         #endregion
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -1626,6 +1624,40 @@ namespace WindowsFormsApplication1
                         this.Cursor = Cursors.Arrow;
                      
                         if (ImageForm.ShowImage(tmpImage, Method, "", "") == DialogResult.OK)
+                            SetNewImage(tmpImage);
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void bitmapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.richTextBox1.Visible = false;
+            this.pictureBox1.Visible = true;
+        }
+
+        private void toolStripComboBoxSkeletonDiff_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SkeletonDifference = toolStripComboBoxSkeletonDiff.SelectedIndex + 1;
+                toolStripComboBoxSkeletonDiff.PerformClick();
+                if (this.OutputImage != null)
+                {
+                    Color color = Color.Black;                    
+                    if (colordlg.ShowDialog() == DialogResult.OK)
+                    {
+                        color = colordlg.Color;
+
+                        this.Cursor = Cursors.WaitCursor;
+                        tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
+                        this.Cursor = Cursors.Arrow;
+
+                        if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
                             SetNewImage(tmpImage);
                     }
                 }
