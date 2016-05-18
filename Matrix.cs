@@ -103,13 +103,11 @@ namespace WindowsFormsApplication1
         }
 
         ~MMatrix()
-        {
-                     
+        {                     
         }
 
         public void Dispose()
-        {
-                    
+        {            
         }
 
         public override int GetHashCode()
@@ -1308,7 +1306,7 @@ namespace WindowsFormsApplication1
         }
 
         /// <summary>
-        /// Gram-Schmidtian orthogonalization of an m by n matrix A, such that
+        /// Gram-Schmidt orthogonalization of an m by n matrix A, such that
         /// {Q, R} is returned, where A = QR, Q is m by n and orthogonal, R is
         /// n by n and upper triangular matrix.
         /// </summary>
@@ -1348,23 +1346,23 @@ namespace WindowsFormsApplication1
 
         /// <summary>
         /// Computes approximates of the eigenvalues of this matrix. WARNING: Computation
-        /// uses basic QR iteration with Gram-Schmidtian orthogonalization. This implies that
+        /// uses basic QR iteration with Gram-Schmidt orthogonalization. This implies that
         /// (1) only real matrices can be examined; (2) if the matrix has a multiple eigenvalue
         /// or complex eigenvalues, partial junk is returned. This is due to the eigenvalues having
         /// to be like |L1| > |L2| > ... > |Ln| for QR iteration to work properly.
+        /// Only symetric matrices
         /// </summary>
-        /// <returns></returns>
         public Vector Eigenvalues()
         {
             if (!this.IsSquared())
                 throw new MMatrixException("Matrix must be squared.");
-            return this.QRIterationBasic(10).DiagVector();
+            return this.QRIterationBasic(100).DiagVector();
         }
         //This method is not correct enough
         public Vector Eigenvalues_Householder()
         {
             this.Householder();
-            return new Vector(this.QR(1E-16, 1000).ToArray());
+            return new Vector(this.QR(1E-16, 100).ToArray());
         }
 
         //Jacobi Cyclic Method is not correct enough
@@ -1442,8 +1440,7 @@ namespace WindowsFormsApplication1
                         if (Math.Abs(pAk[k, m]) < threshold)
                             continue;
 
-                        // Calculate the sin and cos of the rotation angle which
-                        // annihilates A[k][m].
+                        // Calculate the sin and cos of the rotation angle which annihilates A[k][m].
 
                         cot_2phi = 0.5 * (pAk[k, k] - pAm[m, m]) / pAk[k, m];
                         dum1 = Math.Sqrt(cot_2phi * cot_2phi + 1.0);
@@ -1460,8 +1457,7 @@ namespace WindowsFormsApplication1
                         sin_2phi = 2.0 * sin_phi * cos_phi;
                         cos_2phi = cos2_phi - sin2_phi;
 
-                        // Rotate columns k and m for both the matrix A 
-                        //     and the matrix of eigenvectors.
+                        // Rotate columns k and m for both the matrix A and the matrix of eigenvectors.
 
                         p_r = A;
                         dum1 = pAk[k, k];

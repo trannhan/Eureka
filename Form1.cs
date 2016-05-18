@@ -210,7 +210,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -249,7 +249,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         
@@ -276,7 +276,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }        
         
@@ -330,7 +330,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion       
@@ -702,104 +702,97 @@ namespace WindowsFormsApplication1
         }
 
         private void determinantToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {  
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
-                    s += "Det (A) = " + OutputMatrix.Determinant().ToString();
+                    string s = "\n\n\n";
+                    s += "Det (A) = " + Math.Round(OutputMatrix.Determinant(),GlobalMath.DIGITS).ToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void inverseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        { 
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Inverse (A) = \n" + OutputMatrix.Inverse().PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void transposeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        { 
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Transpose (A) = \n" + OutputMatrix.Transpose().PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void housholderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
-            MMatrix temp = new MMatrix();
+        {          
             try
             {
                 if (OutputMatrix != null)
                 {
-                    temp = OutputMatrix.Clone();
-                    s = "\n\n\n";
-                    s += "Housholder (A) = \n" + temp.Householder().PrintToString();
+                    string s = "\n\n\n";
+                    s += "Housholder (A) = \n" + OutputMatrix.Clone().Householder().PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void eigenvaluesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {  
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Eigenvalues (A) = \n" + OutputMatrix.Eigenvalues().PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void eigenvectorsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder("");
-            Vector eigenvalues = new Vector();
-            MMatrix eigenvectors = new MMatrix();            
+        {                        
             try
             {
+                StringBuilder sb = new StringBuilder("");
+                Vector eigenvalues = new Vector();
+                MMatrix eigenvectors = new MMatrix();
                 if (OutputMatrix != null)
                 {
                     MMatrix temp = OutputMatrix.Clone();
@@ -818,217 +811,209 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void echelonFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Echelon Form (A) = \n" + OutputMatrix.EchelonForm().PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void reduceEchelonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {    
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Reduced Echelon Form (A) = \n" + OutputMatrix.ReducedEchelonForm().PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void orthonormalizToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {   
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Orthonormalize (A) = \n" + MMatrix.Orthonormalize(OutputMatrix).PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void factorLUToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
-            MMatrix B = new MMatrix();
             try
-            {
+            {                
                 if (OutputMatrix != null)
                 {
                     OutputMatrix.FactorLU_withP();
-                    s = "\n\n\n";                    
-                    s += "\nFactor LU (A): P=\n" + (new MMatrix(OutputMatrix.LU_P)).PrintToString();
-                    s += "\nFactor LU (A): L=\n" + (new MMatrix(OutputMatrix.LU_L)).PrintToString();
-                    s += "\nFactor LU (A): U=\n" + (new MMatrix(OutputMatrix.LU_U)).PrintToString();
-                    B = (new MMatrix(OutputMatrix.LU_P)).Transpose() * (new MMatrix(OutputMatrix.LU_L)) * (new MMatrix(OutputMatrix.LU_U));
-                    s += "\nFactor LU (A): A=Pt*L*U\n" + B.PrintToString();                    
+                    MMatrix P = new MMatrix(OutputMatrix.LU_P);
+                    MMatrix L = new MMatrix(OutputMatrix.LU_L);
+                    MMatrix U = new MMatrix(OutputMatrix.LU_U);
+                    string s = "\n\n\nFactor LU:\n";                    
+                    s += "\nP=\n" + P.PrintToString();
+                    s += "\nL=\n" + L.PrintToString();
+                    s += "\nU=\n" + U.PrintToString();                    
+                    s += "\nA=(P')*L*U\n" + (P.Transpose()*L*U).PrintToString();                    
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }            
         }
 
         private void factorLDLtToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
-            MMatrix B = new MMatrix();
             try
-            {
+            {                
                 if (OutputMatrix != null)
                 {
                     OutputMatrix.FactorLDLt();
-                    s = "\n\n\n";                    
-                    s += "\nFactor LDLt (A): L=\n" + (new MMatrix(OutputMatrix.LDL_L)).PrintToString();
-                    s += "\nFactor LDLt (A): D=\n" + (new MMatrix(OutputMatrix.LDL_D)).PrintToString();
-                    B = (new MMatrix(OutputMatrix.LDL_L)) * (new MMatrix(OutputMatrix.LDL_D)) * (new MMatrix(OutputMatrix.LDL_L)).Transpose();
-                    s += "\nFactor LDLt: A=L*D*L^T\n" + B.PrintToString();                                        
+                    MMatrix L = new MMatrix(OutputMatrix.LDL_L);
+                    MMatrix D = new MMatrix(OutputMatrix.LDL_D);
+                    string s = "\n\n\nFactor LDLt:\n";                    
+                    s += "\nL=\n" + L.PrintToString();
+                    s += "\nD=\n" + D.PrintToString();                    
+                    s += "\nA=L*D*L'\n" + (L*D*L.Transpose()).PrintToString();                                        
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }  
         }
 
         private void factorSVDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
-            MMatrix B = new MMatrix();
             try
             {
                 if (OutputMatrix != null)
                 {
                     OutputMatrix.FactorSVD();
-                    s = "\n\n\n";                    
+                    MMatrix U = new MMatrix(OutputMatrix.SVD_U);
+                    MMatrix S = new MMatrix(OutputMatrix.SVD_S);
+                    MMatrix Vt = new MMatrix(OutputMatrix.SVD_Vt);
+                    string s = "\n\n\n";                    
                     s += "Factor SVD:\n";                    
-                    s += "\nU=\n" + (new MMatrix(OutputMatrix.SVD_U)).PrintToString();
-                    s += "\nS=\n" + (new MMatrix(OutputMatrix.SVD_S)).PrintToString();
-                    s += "\nVt=\n" + (new MMatrix(OutputMatrix.SVD_Vt)).PrintToString();
-                    B = (new MMatrix(OutputMatrix.SVD_U)) * (new MMatrix(OutputMatrix.SVD_S)) * (new MMatrix(OutputMatrix.SVD_Vt));
-                    s += "\nA=U*S*Vt\n" + B.PrintToString();
+                    s += "\nU=\n" + U.PrintToString();
+                    s += "\nS=\n" + S.PrintToString();
+                    s += "\nV'=\n" + Vt.PrintToString();
+                    //s += "\nA=U*S*V'\n" + (U * S * Vt.Transpose()).PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void spectralRadiusToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {            
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
-                    s += "Spectral Radius (A) = " + OutputMatrix.SpectralRadius().ToString();
+                    string s = "\n\n\n";
+                    s += "Spectral Radius (A) = " + Math.Round(OutputMatrix.SpectralRadius(),GlobalMath.DIGITS).ToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void l2NormToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {            
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
-                    s += "L2 Norm (A) = " + OutputMatrix.L2Norm().ToString();
+                    string s = "\n\n\n";
+                    s += "L2 Norm (A) = " + Math.Round(OutputMatrix.L2Norm(),GlobalMath.DIGITS).ToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void lInfinitiveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {            
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
-                    s += "L_Infinitive Norm (A) = " + OutputMatrix.LInfinitiveNorm().ToString();
+                    string s = "\n\n\n";
+                    s += "L_Infinitive Norm (A) = " + Math.Round(OutputMatrix.LInfinitiveNorm(),GlobalMath.DIGITS).ToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void conditionNumberToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {            
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
-                    s += "Condition Number (A) = " + OutputMatrix.ConditionNumber().ToString();
+                    string s = "\n\n\n";
+                    s += "Condition Number (A) = " + Math.Round(OutputMatrix.ConditionNumber(),GlobalMath.DIGITS).ToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
+            
 
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Matrix B = \n" + InputMatrixForm.MainMatrix.PrintToString();
                     RichText_Display(s);
                     argumentMatrix = InputMatrixForm.MainMatrix;
@@ -1038,26 +1023,26 @@ namespace WindowsFormsApplication1
             {
                 if ((OutputMatrix != null) && (argumentMatrix!=null))
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "A + B = \n" + (OutputMatrix + argumentMatrix).PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void substractionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
+            
 
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Matrix B = \n" + InputMatrixForm.MainMatrix.PrintToString();
                     RichText_Display(s);
                     argumentMatrix = InputMatrixForm.MainMatrix;
@@ -1067,26 +1052,26 @@ namespace WindowsFormsApplication1
             {
                 if ((OutputMatrix != null) && (argumentMatrix != null))
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "A - B = \n" + (OutputMatrix - argumentMatrix).PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void multiplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
+            
 
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Matrix B = \n" + InputMatrixForm.MainMatrix.PrintToString();
                     RichText_Display(s);
                     argumentMatrix = InputMatrixForm.MainMatrix;
@@ -1096,25 +1081,23 @@ namespace WindowsFormsApplication1
             {
                 if ((OutputMatrix != null) && (argumentMatrix != null))
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "A * B = \n" + (OutputMatrix * argumentMatrix).PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void scalarMultiplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s = "";
-
+            string s = "\n\n\n";
             if (ScalarForm.ShowDialog() == DialogResult.OK)
             {
-                ScalarNumber = ScalarForm.Scalar;
-                s = "\n\n\n";
+                ScalarNumber = ScalarForm.Scalar;                
                 s += "Scalar number = " + ScalarNumber.ToString();                               
             }
             try
@@ -1127,38 +1110,35 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void rankToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {  
             try
             {
                 if (OutputMatrix != null)
                 {
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Rank (A) = " + OutputMatrix.Rank().ToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Internal Matrix Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void inputSystemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
-
             if (SystemOfEquationsForm.ShowDialog() == DialogResult.OK)
             {
                 if ((SystemOfEquationsForm.MainMatrix != null) && (SystemOfEquationsForm.b != null))
                 {
                     SystemEquations = new SystemOfEquation(SystemOfEquationsForm.MainMatrix, SystemOfEquationsForm.b);
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "System of equations Ax = b: \n" + SystemEquations.PrintSystemOfEquations();
                     RichText_Display(s);                    
                 }
@@ -1166,14 +1146,13 @@ namespace WindowsFormsApplication1
         }
 
         private void reduceSystemToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s;
+        {  
             try
             {
                 if (SystemEquations != null)
                 {
                     SystemEquations.SolveSystemOfEquations();
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Reduced System of Ax = b:\n" + SystemOfEquation.PrintSystemOfEquations(SystemEquations.ArgumentMatrix);
                     RichText_Display(s);
                 }
@@ -1186,13 +1165,12 @@ namespace WindowsFormsApplication1
 
         private void solutionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s;
             try
             {
                 if (SystemEquations != null)
                 {
                     SystemEquations.SolveSystemOfEquations();
-                    s = "\n\n\n";
+                    string s = "\n\n\n";
                     s += "Solutions to Ax = b:\n" + SystemEquations.PrintSolutions();
                     RichText_Display(s);
                 }
@@ -1294,7 +1272,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }            
         }
 
@@ -1314,7 +1292,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1377,7 +1355,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1406,7 +1384,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }                     
         }
 
@@ -1438,7 +1416,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }  
         }
 
@@ -1467,7 +1445,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1487,7 +1465,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1507,7 +1485,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1529,7 +1507,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion
@@ -1595,7 +1573,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1630,7 +1608,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1664,7 +1642,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Internal Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
