@@ -29,8 +29,8 @@ namespace WindowsFormsApplication1
             {
                 try
                 {
-                    for (int i = 0; i < MainMatrix.row; i++)
-                        for (int j = 0; j < MainMatrix.col; j++)
+                    for (int i = 0; i < MainMatrix.row; ++i)
+                        for (int j = 0; j < MainMatrix.col; ++j)
                             MainMatrix[i, j] = Convert.ToDouble(dataGridViewMatrix[j, i].Value);
                 }
                 catch(Exception exp)
@@ -82,11 +82,11 @@ namespace WindowsFormsApplication1
             dataGridViewMatrix.Columns.Clear();
             /*
             int ColCount = dataGridViewMatrix.Columns.Count;            
-            for (int i = 0; i < ColCount; i++)
+            for (int i = 0; i < ColCount; ++i)
                 dataGridViewMatrix.Columns.RemoveAt(0);           
             */
             DataGridViewColumn[] DCS = new DataGridViewColumn[cols];                                  
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < cols; ++i)
             {
                 DataGridViewColumn column = new DataGridViewTextBoxColumn();
                 column.HeaderText = string.Concat("A", (i + 1).ToString());
@@ -96,8 +96,8 @@ namespace WindowsFormsApplication1
             dataGridViewMatrix.Rows.Add(rows);
 
             //for DataGrid: [column, row]
-            for (int j = 0; j < MainMatrix.col; j++)
-                for (int i = 0; i < MainMatrix.row; i++)                            
+            for (int j = 0; j < MainMatrix.col; ++j)
+                for (int i = 0; i < MainMatrix.row; ++i)                            
                     dataGridViewMatrix[j,i].Value = MainMatrix[i, j];
 
             //this.dataGridViewMatrix.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;

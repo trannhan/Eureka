@@ -27,10 +27,10 @@ namespace WindowsFormsApplication1
         {
             //Form Argument matrix from CoefficientMatrix and b
             MMatrix ArgumentMatrix = new MMatrix(CoefficientMatrix.row, CoefficientMatrix.col + 1);
-            for (int i = 0; i < CoefficientMatrix.row; i++)
-                for (int j = 0; j < CoefficientMatrix.col; j++)
+            for (int i = 0; i < CoefficientMatrix.row; ++i)
+                for (int j = 0; j < CoefficientMatrix.col; ++j)
                     ArgumentMatrix[i, j] = CoefficientMatrix[i, j];
-            for (int i = 0; i < CoefficientMatrix.row; i++)
+            for (int i = 0; i < CoefficientMatrix.row; ++i)
                 ArgumentMatrix[i, ArgumentMatrix.col - 1] = b[i];
 
             return ArgumentMatrix;
@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
                 else
                 {
                     sum = 0;
-                    for (int j = i + 1; j < Ref.col; j++)
+                    for (int j = i + 1; j < Ref.col; ++j)
                     {
                         sum += Ref[i, j] * x[j];
                     }
@@ -87,25 +87,25 @@ namespace WindowsFormsApplication1
             try
             {
                 //Gaussian elimination
-                for (int i = 0; i < CoefficientMatrix.row; i++)
+                for (int i = 0; i < CoefficientMatrix.row; ++i)
                 {
                     if (i < ArgumentMatrix.col - 1)
                     {
                         if (ArgumentMatrix[i, i] == 0)	// if diagonal entry is zero, 
-                            for (int j = i + 1; j < ArgumentMatrix.row; j++)
+                            for (int j = i + 1; j < ArgumentMatrix.row; ++j)
                                 if (ArgumentMatrix[j, i] != 0)	 //check if some below entry is non-zero
                                     ArgumentMatrix.InterchangeRow(i, j);	// then interchange the two rows
                         if (ArgumentMatrix[i, i] == 0)	// if not found any non-zero diagonal entry
                             continue;	// increment i;
 
                         if (ArgumentMatrix[i, i] != 1)	// if diagonal entry is not 1 , 	
-                            for (int j = i + 1; j < ArgumentMatrix.row; j++)
+                            for (int j = i + 1; j < ArgumentMatrix.row; ++j)
                                 if (ArgumentMatrix[j, i] == 1)	 //check if some below entry is 1
                                     ArgumentMatrix.InterchangeRow(i, j);	// then interchange the two rows
 
                         ArgumentMatrix.MultiplyRow(i, 1 / (ArgumentMatrix[i, i]));
 
-                        for (int j = i + 1; j < ArgumentMatrix.row; j++)
+                        for (int j = i + 1; j < ArgumentMatrix.row; ++j)
                             ArgumentMatrix.AddRow(j, i, -ArgumentMatrix[j, i]);
                     }
                 }
@@ -114,7 +114,7 @@ namespace WindowsFormsApplication1
 
                 //More equations than unknown varriables x[i]
                 if (CoefficientMatrix.row > CoefficientMatrix.col)
-                    for (int i = CoefficientMatrix.col; i < CoefficientMatrix.row; i++)
+                    for (int i = CoefficientMatrix.col; i < CoefficientMatrix.row; ++i)
                     {
                         if (ArgumentMatrix[i, CoefficientMatrix.col - 1] == 0)
                             if (ArgumentMatrix[i, ArgumentMatrix.col - 1] != 0)  //b[i] == 0
@@ -128,12 +128,12 @@ namespace WindowsFormsApplication1
                     {
                         //More unknowns than equations
                         int j;
-                        for (j = i+1; j < CoefficientMatrix.col; j++)
+                        for (j = i+1; j < CoefficientMatrix.col; ++j)
                         {
                             if (ArgumentMatrix[i, j] != 0)
                             {
                                 sum = 0;
-                                for (int k = j + 1; k < CoefficientMatrix.col; k++)
+                                for (int k = j + 1; k < CoefficientMatrix.col; ++k)
                                 {
                                     sum += ArgumentMatrix[i, k] * x[k];
                                 }
@@ -167,7 +167,7 @@ namespace WindowsFormsApplication1
                     else
                     {
                         sum = 0;
-                        for (int j = i + 1; j < CoefficientMatrix.col; j++)
+                        for (int j = i + 1; j < CoefficientMatrix.col; ++j)
                         {
                             sum += ArgumentMatrix[i, j] * x[j];
                         }
@@ -193,9 +193,9 @@ namespace WindowsFormsApplication1
         {
             StringBuilder sb = new StringBuilder("");
 
-            for (int i = 0; i < CoefficientMatrix.row; i++)
+            for (int i = 0; i < CoefficientMatrix.row; ++i)
             {
-                for (int j = 0; j < CoefficientMatrix.col; j++)
+                for (int j = 0; j < CoefficientMatrix.col; ++j)
                 {
                     string sign = (CoefficientMatrix[i, j] >= 0) ? "+" : "";
                     sb.Append(sign);
@@ -222,9 +222,9 @@ namespace WindowsFormsApplication1
         {
             StringBuilder sb = new StringBuilder("");
 
-            for (int i = 0; i < AugmentedMatrix.row; i++)
+            for (int i = 0; i < AugmentedMatrix.row; ++i)
             {
-                for (int j = 0; j < AugmentedMatrix.col - 1; j++)
+                for (int j = 0; j < AugmentedMatrix.col - 1; ++j)
                 {
                     string sign = (AugmentedMatrix[i, j] >= 0) ? "+" : "";
                     sb.Append(sign);
@@ -260,7 +260,7 @@ namespace WindowsFormsApplication1
                     sb.Append("The system has a unique solution:\r\n");
                 }
             }
-            for (int i = 0; i < Solutions.Elements.Length; i++)
+            for (int i = 0; i < Solutions.Elements.Length; ++i)
             {                
                 sb.Append("X");
                 sb.Append(i + 1);

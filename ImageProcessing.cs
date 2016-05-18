@@ -50,15 +50,15 @@ namespace WindowsFormsApplication1
             MRed = new MMatrix(bmp.Width, bmp.Height);
 
             if (bGrayScale)                
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                         MRed[i, j] = bmp.GetPixel(i, j).R;
             else
             {
                 MGreen = new MMatrix(bmp.Width, bmp.Height);
                 MBlue = new MMatrix(bmp.Width, bmp.Height);
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                     {
                         PixelColor = bmp.GetPixel(i, j);
                         MRed[i, j] = PixelColor.R;
@@ -72,8 +72,8 @@ namespace WindowsFormsApplication1
         {
             Bitmap tmpBmp = new Bitmap(MRed.row,MRed.col);
 
-            for (int i = 0; i < MRed.row; i++)
-                for (int j = 0; j < MRed.col; j++)
+            for (int i = 0; i < MRed.row; ++i)
+                for (int j = 0; j < MRed.col; ++j)
                     tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
 
             return tmpBmp;
@@ -90,8 +90,8 @@ namespace WindowsFormsApplication1
 
         private void FloorToBitmap(ref MMatrix BitmapMatrix)
         {
-            for (int i = 0; i < BitmapMatrix.row; i++)
-                for (int j = 0; j < BitmapMatrix.col; j++)
+            for (int i = 0; i < BitmapMatrix.row; ++i)
+                for (int j = 0; j < BitmapMatrix.col; ++j)
                 {
                     if (BitmapMatrix[i, j] < 0)
                         BitmapMatrix[i, j] = 0;
@@ -123,8 +123,8 @@ namespace WindowsFormsApplication1
             int NewRGB;
             Color PixelColor;
 
-            for (int i = 0; i < NewBmp.Width; i++)
-                for (int j = 0; j < NewBmp.Height; j++)
+            for (int i = 0; i < NewBmp.Width; ++i)
+                for (int j = 0; j < NewBmp.Height; ++j)
                 {
                     PixelColor = Old.GetPixel(i, j);
                     NewRGB = (PixelColor.R + PixelColor.G + PixelColor.B) / 3;
@@ -139,9 +139,9 @@ namespace WindowsFormsApplication1
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
             Color PixelColor;
 
-            for (int i = 0; i < Old.Width; i++)
+            for (int i = 0; i < Old.Width; ++i)
             {
-                for (int j = 0; j < Old.Height; j++)
+                for (int j = 0; j < Old.Height; ++j)
                 {
                     PixelColor = Old.GetPixel(i, j);
                     if ((PixelColor.R + PixelColor.G + PixelColor.B) / 3 < 125)
@@ -158,9 +158,9 @@ namespace WindowsFormsApplication1
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
             Color PixelColor;
 
-            for (int i = 0; i < Old.Width; i++)
+            for (int i = 0; i < Old.Width; ++i)
             {
-                for (int j = 0; j < Old.Height; j++)
+                for (int j = 0; j < Old.Height; ++j)
                 {
                     PixelColor = Old.GetPixel(i, j);
                     NewImage.SetPixel(i, j, Color.FromArgb(255 - PixelColor.R, 255 - PixelColor.G, 255 - PixelColor.B));
@@ -179,8 +179,8 @@ namespace WindowsFormsApplication1
             WidthRate = (double)Old.Width / newWidth;
             HeightRate = (double)Old.Height / newHeight;
 
-            for (int i = 0; i < newWidth; i++)
-                for (int j = 0; j < newHeight; j++)
+            for (int i = 0; i < newWidth; ++i)
+                for (int j = 0; j < newHeight; ++j)
                 {
                     x = (int)(i * WidthRate);
                     y = (int)(j * HeightRate);
@@ -199,9 +199,9 @@ namespace WindowsFormsApplication1
             int x, y;
             Color PixelColor;
 
-            for (int i = 0; i < Old.Width; i++)
+            for (int i = 0; i < Old.Width; ++i)
             {
-                for (int j = 0; j < Old.Height; j++)
+                for (int j = 0; j < Old.Height; ++j)
                 {
                     x = (int)Math.Abs(i * TransformMatrix[0, 0] + j * TransformMatrix[1, 0]);
                     y = (int)Math.Abs(i * TransformMatrix[0, 1] + j * TransformMatrix[1, 1]);
@@ -241,13 +241,13 @@ namespace WindowsFormsApplication1
                 B = newUMatrix * newSMatrix * newVtMatrix;
                 FloorToBitmap(ref B);
 
-                for (int i = 0; i < B.row; i++)
-                    for (int j = 0; j < B.col; j++)
+                for (int i = 0; i < B.row; ++i)
+                    for (int j = 0; j < B.col; ++j)
                         bmp.SetPixel(i, j, Color.FromArgb((int)B[i, j], (int)B[i, j], (int)B[i, j]));                                   
             }
             else
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)                    
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)                    
                         bmp.SetPixel(i, j, Color.FromArgb(255 - (int)MRed[i, j], 255 - (int)MGreen[i, j], 255 - (int)MBlue[i, j]));                    
 
             return bmp;
@@ -255,18 +255,14 @@ namespace WindowsFormsApplication1
 
         public static void SVD(ref MMatrix matrix, int newrank)
         {            
-            MMatrix newUMatrix = new MMatrix();
-            MMatrix newSMatrix = new MMatrix();
-            MMatrix newVtMatrix = new MMatrix();            
-
             if (newrank >= Math.Min(matrix.row,matrix.col))
                 return;
 
-            matrix.FactorSVD();            
+            matrix.FactorSVD();
 
-            newUMatrix = new MMatrix(matrix.SVD_U, matrix.row, newrank);
-            newSMatrix = new MMatrix(matrix.SVD_S, newrank, newrank);
-            newVtMatrix = new MMatrix(matrix.SVD_Vt, newrank, matrix.col);
+            MMatrix newUMatrix = new MMatrix(matrix.SVD_U, matrix.row, newrank);
+            MMatrix newSMatrix = new MMatrix(matrix.SVD_S, newrank, newrank);
+            MMatrix newVtMatrix = new MMatrix(matrix.SVD_Vt, newrank, matrix.col);
 
             matrix = newUMatrix * newSMatrix * newVtMatrix;
         }
@@ -293,14 +289,14 @@ namespace WindowsFormsApplication1
                 numy = MRed.col / BITMAP_FRACTION_SIZE;
 
                 MMatrix[] C = new MMatrix[numx];
-                for (int k = 0; k < numx; k++)
+                for (int k = 0; k < numx; ++k)
                 {
                     FromRow = k * BITMAP_FRACTION_SIZE;
                     ToRow = (k + 1) * BITMAP_FRACTION_SIZE;
                     newMatrix.Copy(MRed, FromRow, ToRow, 0, BITMAP_FRACTION_SIZE);
                     SVD(ref newMatrix, FactorMatrixRank);
                     C[k] = newMatrix;
-                    for (int m = 1; m < numy; m++)
+                    for (int m = 1; m < numy; ++m)
                     {
                         newMatrix.Copy(MRed, FromRow, ToRow, m * BITMAP_FRACTION_SIZE, (m + 1) * BITMAP_FRACTION_SIZE);
                         SVD(ref newMatrix, FactorMatrixRank);
@@ -308,14 +304,14 @@ namespace WindowsFormsApplication1
                     }
                 }
                 B = C[0];
-                for (int k = 1; k < numx; k++)
+                for (int k = 1; k < numx; ++k)
                     B = MMatrix.Concat_Vertical(B, C[k]);                
 
                 FloorToBitmap(ref B);
                 RootMeanSquareError = MMatrix.RootMeanSquareError(MRed, B);
 
-                for (int i = 0; i < B.row; i++)
-                    for (int j = 0; j < B.col; j++)
+                for (int i = 0; i < B.row; ++i)
+                    for (int j = 0; j < B.col; ++j)
                         TmpBmp.SetPixel(i, j, Color.FromArgb((int)B[i, j], (int)B[i, j], (int)B[i, j]));
             }
             return TmpBmp;
@@ -358,12 +354,12 @@ namespace WindowsFormsApplication1
             int xj0, xj, xj1, yj0, yj, yj1;
             double Gm;
 
-            for(int i = 1; i < yMax; i++)
+            for(int i = 1; i < yMax; ++i)
             {
                 yj0 = (i - 1);
                 yj = i;
                 yj1 = (i + 1);
-                for (int m = 1; m < xMax; m++)
+                for (int m = 1; m < xMax; ++m)
                 {
                     xj0 = (m-1);
                     xj = m;
@@ -409,11 +405,11 @@ namespace WindowsFormsApplication1
             double fj0, fj1;
             int found = 0;                       
 
-            for (int i = 1; i < yMax; i++)
+            for (int i = 1; i < yMax; ++i)
             {
                 y1 = i * h - h;
                 y2 = y1 + h3;
-                for (int j = 1; j < xMax; j++)
+                for (int j = 1; j < xMax; ++j)
                 {
                     fj0 = fj(j, i, h);
                     fj1 = fj(j + 1, i + 1, h);
@@ -497,7 +493,7 @@ namespace WindowsFormsApplication1
             int count = 0;
 
             //search for the first white pixel
-            for (int i = 0; i < Max; i++)
+            for (int i = 0; i < Max; ++i)
             {                
                 if (MRed[i, i] >= detectingColor)
                 {
@@ -516,7 +512,7 @@ namespace WindowsFormsApplication1
             while(true)
             {
                 //search all directions               
-                for (int i = 0; i < DirMax; i++)
+                for (int i = 0; i < DirMax; ++i)
                 {
                     nextX = curX + xDir[i];
                     nextY = curY + yDir[i];
@@ -579,11 +575,11 @@ namespace WindowsFormsApplication1
             MatrixFromBitmap(ref BlackWhiteBmp);
 
             //trace in 8 directions to find the next pixel having the same color
-            for (int i = 0; i < xMax; i++)
+            for (int i = 0; i < xMax; ++i)
             {
-                for (int j = 0; j < yMax; j++)
+                for (int j = 0; j < yMax; ++j)
                 {
-                    for (int k = 0; k < DirMax; k++)
+                    for (int k = 0; k < DirMax; ++k)
                     {
                         nextX = i + xDir[k];
                         nextY = j + yDir[k];
@@ -625,11 +621,11 @@ namespace WindowsFormsApplication1
             MatrixFromBitmap(ref bmp);
 
             //trace in 8 directions to find the next pixel having the same color
-            for (int i = 0; i < xMax; i++)
+            for (int i = 0; i < xMax; ++i)
             {
-                for (int j = 0; j < yMax; j++)
+                for (int j = 0; j < yMax; ++j)
                 {
-                    for (int k = 0; k < DirMax; k++)
+                    for (int k = 0; k < DirMax; ++k)
                     {
                         nextX = i + xDir[k];
                         nextY = j + yDir[k];
@@ -661,8 +657,8 @@ namespace WindowsFormsApplication1
             FloorToBitmap(ref MRed);
 
             if (this.bGrayScale)
-                for (int i = 0; i < xMax; i++)
-                    for (int j = 0; j < yMax; j++)
+                for (int i = 0; i < xMax; ++i)
+                    for (int j = 0; j < yMax; ++j)
                     {
                         NewRGB = (int)MRed[i, j];
                         tmpBmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
@@ -674,8 +670,8 @@ namespace WindowsFormsApplication1
                 MBlue += RandMatrix;
                 FloorToBitmap(ref MBlue);
                 
-                for (int i = 0; i < xMax; i++)
-                    for (int j = 0; j < yMax; j++)
+                for (int i = 0; i < xMax; ++i)
+                    for (int j = 0; j < yMax; ++j)
                         tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
             }
             
@@ -689,8 +685,8 @@ namespace WindowsFormsApplication1
             Color PixelColor;
 
             if (IsGrayScale(ref bmp))
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                     {
                         PixelColor = bmp.GetPixel(i, j);
                         NewR = PixelColor.R;
@@ -702,8 +698,8 @@ namespace WindowsFormsApplication1
                         NewBmp.SetPixel(i, j, Color.FromArgb(NewR, NewR, NewR));
                     }
             else
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                     {
                         PixelColor = bmp.GetPixel(i, j);
 
@@ -743,8 +739,8 @@ namespace WindowsFormsApplication1
 
             if (this.bGrayScale)
             {                
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                     {
                         NewRGB = (int)MRed[i, j];
                         tmpBmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
@@ -756,8 +752,8 @@ namespace WindowsFormsApplication1
                 FloorToBitmap(ref MGreen);
                 MBlue = MMatrix.Gauss_Convolution(MBlue, bCanny, rows, sigma1, cols, sigma2, theta);
                 FloorToBitmap(ref MBlue);
-                for (int i = 0; i < bmp.Width; i++)
-                    for (int j = 0; j < bmp.Height; j++)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                         tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
             }
 
@@ -797,8 +793,8 @@ namespace WindowsFormsApplication1
             Mx = MMatrix.PowEntry(6 * MMatrix.PowEntry(Mx, 2), 0.5);
             FloorToBitmap(ref Mx);
             int NewRGB;
-            for (int i = 0; i < Bmp.Width; i++)
-                for (int j = 0; j < Bmp.Height; j++)
+            for (int i = 0; i < Bmp.Width; ++i)
+                for (int j = 0; j < Bmp.Height; ++j)
                     if (MRed[i, j] < 50)
                     {
                         NewRGB = (int)Mx[i, j];
@@ -816,24 +812,24 @@ namespace WindowsFormsApplication1
             Bitmap tmpBmp = new Bitmap(xMax, yMax);
 
             if (Operation == "&")
-                for (int i = 0; i < xMax; i++)
-                    for (int j = 0; j < yMax; j++)
+                for (int i = 0; i < xMax; ++i)
+                    for (int j = 0; j < yMax; ++j)
                     {
                         P1 = Bmp1.GetPixel(i, j);
                         P2 = Bmp2.GetPixel(i, j);
                         tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R & P2.R, P1.G & P2.G, P1.B & P2.B));
                     }
             else if (Operation == "|")
-                for (int i = 0; i < xMax; i++)
-                    for (int j = 0; j < yMax; j++)
+                for (int i = 0; i < xMax; ++i)
+                    for (int j = 0; j < yMax; ++j)
                     {
                         P1 = Bmp1.GetPixel(i, j);
                         P2 = Bmp2.GetPixel(i, j);
                         tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R | P2.R, P1.G | P2.G, P1.B | P2.B));
                     }
             else //if (Operation == "^")
-                for (int i = 0; i < xMax; i++)
-                    for (int j = 0; j < yMax; j++)
+                for (int i = 0; i < xMax; ++i)
+                    for (int j = 0; j < yMax; ++j)
                     {
                         P1 = Bmp1.GetPixel(i, j);
                         P2 = Bmp2.GetPixel(i, j);
@@ -849,8 +845,8 @@ namespace WindowsFormsApplication1
             Color P1, P2;
             Bitmap tmpBmp = new Bitmap(xMax, yMax);
 
-            for (int i = 0; i < xMax; i++)
-                for (int j = 0; j < yMax; j++)
+            for (int i = 0; i < xMax; ++i)
+                for (int j = 0; j < yMax; ++j)
                 {
                     P1 = Bmp1.GetPixel(i, j);
                     P2 = Bmp2.GetPixel(i, j);

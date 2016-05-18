@@ -45,8 +45,8 @@ namespace WindowsFormsApplication1
             this.row = row;
             this.col = column;
             this.MArray = new double[row, column];
-            for (int i = 0; i < row; i++)
-                for (int j = 0; j < col; j++)
+            for (int i = 0; i < row; ++i)
+                for (int j = 0; j < col; ++j)
                     this.MArray[i, j] = A.MArray[i, j];
         }
         //Trunkcate a matrix
@@ -66,8 +66,8 @@ namespace WindowsFormsApplication1
             this.row = ToRow - FromRow;
             this.col = ToColumn - FromColumn;
             this.MArray = new double[this.row, this.col];
-            for (int i = FromRow; i < ToRow; i++)
-                for (int j = FromColumn; j < ToColumn; j++)
+            for (int i = FromRow; i < ToRow; ++i)
+                for (int j = FromColumn; j < ToColumn; ++j)
                     this.MArray[i - FromRow, j - FromColumn] = A.MArray[i, j];
         }
 
@@ -90,8 +90,8 @@ namespace WindowsFormsApplication1
             this.row = row;
             this.col = column;
             this.MArray = new double[this.row, this.col];
-            for (int i = 0; i < row; i++)
-                for (int j = 0; j < column; j++)
+            for (int i = 0; i < row; ++i)
+                for (int j = 0; j < column; ++j)
                     this.MArray[i, j] = ValueArray[i, j];
         }
 
@@ -149,8 +149,8 @@ namespace WindowsFormsApplication1
 
             this.row = ToRow - FromRow;
             this.col = ToColumn - FromColumn;
-            for (int i = FromRow; i < ToRow; i++)
-                for (int j = FromColumn; j < ToColumn; j++)
+            for (int i = FromRow; i < ToRow; ++i)
+                for (int j = FromColumn; j < ToColumn; ++j)
                     this.MArray[i - FromRow, j - FromColumn] = A.MArray[i, j];
         }
         #endregion
@@ -174,9 +174,9 @@ namespace WindowsFormsApplication1
         {
             StringBuilder sb = new StringBuilder("");                       
 
-            for (int i = 0; i < A.row; i++)
+            for (int i = 0; i < A.row; ++i)
             {
-                for (int j = 0; j < A.col; j++)
+                for (int j = 0; j < A.col; ++j)
                 {
                     sb.Append(Math.Round(A[i, j], GlobalMath.DIGITS));
                     sb.Append("\t\t");                    
@@ -193,8 +193,8 @@ namespace WindowsFormsApplication1
 
         private static MMatrix Negate(MMatrix matrix)
         {
-            for (int i = 0; i < matrix.row; i++)
-                for (int j = 0; j < matrix.col; j++)
+            for (int i = 0; i < matrix.row; ++i)
+                for (int j = 0; j < matrix.col; ++j)
                     matrix[i, j] = -matrix[i, j];
 
             return matrix;
@@ -206,8 +206,8 @@ namespace WindowsFormsApplication1
             if (matrix1.row != matrix2.row || matrix1.col != matrix2.col)
                 throw new MMatrixException("Addition not impossible. Two matrices are different size");
             MMatrix result = new MMatrix(matrix1.row, matrix1.col);
-            for (int i = 0; i < result.row; i++)
-                for (int j = 0; j < result.col; j++)
+            for (int i = 0; i < result.row; ++i)
+                for (int j = 0; j < result.col; ++j)
                     result[i, j] = matrix1[i, j] + matrix2[i, j];
             return result;
         }
@@ -218,9 +218,9 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Multiplication not impossible. Two matrices are different size");
 
             MMatrix result = new MMatrix(matrix1.row, matrix2.col);
-            for (int i = 0; i < result.row; i++)
-                for (int j = 0; j < result.col; j++)
-                    for (int k = 0; k < matrix1.col; k++)              
+            for (int i = 0; i < result.row; ++i)
+                for (int j = 0; j < result.col; ++j)
+                    for (int k = 0; k < matrix1.col; ++k)              
                         result[i, j] += matrix1[i, k] * matrix2[k, j];                    
                     
             return result;
@@ -234,8 +234,8 @@ namespace WindowsFormsApplication1
                 return matrix;
 
             MMatrix result = new MMatrix(matrix.row, matrix.col);
-            for (int i = 0; i < matrix.row; i++)
-                for (int j = 0; j < matrix.col; j++)
+            for (int i = 0; i < matrix.row; ++i)
+                for (int j = 0; j < matrix.col; ++j)
                     result[i, j] = matrix[i, j] * dbl;
             return result;
         }
@@ -244,8 +244,8 @@ namespace WindowsFormsApplication1
         {
             MMatrix A = new MMatrix(row, column);
             Random ranobj = new Random();
-            for (int i = 0; i < A.row; i++)            
-                for (int j = 0; j < A.col; j++)
+            for (int i = 0; i < A.row; ++i)            
+                for (int j = 0; j < A.col; ++j)
                     A[i, j] = ranobj.Next(minvalue, maxvalue);            
 
             return A;
@@ -259,7 +259,7 @@ namespace WindowsFormsApplication1
         public static MMatrix DiagonalMatrix(int size, int initvalue)
         {
             MMatrix A = new MMatrix(size, size);
-            for (int i = 0; i < size; i++)           
+            for (int i = 0; i < size; ++i)           
                 A[i, i] = initvalue;            
 
             return A;
@@ -268,8 +268,8 @@ namespace WindowsFormsApplication1
         public static MMatrix ScalarMatrix(int row, int column, int Scalar)
         {
             MMatrix A = new MMatrix(row, column);
-            for (int i = 0; i < row; i++)
-                for (int j = 0; j < column; j++)
+            for (int i = 0; i < row; ++i)
+                for (int j = 0; j < column; ++j)
                     A[i, j] = Scalar;
 
             return A;
@@ -284,7 +284,7 @@ namespace WindowsFormsApplication1
         {
             Vector v = new Vector(this.row);
 
-            for (int i = 0; i < this.row; i++)
+            for (int i = 0; i < this.row; ++i)
             {
                 v[i] = this[i, j];
             }
@@ -298,7 +298,7 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Cannot get diagonal of non-square matrix.");
 
             Vector v = new Vector(this.col);
-            for (int i = 0; i < this.col; i++)
+            for (int i = 0; i < this.col; ++i)
             {
                 v[i] = this[i, i];
             }
@@ -309,8 +309,8 @@ namespace WindowsFormsApplication1
         public static MMatrix Floor(MMatrix A)
         {
             MMatrix B = A.Clone();
-            for (int i = 0; i < B.row; i++)
-                for (int j = 0; j < B.col; j++)
+            for (int i = 0; i < B.row; ++i)
+                for (int j = 0; j < B.col; ++j)
                     B[i, j] = Math.Floor(B[i,j]);
             
             return B;
@@ -323,11 +323,11 @@ namespace WindowsFormsApplication1
 
             MMatrix C = new MMatrix(A.row, A.col + B.col);
 
-            for (int i = 0; i < C.row; i++)
+            for (int i = 0; i < C.row; ++i)
             {
-                for (int j = 0; j < A.col; j++)
+                for (int j = 0; j < A.col; ++j)
                     C.MArray[i, j] = A.MArray[i, j];
-                for (int j = A.col; j < C.col; j++)
+                for (int j = A.col; j < C.col; ++j)
                     C.MArray[i, j] = B.MArray[i, j - A.col];
             }
             return C;
@@ -340,12 +340,12 @@ namespace WindowsFormsApplication1
 
             MMatrix C = new MMatrix(A.row + B.row, A.col);
 
-            for (int i = 0; i < A.row; i++)            
-                for (int j = 0; j < C.col; j++)
+            for (int i = 0; i < A.row; ++i)            
+                for (int j = 0; j < C.col; ++j)
                     C.MArray[i, j] = A.MArray[i, j];
 
-            for (int i = A.row; i < C.row; i++)
-                for (int j = 0; j < C.col; j++)
+            for (int i = A.row; i < C.row; ++i)
+                for (int j = 0; j < C.col; ++j)
                     C.MArray[i, j] = B.MArray[i-A.row, j];
             return C;
         }
@@ -405,8 +405,8 @@ namespace WindowsFormsApplication1
         {
             MMatrix B = new MMatrix(row, column);
 
-            for (int i = 0; i < row; i++)
-                for (int j = 0; j < column; j++)
+            for (int i = 0; i < row; ++i)
+                for (int j = 0; j < column; ++j)
                     B[i, j] = Math.Abs(A[i, j]);
 
             return B;
@@ -421,16 +421,16 @@ namespace WindowsFormsApplication1
         {
             MMatrix B = new MMatrix(row, column);
             if (pow == 2)
-                for (int i = 0; i < row; i++)
-                    for (int j = 0; j < column; j++)
+                for (int i = 0; i < row; ++i)
+                    for (int j = 0; j < column; ++j)
                         B[i, j] = A[i, j] * A[i, j];
             else if (pow == 0.5)
-                for (int i = 0; i < row; i++)
-                    for (int j = 0; j < column; j++)
+                for (int i = 0; i < row; ++i)
+                    for (int j = 0; j < column; ++j)
                         B[i, j] = Math.Sqrt(A[i, j]);
             else
-                for (int i = 0; i < row; i++)
-                    for (int j = 0; j < column; j++)
+                for (int i = 0; i < row; ++i)
+                    for (int j = 0; j < column; ++j)
                         B[i, j] = Math.Pow(A[i, j], pow);
             
             return B;
@@ -455,8 +455,8 @@ namespace WindowsFormsApplication1
         {
             MMatrix B = new MMatrix(column, row);
 
-            for (int i = 0; i < row; i++)
-                for (int j = 0; j < column; j++)
+            for (int i = 0; i < row; ++i)
+                for (int j = 0; j < column; ++j)
                     B[j, i] = A[i, j];
 
             return B;
@@ -477,12 +477,12 @@ namespace WindowsFormsApplication1
             MMatrix minor = new MMatrix(A.row - 1, A.col - 1);
             int m = 0, n = 0;
 
-            for (int i = 0; i < A.row; i++)
+            for (int i = 0; i < A.row; ++i)
             {
                 if (i == row)
                     continue;
                 n = 0;
-                for (int j = 0; j < A.col; j++)
+                for (int j = 0; j < A.col; ++j)
                 {
                     if (j == col)
                         continue;
@@ -501,7 +501,7 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Determinant of a non-square A doesn't exist");
             if (A.row == 1)
                 return A[0, 0];
-            for (int j = 0; j < A.col; j++)
+            for (int j = 0; j < A.col; ++j)
             {
                 if (A[0, j] == 0)
                     continue;
@@ -517,7 +517,7 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Determinant of a non-square matrix doesn't exist");
 
             A.FactorLU_withP();
-            for (int i = 0; i < A.row; i++)
+            for (int i = 0; i < A.row; ++i)
                 det *= A.LU_L[i, i] * A.LU_U[i, i];
             det *= Determinant(new MMatrix(A.LU_P)); 
 
@@ -548,8 +548,8 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Adjoint of a non-square A does not exists");
 
             MMatrix AdjointMatrix = new MMatrix(A.row, A.col);
-            for (int i = 0; i < A.row; i++)
-                for (int j = 0; j < A.col; j++)
+            for (int i = 0; i < A.row; ++i)
+                for (int j = 0; j < A.col; ++j)
                     AdjointMatrix[i, j] = Math.Pow(-1, i + j) * Determinant(Minor(A, i, j));
 
             return Transpose(AdjointMatrix); 
@@ -558,7 +558,7 @@ namespace WindowsFormsApplication1
         public void InterchangeRow(int iRow1, int iRow2)
         {
             double temp;
-            for (int j = 0; j < this.col; j++)
+            for (int j = 0; j < this.col; ++j)
             {
                 temp = this[iRow1, j];
                 this[iRow1, j] = this[iRow2, j];
@@ -569,7 +569,7 @@ namespace WindowsFormsApplication1
         public void InterchangeColumn(int iCol1, int iCol2)
         {
             double temp;
-            for (int j = 0; j < this.row; j++)
+            for (int j = 0; j < this.row; ++j)
             {
                 temp = this[j, iCol1];
                 this[j, iCol1] = this[j, iCol2];
@@ -579,13 +579,13 @@ namespace WindowsFormsApplication1
 
         public void MultiplyRow(int iRow, double dbl)
         {
-            for (int j = 0; j < this.col; j++)           
+            for (int j = 0; j < this.col; ++j)           
                 this[iRow, j] *= dbl;                          
         }
 
         public void AddRow(int iTargetRow, int iSecondRow, double iMultiple)
         {
-            for (int j = 0; j < this.col; j++)
+            for (int j = 0; j < this.col; ++j)
                 this[iTargetRow, j] += (this[iSecondRow, j] * iMultiple);
         }
 
@@ -594,31 +594,31 @@ namespace WindowsFormsApplication1
             try
             {
                 MMatrix EchelonMatrix = new MMatrix(matrix);
-                for (int i = 0; i < matrix.row; i++)
+                for (int i = 0; i < matrix.row; ++i)
                 {
                     /*Overcome round-off error to approximate values
-                    for (int j = 0; j < EchelonMatrix.row; j++)
-                        for (int k = 0 ; k < EchelonMatrix.col; k++)
+                    for (int j = 0; j < EchelonMatrix.row; ++j)
+                        for (int k = 0 ; k < EchelonMatrix.col; ++k)
                             if (Math.Abs(EchelonMatrix[j, k]) <= ZERO)
                                 EchelonMatrix[j, k] = 0;
                     */
                     if (i < EchelonMatrix.col)
                     {
                         if (EchelonMatrix[i, i] == 0)	// if diagonal entry is zero, 
-                            for (int j = i + 1; j < EchelonMatrix.row; j++)
+                            for (int j = i + 1; j < EchelonMatrix.row; ++j)
                                 if (EchelonMatrix[j, i] != 0)	 //check if some below entry is non-zero
                                     EchelonMatrix.InterchangeRow(i, j);	// then interchange the two rows
                         if (EchelonMatrix[i, i] == 0)	// if not found any non-zero diagonal entry
                             continue;	// increment i;
 
                         if (EchelonMatrix[i, i] != 1)	// if diagonal entry is not 1 , 	
-                            for (int j = i + 1; j < EchelonMatrix.row; j++)
+                            for (int j = i + 1; j < EchelonMatrix.row; ++j)
                                 if (EchelonMatrix[j, i] == 1)	 //check if some below entry is 1
                                     EchelonMatrix.InterchangeRow(i, j);	// then interchange the two rows
 
                         EchelonMatrix.MultiplyRow(i, 1 / (EchelonMatrix[i, i]));
 
-                        for (int j = i + 1; j < EchelonMatrix.row; j++)
+                        for (int j = i + 1; j < EchelonMatrix.row; ++j)
                             EchelonMatrix.AddRow(j, i, -EchelonMatrix[j, i]);
                     }
                 }
@@ -640,23 +640,23 @@ namespace WindowsFormsApplication1
             try
             {
                 MMatrix ReducedEchelonMatrix = new MMatrix(matrix);
-                for (int i = 0; i < matrix.row; i++)
+                for (int i = 0; i < matrix.row; ++i)
                 {
                     if (i < ReducedEchelonMatrix.col)
                     {
                         if (ReducedEchelonMatrix[i, i] == 0)	// if diagonal entry is zero, 
-                            for (int j = i + 1; j < ReducedEchelonMatrix.row; j++)
+                            for (int j = i + 1; j < ReducedEchelonMatrix.row; ++j)
                                 if (ReducedEchelonMatrix[j, i] != 0)	 //check if some below entry is non-zero
                                     ReducedEchelonMatrix.InterchangeRow(i, j);	// then interchange the two rows
                         if (ReducedEchelonMatrix[i, i] == 0)	// if not found any non-zero diagonal entry
                             continue;	// increment i;
                         if (ReducedEchelonMatrix[i, i] != 1)	// if diagonal entry is not 1 , 	
-                            for (int j = i + 1; j < ReducedEchelonMatrix.row; j++)
+                            for (int j = i + 1; j < ReducedEchelonMatrix.row; ++j)
                                 if (ReducedEchelonMatrix[j, i] == 1)	 //check if some below entry is 1
                                     ReducedEchelonMatrix.InterchangeRow(i, j);	// then interchange the two rows
                         ReducedEchelonMatrix.MultiplyRow(i, 1 / (ReducedEchelonMatrix[i, i]));
 
-                        for (int j = i + 1; j < ReducedEchelonMatrix.row; j++)
+                        for (int j = i + 1; j < ReducedEchelonMatrix.row; ++j)
                             ReducedEchelonMatrix.AddRow(j, i, -ReducedEchelonMatrix[j, i]);
                         for (int j = i - 1; j >= 0; j--)
                             ReducedEchelonMatrix.AddRow(j, i, -ReducedEchelonMatrix[j, i]);
@@ -684,16 +684,16 @@ namespace WindowsFormsApplication1
 
             v1 = Eigenvectors.ElementAt(0);
             v1 = v1.Normalize();
-            for (int i = 0; i < v1.Elements.Length; i++)
+            for (int i = 0; i < v1.Elements.Length; ++i)
             {
                 A[i, 0] = v1[i];
             }
-            for (int j = 1; j < Eigenvectors.Count; j++)
+            for (int j = 1; j < Eigenvectors.Count; ++j)
             {
                 v = Eigenvectors.ElementAt(j);
                 v = v.Orthonormalize(v1);
                 column++;
-                for (int i = 0; i < v.Elements.Length; i++)
+                for (int i = 0; i < v.Elements.Length; ++i)
                 {
                     A[i, column] = v[i];
                 }
@@ -708,19 +708,19 @@ namespace WindowsFormsApplication1
             Vector v1 = new Vector(Eigenvectors.row);
             Vector v = new Vector(Eigenvectors.row);                        
             
-            for (int i = 0; i < v1.Elements.Length; i++)            
+            for (int i = 0; i < v1.Elements.Length; ++i)            
                 v1[i] = A[i, 0];
             v1 = v1.Normalize();
-            for (int i = 0; i < v1.Elements.Length; i++)
+            for (int i = 0; i < v1.Elements.Length; ++i)
                 A[i, 0] = v1[i];
 
-            for (int i = 1; i < Eigenvectors.col; i++)
+            for (int i = 1; i < Eigenvectors.col; ++i)
             {
-                for (int j = 0; j < Eigenvectors.row; j++)
+                for (int j = 0; j < Eigenvectors.row; ++j)
                     v[j] = Eigenvectors[j,i];
                 v = v.Orthonormalize(v1);
                 
-                for (int j = 0; j < v.Elements.Length; j++)                
+                for (int j = 0; j < v.Elements.Length; ++j)                
                     A[j, i] = v[j];                
             }
             return A;
@@ -733,8 +733,8 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Eigenvectors do not match eigenvalues.");
             
             double temp;
-            for (int i = 0; i < eigenvalues.Elements.Length; i++)            
-                for (int j = i + 1; j < eigenvalues.Elements.Length; j++)
+            for (int i = 0; i < eigenvalues.Elements.Length; ++i)            
+                for (int j = i + 1; j < eigenvalues.Elements.Length; ++j)
                     if (eigenvalues[i] < eigenvalues[j])
                     {
                         temp = eigenvalues[i];
@@ -774,8 +774,8 @@ namespace WindowsFormsApplication1
             if(!IsSquared(A))
                 return false;
 
-            for (int i = 0; i < A.row; i++)                            
-                for (int j = i+1; j < A.col; j++)
+            for (int i = 0; i < A.row; ++i)                            
+                for (int j = i+1; j < A.col; ++j)
                     if(A[i,j]!=A[j,i])                    
                         return false;
 
@@ -795,8 +795,8 @@ namespace WindowsFormsApplication1
             if ((matrix1.row != matrix2.row) || (matrix1.col != matrix2.col))
                 return false;
 
-            for (int i = 0; i < matrix1.row; i++)
-                for (int j = 0; j < matrix1.col; j++)
+            for (int i = 0; i < matrix1.row; ++i)
+                for (int j = 0; j < matrix1.col; ++j)
                     if (Math.Round(matrix1[i, j], GlobalMath.DIGITS) != Math.Round(matrix2[i, j], GlobalMath.DIGITS))
                         return false;
 
@@ -826,32 +826,32 @@ namespace WindowsFormsApplication1
             A.LDL_D1 = new double[size];
             A.LDL_L = new double[size, size];
             A.LDL_D = new double[size, size];
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
             {
                 A.LDL_L[i, i] = 1;
                 //A.LDL_D[i] = A[i, i];
             }
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
             {
-                for (int j = 0; j < i - 1; j++)
+                for (int j = 0; j < i - 1; ++j)
                     V[j] = A.LDL_L[i, j] * A.LDL_D1[j];
 
                 //sum1 = 0;
-                for (int j = 0; j < i - 1; j++)
+                for (int j = 0; j < i - 1; ++j)
                     sum1 += A.LDL_L[i, j] * V[j];
                 A.LDL_D1[i] = A[i, i] - sum1;
 
-                for (int j = i + 1; j < size; j++)
+                for (int j = i + 1; j < size; ++j)
                 {
                     //sum2 = 0;
-                    for (int k = 0; k < i - 1; k++)
+                    for (int k = 0; k < i - 1; ++k)
                         sum2 += A.LDL_L[j, k] * V[k];
                     A.LDL_L[j, i] = (A[j, i] - sum2) / A.LDL_D1[i];
                 }
             }
             // Create Matrix DD from array D
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
                 A.LDL_D[i, i] = A.LDL_D1[i];
         }
 
@@ -887,7 +887,7 @@ namespace WindowsFormsApplication1
             //Init LU_L matrix 
             A.LU_L = new double[size, size];
             A.LU_U = new double[size, size];            
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
             {
                 A.LU_L[i, i] = 1;
                 A.LU_U[0, i] = A[0, i];
@@ -896,37 +896,37 @@ namespace WindowsFormsApplication1
             if (A.LU_L[0,0]*A.LU_U[0, 0] == 0)
                 throw new MMatrixException("LU factorization impossible.");
 
-            for (int j = 1; j < size; j++)
+            for (int j = 1; j < size; ++j)
             {
                 A.LU_U[0,j] = A[0,j]/A.LU_L[0,0];
                 A.LU_L[j, 0] = A[j, 0] / A.LU_U[0, 0];
             }
 
-            for (int i = 1; i < size - 1; i++)
+            for (int i = 1; i < size - 1; ++i)
             {
                 sum = 0;
-                for (int k = 0; k < i - 1; k++)
+                for (int k = 0; k < i - 1; ++k)
                     sum += A.LU_L[i, k] * A.LU_U[k, i];
                 A.LU_U[i, i] = A[i, i] - sum;
 
                 if (A.LU_U[i, i] == 0)
                     throw new MMatrixException("LU factorization impossible.");
 
-                for (int j = i + 1; j < size; j++)
+                for (int j = i + 1; j < size; ++j)
                 {
                     sum1 = 0;
-                    for (int k = 0; k < i - 1; k++)
+                    for (int k = 0; k < i - 1; ++k)
                         sum1 += A.LU_L[i, k] * A.LU_U[k, j];
                     A.LU_U[i, j] = (1 / A.LU_L[i, i]) * (A[i, j] - sum1);
 
                     sum2 = 0;
-                    for (int k = 0; k < i - 1; k++)
+                    for (int k = 0; k < i - 1; ++k)
                         sum2 += A.LU_L[j, k] * A.LU_U[k, i];
                     A.LU_L[j, i] = (1 / A.LU_U[i, i]) * (A[j, i] - sum2);
                 }
             }
             sum = 0;
-            for (int k = 0; k < size - 1; k++)
+            for (int k = 0; k < size - 1; ++k)
                 sum += A.LU_L[size - 1, k] * A.LU_U[k, size - 1];
             A.LU_U[size - 1, size - 1] = A[size - 1, size - 1] - sum;
         }
@@ -938,14 +938,14 @@ namespace WindowsFormsApplication1
             //A.LU_U = new double[size, size];
             A.LU_U = (double[,])A.MArray.Clone();
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
                 A.LU_L[i, i] = 1;
 
-            for (int i = 0; i < size; i++)
-                for (int j = i + 1; j < size; j++)
+            for (int i = 0; i < size; ++i)
+                for (int j = i + 1; j < size; ++j)
                 {
                     A.LU_L[j, i] = A.LU_U[j, i] / A.LU_U[i, i];
-                    for (int k = i; k < size; k++)
+                    for (int k = i; k < size; ++k)
                         A.LU_U[j, k] = A.LU_U[j, k] - A.LU_U[i, k] * A.LU_L[j, i];
                 }
         }        
@@ -969,14 +969,14 @@ namespace WindowsFormsApplication1
             MMatrix P = MMatrix.DiagonalMatrix(size, 1);
             A.LU_L = new double[size, size];
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
                 A.LU_L[i, i] = 1;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
             {
                 //Interchange row if the entry [i,i] is 0
                 if (A[i, i] == 0)	// if diagonal entry is zero, 
-                    for (int k = i + 1; k < A.row; k++)
+                    for (int k = i + 1; k < A.row; ++k)
                         if (A[k, i] != 0)	 //check if some below entry is non-zero
                         {
                             A.InterchangeRow(i, k);	// then interchange the two rows
@@ -985,7 +985,7 @@ namespace WindowsFormsApplication1
                 if (A[i, i] == 0)	// if not found any non-zero diagonal entry
                     throw new MMatrixException("Cannot factor LU for this matrix");
 
-                for (int j = i + 1; j < size; j++)
+                for (int j = i + 1; j < size; ++j)
                 {
                     A.LU_L[j, i] = A[j, i] / A[i, i];
                     A.AddRow(j, i, -A.LU_L[j, i]);
@@ -1021,21 +1021,21 @@ namespace WindowsFormsApplication1
             AA.FactorLDLt();
             Eigenvectors = new MMatrix(AA.LDL_L);
             Eigenvalues = new Vector(AA.row);
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; ++i)
                 Eigenvalues[i] = AA.LDL_D[i, i];
             SortEigen(ref Eigenvalues, ref Eigenvectors);
             A.SVD_U = Eigenvectors.MArray;
 
             if (A.SVD_S == null)
                 A.SVD_S = new double[A.row, A.col];
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; ++i)
                 A.SVD_S[i, i] = Math.Sqrt(Eigenvalues[i]);
 
             AA = AA.Transpose();
             AA.FactorLDLt();
             Eigenvectors = new MMatrix(AA.LDL_L);
             Eigenvalues = new Vector(AA.row);
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; ++i)
                 Eigenvalues[i] = AA.LDL_D[i, i];
             SortEigen(ref Eigenvalues, ref Eigenvectors);
             A.SVD_Vt = Eigenvectors.Transpose().MArray;            
@@ -1059,7 +1059,7 @@ namespace WindowsFormsApplication1
             //S
             A.SVD_S = new double[A.row, A.col];
             index = (A.row < A.col) ? (A.row) : (A.col);
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; ++i)
                 A.SVD_S[i, i] = Math.Sqrt(Eigenvalues[i]);
                                                
             //V
@@ -1088,10 +1088,10 @@ namespace WindowsFormsApplication1
             double[] U = new double[n];
             double[] Z = new double[n];
 
-            for (int k = 0; k < n-2; k++)
+            for (int k = 0; k < n-2; ++k)
             {
                 q = 0;
-                for (int j = k + 1; j < n; j++)
+                for (int j = k + 1; j < n; ++j)
                     q += A[j, k]* A[j, k];
 
                 if (A[k + 1, k] == 0)
@@ -1103,27 +1103,27 @@ namespace WindowsFormsApplication1
                 
                 V[k] = 0;
                 V[k + 1] = A[k + 1, k] - alpha;
-                for (int j = k + 2; j < n; j++)                
+                for (int j = k + 2; j < n; ++j)                
                     V[j] = A[j, k];
 
-                for (int j = k; j < n; j++)
+                for (int j = k; j < n; ++j)
                 {
                     sum = 0;
-                    for (int i = k + 1; i < n; i++)
+                    for (int i = k + 1; i < n; ++i)
                         sum += A[j, i] * V[i];
                         U[j] = (1 / RSQ) * sum;
                 }
                 sum = 0;
-                for (int i = k + 1; i < n; i++)
+                for (int i = k + 1; i < n; ++i)
                     sum += V[i]*U[i];
                 PROD = sum;
 
-                for (int j = k; j < n; j++)                
+                for (int j = k; j < n; ++j)                
                     Z[j] = U[j] - (PROD / (2 * RSQ)) * V[j];
 
-                for (int l = k + 1; l < n - 1; l++)
+                for (int l = k + 1; l < n - 1; ++l)
                 {
-                    for (int j = l + 1; j < n; j++)
+                    for (int j = l + 1; j < n; ++j)
                     {
                         A[j, l] = A[j, l] - (V[l] * Z[j]) - (V[j] * Z[l]);
                         A[l, j] = A[j, l];
@@ -1133,7 +1133,7 @@ namespace WindowsFormsApplication1
 
                 A[n - 1, n - 1] = A[n - 1, n - 1] - 2 * V[n - 1] * Z[n - 1];
 
-                for (int j = k + 2; j < n; j++)
+                for (int j = k + 2; j < n; ++j)
                 {
                     A[k, j] = 0;
                     A[j, k] = 0;
@@ -1173,9 +1173,9 @@ namespace WindowsFormsApplication1
             double[] Sig = new double[n];
             Queue<double> QLamda=new Queue<double>();                        
 
-            for (int i = 0; i < n; i++)            
+            for (int i = 0; i < n; ++i)            
                 A[i] = matrix[i, i];
-            for (int i = 1; i < n; i++)
+            for (int i = 1; i < n; ++i)
                 B[i] = matrix[i,i-1];
 
             k = 1;
@@ -1196,7 +1196,7 @@ namespace WindowsFormsApplication1
                     QLamda.Enqueue(lamda);
                     n = n - 1;
                     A[0] = A[1];
-                    for (int j = 1; j < n; j++)
+                    for (int j = 1; j < n; ++j)
                     {
                         A[j] = A[j + 1];
                         B[j] = B[j + 1];
@@ -1213,7 +1213,7 @@ namespace WindowsFormsApplication1
                     return QLamda;
                 }
                 /*
-                for (int j = 2; j < n - 1; j++)
+                for (int j = 2; j < n - 1; ++j)
                 {
                     if (Math.Abs(B[j]) <= TOL)
                     {
@@ -1249,13 +1249,13 @@ namespace WindowsFormsApplication1
                 sigma = min + A[n - 1];
                 SHIFT += sigma;
 
-                for (int j = 0; j < n; j++)
+                for (int j = 0; j < n; ++j)
                     D[j] = A[j] - sigma;
 
                 X[0] = D[0];
                 Y[0] = B[1];
 
-                for (int j = 1; j < n; j++)
+                for (int j = 1; j < n; ++j)
                 {
                     Z[j - 1] = Math.Sqrt(X[j-1]*X[j-1]+B[j]*B[j]);
                     C[j] = X[j-1] / Z[j-1];
@@ -1273,7 +1273,7 @@ namespace WindowsFormsApplication1
                 A[0] = Sig[1] * Q[0] + C[1] * Z[0];
                 B[1] = Sig[1] * Z[1];
 
-                for (int j = 1; j < n - 1; j++)
+                for (int j = 1; j < n - 1; ++j)
                 {
                     A[j] = Sig[j + 1] * Q[j] + C[j] * C[j + 1] * Z[j];
                     B[j + 1] = Sig[j + 1] * Z[j + 1];
@@ -1296,7 +1296,7 @@ namespace WindowsFormsApplication1
             MMatrix T = this.Clone();
             MMatrix[] QR = new MMatrix[2];
 
-            for (int i = 0; i < max_iterations; i++)
+            for (int i = 0; i < max_iterations; ++i)
             {
                 QR = T.QRGramSchmidt();
                 T = QR[1] * QR[0];
@@ -1320,23 +1320,23 @@ namespace WindowsFormsApplication1
             MMatrix R = new MMatrix(n, n);
 
             // the first column of Q equals the first column of this matrix
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i < m; ++i)
                 Q[i, 0] = this[i, 0];
 
             R[0, 0] = 1;
 
-            for (int k = 0; k < n; k++)
+            for (int k = 0; k < n; ++k)
             {
                 R[k, k] = Vector.L2Norm(this.Column(k));
 
-                for (int i = 0; i < m; i++)
+                for (int i = 0; i < m; ++i)
                     Q[i, k] = this[i, k] / R[k, k];
 
-                for (int j = k + 1; j < n; j++)
+                for (int j = k + 1; j < n; ++j)
                 {
                     R[k, j] = Vector.DotProduct(Q.Column(k), this.Column(j));
 
-                    for (int i = 0; i < m; i++)
+                    for (int i = 0; i < m; ++i)
                         this[i, j] = this[i, j] - Q[i, k] * R[k, j];
                 }
             }
@@ -1412,13 +1412,13 @@ namespace WindowsFormsApplication1
             }
 
             // Initialize the eigenvalues to the identity matrix.
-            /*for (p_e = eigenvectors, i = 0; i < n; i++)
-                for (j = 0; j < n; j++)
+            /*for (p_e = eigenvectors, i = 0; i < n; ++i)
+                for (j = 0; j < n; ++j)
                     p_e[i, j] = (i == j) ? 1.0 : 0.0;  */                   
 
             // Calculate the threshold and threshold_norm.
-            for (threshold = 0.0, pAk = A, i = 0; i < (n - 1); i++)
-                for (j = i + 1; j < n; j++)
+            for (threshold = 0.0, pAk = A, i = 0; i < (n - 1); ++i)
+                for (j = i + 1; j < n; ++j)
                     threshold += pAk[i, j] * pAk[i, j];
 
             threshold = Math.Sqrt(threshold + threshold);
@@ -1433,9 +1433,9 @@ namespace WindowsFormsApplication1
                 max = 0.0;
                 pAk = A;
                 pAm = pAk;
-                for (k = 0; k < (n - 1); k++)
+                for (k = 0; k < (n - 1); ++k)
                 {
-                    for (m = k + 1; m < n; m++)
+                    for (m = k + 1; m < n; ++m)
                     {
                         if (Math.Abs(pAk[k, m]) < threshold)
                             continue;
@@ -1467,7 +1467,7 @@ namespace WindowsFormsApplication1
                         pAm[m, m] = dum1 * sin2_phi + dum2 * cos2_phi - dum3 * sin_2phi;
                         pAk[k, m] = 0.0;
                         pAm[m, k] = 0.0;
-                        for (i = 0; i < n; i++)
+                        for (i = 0; i < n; ++i)
                         {
                             if ((i == k) || (i == m))
                                 continue;
@@ -1490,7 +1490,7 @@ namespace WindowsFormsApplication1
                             else
                                 pAm[m, i] = dum3;
                         }
-                        for (p_e = eigenvectors, i = 0; i < n; i++)
+                        for (p_e = eigenvectors, i = 0; i < n; ++i)
                         {
                             dum1 = p_e[i, k];
                             dum2 = p_e[i, m];
@@ -1498,14 +1498,14 @@ namespace WindowsFormsApplication1
                             p_e[i, m] = -dum1 * sin_phi + dum2 * cos_phi;
                         }
                     }
-                    for (i = 0; i < n; i++)
+                    for (i = 0; i < n; ++i)
                         if (i == k)
                             continue;
                         else if (max < Math.Abs(pAk[k, i]))
                             max = Math.Abs(pAk[k, i]);
                 }
             }
-            for (pAk = A, k = 0; k < n; k++)
+            for (pAk = A, k = 0; k < n; ++k)
                 eigenvalues[k] = pAk[k, k];
         }
 
@@ -1572,10 +1572,10 @@ namespace WindowsFormsApplication1
         {
             double MaxRow = 0;
 
-            for (int i = 0; i < A.row; i++)
+            for (int i = 0; i < A.row; ++i)
             {
                 double sum = 0;
-                for (int j = 0; j < A.col; j++)
+                for (int j = 0; j < A.col; ++j)
                     sum += Math.Abs(A[i, j]);
                 if (MaxRow < sum)
                     MaxRow = sum;
@@ -1606,8 +1606,8 @@ namespace WindowsFormsApplication1
                         
             double sum = 0;
             double diff;
-            for (int i = 0; i < MActual.row; i++)
-                for (int j = 0; j < MActual.col; j++)
+            for (int i = 0; i < MActual.row; ++i)
+                for (int j = 0; j < MActual.col; ++j)
                 {
                     diff = MActual[i, j] - MApproximate[i, j];
                     sum += diff * diff;
@@ -1623,7 +1623,7 @@ namespace WindowsFormsApplication1
             int index = Math.Min(temp.row, temp.col);
             int rank = 0;
 
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; ++i)
             {
                 if (temp[i, i] != 0)
                     rank++;
@@ -1641,9 +1641,9 @@ namespace WindowsFormsApplication1
         {            
             double sum = 0;
 
-            for (int i = 0; i < A.row; i++)
+            for (int i = 0; i < A.row; ++i)
             {                
-                for (int j = 0; j < A.col; j++)
+                for (int j = 0; j < A.col; ++j)
                     sum += A[i, j];              
             }
 
@@ -1671,10 +1671,10 @@ namespace WindowsFormsApplication1
             r[1, 0] = -r[0, 1];
             r[1, 1] = r[0, 0];
 
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < cols; ++i)
             {
                 u[1, 0] = i - hcols;
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < rows; ++j)
                 {
                     u[0, 0] = j - hrows;                    
                     h = r * u;
@@ -1699,10 +1699,10 @@ namespace WindowsFormsApplication1
             r[1, 0] = -r[0, 1];
             r[1, 1] = r[0, 0];
 
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < cols; ++i)
             {
                 u[1, 0] = i - hcols;
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < rows; ++j)
                 {
                     u[0, 0] = j - hrows;
                     h = r * u;
@@ -1736,25 +1736,25 @@ namespace WindowsFormsApplication1
             Filter = (bCanny)? D2Gauss_Canny(rows, sigma1, cols, sigma2, theta): D2Gauss(rows, sigma1, cols, sigma2, theta);
             
             //Create a larger matrix to do convolution
-            for (int i = halfKernelRows; i < xMax; i++)
-                for (int j = halfKernelCols; j < yMax; j++)
+            for (int i = halfKernelRows; i < xMax; ++i)
+                for (int j = halfKernelCols; j < yMax; ++j)
                     conMatrix[i, j] = Matrix[i - halfKernelRows, j - halfKernelCols];                   
                 
             //Do convolution on the bigger matrix
-            for (int i = halfKernelRows; i < xMax; i++)
-                for (int j = halfKernelCols; j < yMax; j++)
+            for (int i = halfKernelRows; i < xMax; ++i)
+                for (int j = halfKernelCols; j < yMax; ++j)
                 {
                     tmpBit = 0;
-                    for (int k = 0; k < rows; k++)
-                        for (int l = 0; l < cols; l++)
+                    for (int k = 0; k < rows; ++k)
+                        for (int l = 0; l < cols; ++l)
                             tmpBit += conMatrix[i - halfKernelRows + k, j - halfKernelCols + l] * Filter[k, l];                            
                     conMatrix[i, j] = tmpBit;
                 }
 
             //Copy back to the original-size matrix
             MMatrix newMatrix = new MMatrix(Matrix.row, Matrix.col);
-            for (int i = halfKernelRows; i < xMax; i++)
-                for (int j = halfKernelCols; j < yMax; j++)
+            for (int i = halfKernelRows; i < xMax; ++i)
+                for (int j = halfKernelCols; j < yMax; ++j)
                     newMatrix[i - halfKernelRows, j - halfKernelCols] = conMatrix[i, j];
 
             return newMatrix;

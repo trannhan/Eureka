@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
         {
             Vector A = new Vector(NumElements);
             Random ranobj = new Random();
-            for (int i = 0; i < NumElements; i++)
+            for (int i = 0; i < NumElements; ++i)
                 A[i] = ranobj.Next(minvalue, maxvalue);
 
             return A;
@@ -68,7 +68,7 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Two vectors are different size.");
 
             Vector C = new Vector(A.Elements.Length);
-            for (int i = 0; i < A.Elements.Length; i++)
+            for (int i = 0; i < A.Elements.Length; ++i)
             {
                 C[i] = A[i] + B[i];
             }
@@ -82,7 +82,7 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Two vectors are different size.");
 
             Vector C = new Vector(A.Elements.Length);
-            for (int i = 0; i < A.Elements.Length; i++)
+            for (int i = 0; i < A.Elements.Length; ++i)
             {
                 C[i] = A[i] - B[i];
             }
@@ -96,7 +96,7 @@ namespace WindowsFormsApplication1
                 throw new MMatrixException("Two vectors are different size.");
 
             double c = 0;
-            for (int i = 0; i < A.Elements.Length; i++)
+            for (int i = 0; i < A.Elements.Length; ++i)
                 c += A[i] * B[i];
 
             return c;
@@ -105,7 +105,7 @@ namespace WindowsFormsApplication1
         public static Vector operator *(Vector A, double Scalar)
         {
             Vector B = new Vector(A.Elements.Length);
-            for (int i = 0; i < A.Elements.Length; i++)
+            for (int i = 0; i < A.Elements.Length; ++i)
             {
                 B[i] = A[i] * Scalar;
             }
@@ -143,7 +143,7 @@ namespace WindowsFormsApplication1
             Vector B = A.Abs();
             double Max = B[0];
 
-            for (int j = 1; j < B.Elements.Length; j++)
+            for (int j = 1; j < B.Elements.Length; ++j)
                 if (Max < B[j])
                     Max = B[j];
 
@@ -153,7 +153,7 @@ namespace WindowsFormsApplication1
         public static Vector Abs(Vector A)
         {
             Vector B = new Vector(A.Elements.Length);
-            for (int i = 0; i < A.Elements.Length; i++)
+            for (int i = 0; i < A.Elements.Length; ++i)
                 B[i] = Math.Abs(A[i]);
 
             return B;
@@ -194,8 +194,8 @@ namespace WindowsFormsApplication1
             int m = A.Elements.Length;
             double temp;
             
-            for (int i = 0; i < m; i++)
-                for (int j = i + 1; j < m; j++)
+            for (int i = 0; i < m; ++i)
+                for (int j = i + 1; j < m; ++j)
                 {
                     if (A[i] < A[j])
                     {
@@ -211,8 +211,8 @@ namespace WindowsFormsApplication1
             int m = A.Elements.Length;
             double temp;
 
-            for (int i = 0; i < m; i++)
-                for (int j = i + 1; j < m; j++)
+            for (int i = 0; i < m; ++i)
+                for (int j = i + 1; j < m; ++j)
                 {
                     if (A[i] > A[j])
                     {
@@ -242,7 +242,7 @@ namespace WindowsFormsApplication1
         {
             StringBuilder sb = new StringBuilder("");
 
-            for (int i = 0; i < this.Elements.Length; i++)
+            for (int i = 0; i < this.Elements.Length; ++i)
             {
                 sb.Append(Math.Round(this[i], GlobalMath.DIGITS));
                 sb.Append("\t\t");

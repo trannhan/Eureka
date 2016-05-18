@@ -30,11 +30,11 @@ namespace WindowsFormsApplication1
             {
                 try
                 {
-                    for (int i = 0; i < MainMatrix.row; i++)
-                        for (int j = 0; j < MainMatrix.col; j++)
+                    for (int i = 0; i < MainMatrix.row; ++i)
+                        for (int j = 0; j < MainMatrix.col; ++j)
                             MainMatrix[i, j] = Convert.ToDouble(dataGridViewMatrix[j, i].Value);
 
-                    for (int i = 0; i < b.Elements.Length; i++)
+                    for (int i = 0; i < b.Elements.Length; ++i)
                         b[i] = Convert.ToDouble(dataGridViewVectorb[0, i].Value);
                 }
                 catch(Exception exp)
@@ -78,7 +78,7 @@ namespace WindowsFormsApplication1
             dataGridViewMatrix.SuspendLayout();
             dataGridViewMatrix.Columns.Clear();
             DataGridViewColumn[] DCS = new DataGridViewColumn[cols];
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < cols; ++i)
             {
                 DataGridViewColumn column = new DataGridViewTextBoxColumn();
                 column.HeaderText = string.Concat("A", (i + 1).ToString());
@@ -88,8 +88,8 @@ namespace WindowsFormsApplication1
             dataGridViewMatrix.Rows.Add(rows);
 
             //for DataGrid: [column, row]
-            for (int j = 0; j < MainMatrix.col; j++)
-                for (int i = 0; i < MainMatrix.row; i++)                            
+            for (int j = 0; j < MainMatrix.col; ++j)
+                for (int i = 0; i < MainMatrix.row; ++i)                            
                     dataGridViewMatrix[j,i].Value = MainMatrix[i, j];
 
             //this.dataGridViewMatrix.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
@@ -103,7 +103,7 @@ namespace WindowsFormsApplication1
             dataGridViewVectorb.Columns.Add("b","b");
             dataGridViewVectorb.Columns[0].Width = ColWidth;
             dataGridViewVectorb.Rows.Add(rows);
-            for (int i = 0; i < b.Elements.Length; i++)
+            for (int i = 0; i < b.Elements.Length; ++i)
                 dataGridViewVectorb[0, i].Value = b[i];
             dataGridViewVectorb.ResumeLayout();  
         }   

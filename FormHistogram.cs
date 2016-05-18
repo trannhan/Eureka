@@ -47,9 +47,9 @@ namespace WindowsFormsApplication1
             Color P;      
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
 
-            for (int i = 0; i < Old.Width; i++)
+            for (int i = 0; i < Old.Width; ++i)
             {
-                for (int j = 0; j < Old.Height; j++)
+                for (int j = 0; j < Old.Height; ++j)
                 {
                     P = Old.GetPixel(i, j);
                     R = P.R + (int)this.numericUpDownR.Value;

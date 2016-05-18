@@ -60,7 +60,7 @@ namespace WindowsFormsApplication1
             colordlg = new ColorDialog();
             ImgProcess = new ImageProcessing();
 
-            for (int i = 1; i < 256; i++)
+            for (int i = 1; i < 256; ++i)
             {
                 toolStripSkeletonDiff.Items.Add(i);
                 toolStripComboBoxSkeletonDiff.Items.Add(i);
@@ -798,7 +798,7 @@ namespace WindowsFormsApplication1
                     MMatrix temp = OutputMatrix.Clone();
                     temp.Jacobi_Cyclic_Method(ref eigenvalues, ref eigenvectors);
                     sb.Append("\n\n\nEigenvectors (A) = \n");
-                    for (int i = 0; i < eigenvectors.col; i++)
+                    for (int i = 0; i < eigenvectors.col; ++i)
                     {
                         sb.Append("V");
                         sb.Append(i + 1);
