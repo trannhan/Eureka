@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public class ImageProcessing : IDisposable
+    public class ImageProcessing
     {
         private MMatrix MRed;
         private MMatrix MGreen;
@@ -33,15 +33,11 @@ namespace WindowsFormsApplication1
         public ImageProcessing()
         {
         }
-
+        /*
         ~ImageProcessing()
         {      
         }
-
-        public void Dispose()
-        {  
-        }
-
+        */
         #region Pixel Processing
         public void MatrixFromBitmap(ref Bitmap bmp)
         {                        
@@ -117,24 +113,25 @@ namespace WindowsFormsApplication1
         #endregion
 
         #region Basic Image Processing
-        public static Image GrayScale(Bitmap Old)
+        public Image GrayScale(Bitmap Old)
         {
             Bitmap NewBmp = new Bitmap(Old.Width, Old.Height);
             int NewRGB;
             Color PixelColor;
 
             for (int i = 0; i < NewBmp.Width; ++i)
+            {   
                 for (int j = 0; j < NewBmp.Height; ++j)
                 {
                     PixelColor = Old.GetPixel(i, j);
                     NewRGB = (PixelColor.R + PixelColor.G + PixelColor.B) / 3;
                     NewBmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
                 }
-
+            }
             return NewBmp;
         }       
 
-        public static Image BlackWhite(Bitmap Old)
+        public Image BlackWhite(Bitmap Old)
         {
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
             Color PixelColor;
@@ -153,7 +150,7 @@ namespace WindowsFormsApplication1
             return NewImage;
         }
 
-        public static Image Negate(Bitmap Old)
+        public Image Negate(Bitmap Old)
         {
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
             Color PixelColor;
@@ -169,7 +166,7 @@ namespace WindowsFormsApplication1
             return NewImage;
         }
 
-        public static Image ZoomOut(Bitmap Old, int newWidth, int newHeight)
+        public Image ZoomOut(Bitmap Old, int newWidth, int newHeight)
         {
             Bitmap New = new Bitmap(newWidth, newHeight);            
             Color PixelColor;
@@ -180,14 +177,15 @@ namespace WindowsFormsApplication1
             HeightRate = (double)Old.Height / newHeight;
 
             for (int i = 0; i < newWidth; ++i)
+            {
+                x = (int)(i * WidthRate);
                 for (int j = 0; j < newHeight; ++j)
                 {
-                    x = (int)(i * WidthRate);
                     y = (int)(j * HeightRate);
-                    PixelColor = Old.GetPixel(x, y);                    
+                    PixelColor = Old.GetPixel(x, y);
                     New.SetPixel(i, j, Color.FromArgb(PixelColor.R, PixelColor.G, PixelColor.B));
                 }
-
+            }
             return New;
         }
 
@@ -605,8 +603,6 @@ namespace WindowsFormsApplication1
             int xMax = bmp.Width; //colume wrt to matrix
             int yMax = bmp.Height; //row wrt to matrix
             Bitmap tmpBmp = bmp;
-            //Graphics g1 = Graphics.FromImage((Image)tmpBmp);
-            //g1.FillRectangle(Brushes.White, 0, 0, xMax, yMax);
 
             const int DirMax = 8; //search in 8 directions
             int[] xDir =  { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
@@ -616,8 +612,6 @@ namespace WindowsFormsApplication1
             int nextX = 0;
             int nextY = 0;
 
-            //if (!IsGrayScale(ref bmp))
-            //    bmp = (Bitmap)GrayScale(bmp);
             MatrixFromBitmap(ref bmp);
 
             //trace in 8 directions to find the next pixel having the same color
@@ -646,10 +640,8 @@ namespace WindowsFormsApplication1
 
         public Bitmap CreateNoise(Bitmap bmp, double Noise)
         {
-            int xMax = bmp.Width; //colume wrt to matrix
-            int yMax = bmp.Height; //row wrt to matrix
-            Bitmap tmpBmp = new Bitmap(xMax, yMax);
-            MMatrix RandMatrix = MMatrix.RandomMatrix(xMax, yMax, 0, (int)(255*Noise));
+            Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
+            MMatrix RandMatrix = MMatrix.RandomMatrix(bmp.Width, bmp.Height, 0, (int)(255*Noise));
             int NewRGB;                        
             
             MatrixFromBitmap(ref bmp);      
@@ -657,8 +649,8 @@ namespace WindowsFormsApplication1
             FloorToBitmap(ref MRed);
 
             if (this.bGrayScale)
-                for (int i = 0; i < xMax; ++i)
-                    for (int j = 0; j < yMax; ++j)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                     {
                         NewRGB = (int)MRed[i, j];
                         tmpBmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
@@ -670,15 +662,15 @@ namespace WindowsFormsApplication1
                 MBlue += RandMatrix;
                 FloorToBitmap(ref MBlue);
                 
-                for (int i = 0; i < xMax; ++i)
-                    for (int j = 0; j < yMax; ++j)
+                for (int i = 0; i < bmp.Width; ++i)
+                    for (int j = 0; j < bmp.Height; ++j)
                         tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
             }
             
             return tmpBmp;
         }        
 
-        public static Bitmap Sharpen(Bitmap bmp, int Threshold_High, int Threshold_Low, int ChangeStep)
+        public Bitmap Sharpen(Bitmap bmp, int Threshold_High, int Threshold_Low, int ChangeStep)
         { 
             Bitmap NewBmp = new Bitmap(bmp);            
             int NewR, NewG, NewB;            
@@ -804,7 +796,7 @@ namespace WindowsFormsApplication1
         }
 
         //Very slow
-        public static Bitmap BitmapBitwise(Bitmap Bmp1, Bitmap Bmp2, string Operation)
+        public Bitmap BitmapBitwise(Bitmap Bmp1, Bitmap Bmp2, string Operation)
         {                        
             int xMax = Bmp1.Width;
             int yMax = Bmp1.Height;

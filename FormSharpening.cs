@@ -16,6 +16,7 @@ namespace WindowsFormsApplication1
         int Threshold_High = 0;
         int Threshold_Low = 0;
         int ChangeStep = 0;
+        ImageProcessing ImgProcess = new ImageProcessing();
 
         public FormSharpening()
         {
@@ -35,13 +36,13 @@ namespace WindowsFormsApplication1
         }
 
         private void buttonApply_Click(object sender, EventArgs e)
-        {
+        {            
             this.Cursor = Cursors.WaitCursor;
             Threshold_High = (int)numericUpDownThresholdHigh.Value;
             Threshold_Low = (int)numericUpDownThresholdLow.Value;
             if(ChangeStep< (int)numericUpDownStep.Value)
                 ChangeStep = (int)numericUpDownStep.Value;
-            Picture = ImageProcessing.Sharpen((Bitmap)Picture, Threshold_High, Threshold_Low, ChangeStep);
+            Picture = ImgProcess.Sharpen((Bitmap)Picture, Threshold_High, Threshold_Low, ChangeStep);
             this.Cursor = Cursors.Arrow;
 
             OldPic.Dispose();
@@ -53,7 +54,7 @@ namespace WindowsFormsApplication1
         {
             this.Cursor = Cursors.WaitCursor;            
             ChangeStep += (int)numericUpDownStep.Value/4;
-            this.pictureBox1.Image = ImageProcessing.Sharpen((Bitmap)pictureBox1.Image, (int)numericUpDownThresholdHigh.Value,
+            this.pictureBox1.Image = ImgProcess.Sharpen((Bitmap)pictureBox1.Image, (int)numericUpDownThresholdHigh.Value,
                 (int)numericUpDownThresholdLow.Value, (int)numericUpDownStep.Value);
             this.pictureBox1.Refresh();
             this.Cursor = Cursors.Arrow;
@@ -72,7 +73,7 @@ namespace WindowsFormsApplication1
             {
                 if ((Picture.Width > pictureBox1.Width) && (Picture.Height > pictureBox1.Height))
                 {
-                    OldPic = ImageProcessing.ZoomOut((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
+                    OldPic = ImgProcess.ZoomOut((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
                 }
                 else
                     OldPic = (Image)Picture.Clone();

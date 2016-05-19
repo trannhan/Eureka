@@ -14,7 +14,8 @@ namespace WindowsFormsApplication1
         public Bitmap Picture;
         private Bitmap OldPic;
         const int step = 4;
-        int maxValue = 255 - step;
+        const int maxValue = 255 - step;
+        ImageProcessing ImgProcess = new ImageProcessing();
 
         public FormHistogram()
         {
@@ -26,10 +27,8 @@ namespace WindowsFormsApplication1
             if (Picture != null)
             {
                 if ((Picture.Width > pictureBox1.Width) && (Picture.Height > pictureBox1.Height))
-                {
-                    //ImageProcessing ImgP = new ImageProcessing();
-                    OldPic = (Bitmap)ImageProcessing.ZoomOut(Picture, pictureBox1.Width, pictureBox1.Height);
-                    //ImgP.Dispose();
+                {                    
+                    OldPic = (Bitmap)ImgProcess.ZoomOut(Picture, pictureBox1.Width, pictureBox1.Height);
                 }
                 else
                     OldPic = (Bitmap)Picture.Clone();
@@ -107,8 +106,6 @@ namespace WindowsFormsApplication1
             Picture = UpdateRGB(Picture);
             this.Cursor = Cursors.Arrow;
             
-            //OldPic.Dispose();
-            //OldPic = null;
             this.Close();
         }
 

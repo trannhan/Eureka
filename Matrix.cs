@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WindowsFormsApplication1
 {
-    public class MMatrix : MarshalByRefObject, IDisposable
+    public class MMatrix : MarshalByRefObject//, IDisposable
     {
         public int row, col;
         public double[,] MArray;
@@ -101,15 +101,11 @@ namespace WindowsFormsApplication1
             this.col = ValueArray.GetUpperBound(1)+1;            
             this.MArray = (double[,])ValueArray.Clone();
         }
-
+        /*
         ~MMatrix()
         {                     
         }
-
-        public void Dispose()
-        {            
-        }
-
+        */
         public override int GetHashCode()
         {
             return (Convert.ToInt32(this.MArray.GetHashCode() & 0xFFFFFFFF));

@@ -945,21 +945,21 @@
             // factorLUToolStripMenuItem
             // 
             this.factorLUToolStripMenuItem.Name = "factorLUToolStripMenuItem";
-            this.factorLUToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.factorLUToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.factorLUToolStripMenuItem.Text = "Factor LU";
             this.factorLUToolStripMenuItem.Click += new System.EventHandler(this.factorLUToolStripMenuItem_Click);
             // 
             // factorLDLtToolStripMenuItem
             // 
             this.factorLDLtToolStripMenuItem.Name = "factorLDLtToolStripMenuItem";
-            this.factorLDLtToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.factorLDLtToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.factorLDLtToolStripMenuItem.Text = "Factor LDLt";
             this.factorLDLtToolStripMenuItem.Click += new System.EventHandler(this.factorLDLtToolStripMenuItem_Click);
             // 
             // factorSVDToolStripMenuItem
             // 
             this.factorSVDToolStripMenuItem.Name = "factorSVDToolStripMenuItem";
-            this.factorSVDToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.factorSVDToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.factorSVDToolStripMenuItem.Text = "Factor SVD";
             this.factorSVDToolStripMenuItem.Click += new System.EventHandler(this.factorSVDToolStripMenuItem_Click);
             // 
@@ -1302,6 +1302,7 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.pictureBox1);
+            this.DoubleBuffered = true;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;

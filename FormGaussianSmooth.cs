@@ -11,7 +11,7 @@ namespace WindowsFormsApplication1
 {
     public partial class FormGaussianSmooth : Form
     {
-        private ImageProcessing ImgProcess;        
+        private ImageProcessing ImgProcess = new ImageProcessing();
         private Image OldPic;
         public Image Picture;
         int rows = 0;
@@ -23,7 +23,6 @@ namespace WindowsFormsApplication1
         public FormGaussianSmooth()
         {
             InitializeComponent();            
-            ImgProcess = new ImageProcessing();
         }
 
         private void buttonReset_Click(object sender, EventArgs e)
@@ -73,7 +72,7 @@ namespace WindowsFormsApplication1
             {
                 if ((Picture.Width > pictureBox1.Width) && (Picture.Height > pictureBox1.Height))
                 {
-                    OldPic = ImageProcessing.ZoomOut((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
+                    OldPic = ImgProcess.ZoomOut((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
                 }
                 else
                     OldPic = (Image)Picture.Clone();

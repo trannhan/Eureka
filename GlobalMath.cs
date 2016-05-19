@@ -13,5 +13,6 @@ namespace WindowsFormsApplication1
         public const double EPSILON = 1E-16;
         public static double SQRT2PI = Math.Sqrt(2 * Math.PI);
         public const double HALFPI = Math.PI* 0.5;
+        public const int MAXITER = 100;
     }
 }

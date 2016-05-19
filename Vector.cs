@@ -28,11 +28,11 @@ namespace WindowsFormsApplication1
         {
             Elements = (double[])A.Elements.Clone();
         }
-
+        /*
         ~Vector()
         {
         }
-
+        */
         public Vector Clone()
         {
             return (new Vector(this));
