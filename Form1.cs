@@ -1208,7 +1208,7 @@ namespace WindowsFormsApplication1
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
-                tmpImage = ImgProcess.GrayScale(new Bitmap(this.OutputImage));
+                tmpImage = ImgProcess.GrayScale((Bitmap)this.OutputImage);
                 this.Cursor = Cursors.Arrow;
            
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_GRAYSCALE, "", "") == DialogResult.OK)
@@ -1222,7 +1222,7 @@ namespace WindowsFormsApplication1
             if (this.OutputImage != null)
             {
                 this.Cursor = Cursors.WaitCursor;
-                tmpImage = ImgProcess.BlackWhite(new Bitmap(this.OutputImage));
+                tmpImage = ImgProcess.BlackWhite((Bitmap)this.OutputImage);
                 this.Cursor = Cursors.Arrow;
          
                 if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_BLACKWHITE, "", "") == DialogResult.OK)
@@ -1376,7 +1376,7 @@ namespace WindowsFormsApplication1
                         color = colordlg.Color;
 
                         this.Cursor = Cursors.WaitCursor;
-                        tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
+                        tmpImage = ImgProcess.Bitmap_Skeleton((Bitmap)this.OutputImage, color, SkeletonDifference);
                         this.Cursor = Cursors.Arrow;
                    
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
@@ -1499,7 +1499,7 @@ namespace WindowsFormsApplication1
                 {
                     this.Cursor = Cursors.WaitCursor;
                     
-                    tmpImage = ImgProcess.Canny(new Bitmap(this.OutputImage));                                   
+                    tmpImage = ImgProcess.Canny((Bitmap)this.OutputImage);                                   
                     this.Cursor = Cursors.Arrow;
                
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_CANNY, "", "") == DialogResult.OK)
@@ -1631,7 +1631,7 @@ namespace WindowsFormsApplication1
                         color = colordlg.Color;
 
                         this.Cursor = Cursors.WaitCursor;
-                        tmpImage = ImgProcess.Bitmap_Skeleton(new Bitmap(this.OutputImage), color, SkeletonDifference);
+                        tmpImage = ImgProcess.Bitmap_Skeleton((Bitmap)this.OutputImage, color, SkeletonDifference);
                         this.Cursor = Cursors.Arrow;
 
                         if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)

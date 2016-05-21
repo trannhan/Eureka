@@ -446,21 +446,21 @@
             // toolStripMenuItem17
             // 
             this.toolStripMenuItem17.Name = "toolStripMenuItem17";
-            this.toolStripMenuItem17.Size = new System.Drawing.Size(158, 26);
+            this.toolStripMenuItem17.Size = new System.Drawing.Size(159, 26);
             this.toolStripMenuItem17.Text = "Factor LU";
             this.toolStripMenuItem17.Click += new System.EventHandler(this.factorLUToolStripMenuItem_Click);
             // 
             // toolStripMenuItem18
             // 
             this.toolStripMenuItem18.Name = "toolStripMenuItem18";
-            this.toolStripMenuItem18.Size = new System.Drawing.Size(158, 26);
+            this.toolStripMenuItem18.Size = new System.Drawing.Size(159, 26);
             this.toolStripMenuItem18.Text = "Factor LDL*";
             this.toolStripMenuItem18.Click += new System.EventHandler(this.factorLDLtToolStripMenuItem_Click);
             // 
             // toolStripMenuItem19
             // 
             this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(158, 26);
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(159, 26);
             this.toolStripMenuItem19.Text = "Factor SVD";
             this.toolStripMenuItem19.Click += new System.EventHandler(this.factorSVDToolStripMenuItem_Click);
             // 
@@ -945,21 +945,21 @@
             // factorLUToolStripMenuItem
             // 
             this.factorLUToolStripMenuItem.Name = "factorLUToolStripMenuItem";
-            this.factorLUToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.factorLUToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.factorLUToolStripMenuItem.Text = "Factor LU";
             this.factorLUToolStripMenuItem.Click += new System.EventHandler(this.factorLUToolStripMenuItem_Click);
             // 
             // factorLDLtToolStripMenuItem
             // 
             this.factorLDLtToolStripMenuItem.Name = "factorLDLtToolStripMenuItem";
-            this.factorLDLtToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.factorLDLtToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.factorLDLtToolStripMenuItem.Text = "Factor LDL*";
             this.factorLDLtToolStripMenuItem.Click += new System.EventHandler(this.factorLDLtToolStripMenuItem_Click);
             // 
             // factorSVDToolStripMenuItem
             // 
             this.factorSVDToolStripMenuItem.Name = "factorSVDToolStripMenuItem";
-            this.factorSVDToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.factorSVDToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.factorSVDToolStripMenuItem.Text = "Factor SVD";
             this.factorSVDToolStripMenuItem.Click += new System.EventHandler(this.factorSVDToolStripMenuItem_Click);
             // 

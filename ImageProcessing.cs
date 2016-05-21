@@ -271,7 +271,7 @@ namespace WindowsFormsApplication1
             int FactorMatrixRank, bestRank;
             MMatrix newMatrix = new MMatrix(BITMAP_FRACTION_SIZE, BITMAP_FRACTION_SIZE);
             MMatrix B = new MMatrix();
-            Bitmap TmpBmp = new Bitmap(bmp);
+            Bitmap TmpBmp = new Bitmap(bmp.Width, bmp.Height);
             int FromRow, ToRow;
 
             bestRank = (bmp.Height * bmp.Width) / (1 + bmp.Height + bmp.Width);
@@ -557,11 +557,9 @@ namespace WindowsFormsApplication1
 
         public Bitmap Bitmap_BorderTracing(Graphics g, Bitmap bmp)
         {            
-            int xMax = bmp.Width; //colume wrt to matrix
-            int yMax = bmp.Height; //row wrt to matrix
-            Bitmap tmpBmp = new Bitmap(xMax, yMax);
+            Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
             Graphics g1 = Graphics.FromImage((Image)tmpBmp);
-            g1.FillRectangle(Brushes.White, 0, 0, xMax, yMax);         
+            g1.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);         
 
             const int DirMax = 8; //search in 8 directions
             int[] xDir = new int[8] { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
@@ -573,15 +571,15 @@ namespace WindowsFormsApplication1
             MatrixFromBitmap(ref BlackWhiteBmp);
 
             //trace in 8 directions to find the next pixel having the same color
-            for (int i = 0; i < xMax; ++i)
+            for (int i = 0; i < bmp.Width; ++i)
             {
-                for (int j = 0; j < yMax; ++j)
+                for (int j = 0; j < bmp.Height; ++j)
                 {
                     for (int k = 0; k < DirMax; ++k)
                     {
                         nextX = i + xDir[k];
                         nextY = j + yDir[k];
-                        if ((nextX < xMax) && (nextY < yMax) && (nextX >= 0) && (nextY >= 0))
+                        if ((nextX < bmp.Width) && (nextY < bmp.Height) && (nextX >= 0) && (nextY >= 0))
                         {
                             //if the point around point (i,j) has different color, point (i,j) is the boundary point
                             if (MRed[nextX, nextY] != MRed[i, j])
@@ -602,7 +600,7 @@ namespace WindowsFormsApplication1
         {                        
             int xMax = bmp.Width; //colume wrt to matrix
             int yMax = bmp.Height; //row wrt to matrix
-            Bitmap tmpBmp = bmp;
+            Bitmap tmpBmp = new Bitmap(bmp);
 
             const int DirMax = 8; //search in 8 directions
             int[] xDir =  { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
@@ -672,7 +670,7 @@ namespace WindowsFormsApplication1
 
         public Bitmap Sharpen(Bitmap bmp, int Threshold_High, int Threshold_Low, int ChangeStep)
         { 
-            Bitmap NewBmp = new Bitmap(bmp);            
+            Bitmap NewBmp = new Bitmap(bmp.Width, bmp.Height);            
             int NewR, NewG, NewB;            
             Color PixelColor;
 
@@ -752,7 +750,7 @@ namespace WindowsFormsApplication1
             return tmpBmp;
         }
 
-        public Bitmap Canny(Bitmap Bmp)
+        public Bitmap Canny(Bitmap bmp)
         {
             //The algorithm parameters:
             //1. Parameters of edge detecting filters:
@@ -771,6 +769,7 @@ namespace WindowsFormsApplication1
             //2. The thresholding parameter alfa:
             //double alfa=0.1;                             
 
+            Bitmap Bmp = new Bitmap(bmp);
             //if (!IsGrayScale(Bmp))
             //    Bmp = (Bitmap)GrayScale(Bmp);            
             MatrixFromBitmap(ref Bmp);
