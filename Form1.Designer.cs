@@ -454,7 +454,7 @@
             // 
             this.toolStripMenuItem18.Name = "toolStripMenuItem18";
             this.toolStripMenuItem18.Size = new System.Drawing.Size(158, 26);
-            this.toolStripMenuItem18.Text = "Factor LDLt";
+            this.toolStripMenuItem18.Text = "Factor LDL*";
             this.toolStripMenuItem18.Click += new System.EventHandler(this.factorLDLtToolStripMenuItem_Click);
             // 
             // toolStripMenuItem19
@@ -953,7 +953,7 @@
             // 
             this.factorLDLtToolStripMenuItem.Name = "factorLDLtToolStripMenuItem";
             this.factorLDLtToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
-            this.factorLDLtToolStripMenuItem.Text = "Factor LDLt";
+            this.factorLDLtToolStripMenuItem.Text = "Factor LDL*";
             this.factorLDLtToolStripMenuItem.Click += new System.EventHandler(this.factorLDLtToolStripMenuItem_Click);
             // 
             // factorSVDToolStripMenuItem

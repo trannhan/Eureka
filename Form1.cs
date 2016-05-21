@@ -176,7 +176,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion
@@ -205,14 +205,14 @@ namespace WindowsFormsApplication1
                 s += "\nVt=\n" + (new MMatrix(A.SVD_Vt)).PrintToString();
 
                 B = (new MMatrix(A.SVD_U)) * (new MMatrix(A.SVD_S)) * (new MMatrix(A.SVD_Vt));
-                s += "\nA=U*S*Vt\n" + B.PrintToString();
+                s += "\nA=USV*\n" + B.PrintToString();
 
                 this.RichText_Display(s);
                 OutputMatrix = A;
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -232,7 +232,7 @@ namespace WindowsFormsApplication1
             {
                 //A = MMatrix.RandomMatrix(3,0,255);                
                 B = A*A.Transpose();                                
-                s += "\nAt*A=\n" + B.PrintToString();                
+                s += "\nAA*=\n" + B.PrintToString();                
 
                 B.Jacobi_Cyclic_Method(ref v, ref Eigenvectors);
                 s += "\nBefore sort:";
@@ -251,7 +251,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         
@@ -278,7 +278,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }        
         
@@ -302,15 +302,15 @@ namespace WindowsFormsApplication1
                 C = A * A.Transpose();                
                 s += "\nC=A*A^T=\n" + C.PrintToString();                
 
-                /////////////////Factor A = LDLt
+                /////////////////Factor A = LDL*
                 
                 MMatrix.FactorLDLt(C);                                
-                s += "\nFactor LDLT(C): L=\n" + (new MMatrix(C.LDL_L)).PrintToString();                
-                s += "\nFactor LDLT(C): D=\n" + (new MMatrix(C.LDL_D)).PrintToString();                
+                s += "\nFactor LDL*(C): L=\n" + (new MMatrix(C.LDL_L)).PrintToString();                
+                s += "\nFactor LDL*(C): D=\n" + (new MMatrix(C.LDL_D)).PrintToString();                
                 B = (new MMatrix(C.LDL_L)) * (new MMatrix(C.LDL_D)) * (new MMatrix(C.LDL_L)).Transpose();                
-                s += "\nFactor LDLt: C=L*D*L^T\n" + B.PrintToString();                
+                s += "\nFactor LDL*: C=L*D*L^T\n" + B.PrintToString();                
                 B = (new MMatrix(C.LDL_L)) * (new MMatrix(C.LDL_L)).Transpose();                
-                s += "\nFactor LDLt: C=L*L^T\n" + B.PrintToString();                
+                s += "\nFactor LDL*: C=L*L^T\n" + B.PrintToString();                
 
                 /////////////////Factor A = LU 
 
@@ -325,14 +325,14 @@ namespace WindowsFormsApplication1
                 s += "\nFactor LU (A): P=\n" + (new MMatrix(A.LU_P)).PrintToString();
                 s += "\nFactor LU (A): L=\n" + (new MMatrix(A.LU_L)).PrintToString();              
                 s += "\nFactor LU (A): U=\n" + (new MMatrix(A.LU_U)).PrintToString();                                                
-                s += "\nFactor LU: A=P*L*U\n" + ((new MMatrix(A.LU_P)).Transpose() * (new MMatrix(A.LU_L)) * (new MMatrix(A.LU_U))).PrintToString();
+                s += "\nFactor LU: A=PLU\n" + ((new MMatrix(A.LU_P)).Transpose() * (new MMatrix(A.LU_L)) * (new MMatrix(A.LU_U))).PrintToString();
 
                 this.RichText_Display(s);
                 OutputMatrix = C;
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion       
@@ -616,13 +616,13 @@ namespace WindowsFormsApplication1
                     SaveText(FileNamePart[0] + "_LU_L" + FileExtension, (new MMatrix(matrix.LU_L)).PrintToString(), false);
                 if (matrix.LU_U != null)
                     SaveText(FileNamePart[0] + "_LU_U" + FileExtension, (new MMatrix(matrix.LU_U)).PrintToString(), false);
-                //LDLt
+                //LDL*
                 if (matrix.LDL_L != null)
-                    SaveText(FileNamePart[0] + "_LDLt_L" + FileExtension, (new MMatrix(matrix.LDL_L)).PrintToString(), false);
+                    SaveText(FileNamePart[0] + "_LDL*_L" + FileExtension, (new MMatrix(matrix.LDL_L)).PrintToString(), false);
                 if (matrix.LDL_D != null)
-                    SaveText(FileNamePart[0] + "_LDLt_D" + FileExtension, (new MMatrix(matrix.LDL_D)).PrintToString(), false);
+                    SaveText(FileNamePart[0] + "_LDL*_D" + FileExtension, (new MMatrix(matrix.LDL_D)).PrintToString(), false);
                 if (matrix.LDL_L != null)
-                    SaveText(FileNamePart[0] + "_LDLt_Lt" + FileExtension, (new MMatrix(matrix.LDL_L)).Transpose().PrintToString(), false);
+                    SaveText(FileNamePart[0] + "_LDL*_Lt" + FileExtension, (new MMatrix(matrix.LDL_L)).Transpose().PrintToString(), false);
                  * */
             }
             bSaveDone = true;
@@ -716,7 +716,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -733,7 +733,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -750,7 +750,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -767,7 +767,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -784,7 +784,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -813,7 +813,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -830,7 +830,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -847,7 +847,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -864,7 +864,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -882,13 +882,13 @@ namespace WindowsFormsApplication1
                     s += "\nP=\n" + P.PrintToString();
                     s += "\nL=\n" + L.PrintToString();
                     s += "\nU=\n" + U.PrintToString();                    
-                    s += "\nA=(P')*L*U\n" + (P.Transpose()*L*U).PrintToString();                    
+                    s += "\nA=P*LU\n" + (P.Transpose()*L*U).PrintToString();                    
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }            
         }
 
@@ -901,16 +901,16 @@ namespace WindowsFormsApplication1
                     OutputMatrix.FactorLDLt();
                     MMatrix L = new MMatrix(OutputMatrix.LDL_L);
                     MMatrix D = new MMatrix(OutputMatrix.LDL_D);
-                    string s = "\n\n\nFactor LDLt:\n";                    
+                    string s = "\n\n\nFactor LDL*:\n";                    
                     s += "\nL=\n" + L.PrintToString();
                     s += "\nD=\n" + D.PrintToString();                    
-                    s += "\nA=L*D*L'\n" + (L*D*L.Transpose()).PrintToString();                                        
+                    s += "\nA=LDL*\n" + (L*D*L.Transpose()).PrintToString();                                        
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }  
         }
 
@@ -929,13 +929,13 @@ namespace WindowsFormsApplication1
                     s += "\nU=\n" + U.PrintToString();
                     s += "\nS=\n" + S.PrintToString();
                     s += "\nV'=\n" + Vt.PrintToString();
-                    //s += "\nA=U*S*V'\n" + (U * S * Vt.Transpose()).PrintToString();
+                    //s += "\nA=USV*\n" + (U * S * Vt.Transpose()).PrintToString();
                     RichText_Display(s);
                 }
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -952,7 +952,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -969,7 +969,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -986,7 +986,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1003,7 +1003,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1032,7 +1032,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1061,7 +1061,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1090,7 +1090,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1112,7 +1112,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1129,7 +1129,7 @@ namespace WindowsFormsApplication1
             }
             catch (MMatrixException exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1274,7 +1274,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }            
         }
 
@@ -1294,7 +1294,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1357,7 +1357,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1386,7 +1386,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }                     
         }
 
@@ -1417,7 +1417,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }  
         }
 
@@ -1446,7 +1446,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1466,7 +1466,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1486,7 +1486,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1508,7 +1508,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion
@@ -1573,7 +1573,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1607,7 +1607,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1641,7 +1641,7 @@ namespace WindowsFormsApplication1
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Warning: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

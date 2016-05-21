@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
         public int row, col;
         public double[,] MArray;
 
-        // Factor LDLt
+        // Factor LDL*
         private double[] LDL_D1;
         public double[,] LDL_L;
         public double[,] LDL_D;
@@ -867,7 +867,7 @@ namespace WindowsFormsApplication1
         public static void FactorLDLt(MMatrix squareMatrix)
         {
             if (!squareMatrix.IsSymetric())
-                throw new MMatrixException("Cannot factor LDLt a non-symetric matrix");
+                throw new MMatrixException("Cannot factor LDL* a non-symetric matrix");
             FactorLDLt(squareMatrix, squareMatrix.row);
         }
 
