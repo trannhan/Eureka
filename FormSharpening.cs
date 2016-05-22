@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
         public Image Picture;
         int Threshold_High = 0;
         int Threshold_Low = 0;
-        int ChangeStep = 0;
+        byte ChangeStep = 0;
         ImageProcessing ImgProcess = new ImageProcessing();
 
         public FormSharpening()
@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
             Threshold_High = (int)numericUpDownThresholdHigh.Value;
             Threshold_Low = (int)numericUpDownThresholdLow.Value;
             if(ChangeStep< (int)numericUpDownStep.Value)
-                ChangeStep = (int)numericUpDownStep.Value;
+                ChangeStep = (byte)numericUpDownStep.Value;
             Picture = ImgProcess.Sharpen((Bitmap)Picture, Threshold_High, Threshold_Low, ChangeStep);
             this.Cursor = Cursors.Arrow;
 
@@ -53,9 +53,9 @@ namespace WindowsFormsApplication1
         private void buttonSharpen_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;            
-            ChangeStep += (int)numericUpDownStep.Value/4;
+            ChangeStep += (byte)(numericUpDownStep.Value/4);
             this.pictureBox1.Image = ImgProcess.Sharpen((Bitmap)pictureBox1.Image, (int)numericUpDownThresholdHigh.Value,
-                (int)numericUpDownThresholdLow.Value, (int)numericUpDownStep.Value);
+                (int)numericUpDownThresholdLow.Value, (byte)numericUpDownStep.Value);
             this.pictureBox1.Refresh();
             this.Cursor = Cursors.Arrow;
         }

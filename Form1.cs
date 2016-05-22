@@ -1286,7 +1286,7 @@ namespace WindowsFormsApplication1
                 {
                     double Err = 0;
                     
-                    tmpImage = ImgProcess.Bitmap_SVD((Bitmap)(this.OutputImage), NewRank, ref Err);
+                    //tmpImage = ImgProcess.SVD_Fraction((Bitmap)(this.OutputImage), NewRank, ref Err);
                
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SVD, NewRank.ToString(), Err.ToString()) == DialogResult.OK)
                         SetNewImage(tmpImage);                                        
@@ -1348,7 +1348,7 @@ namespace WindowsFormsApplication1
                 {
                     this.Cursor = Cursors.WaitCursor;
                                        
-                    tmpImage = ImgProcess.Bitmap_BorderTracing(pictureBox1.CreateGraphics(), (Bitmap)(this.OutputImage));                    
+                    tmpImage = ImgProcess.Bitmap_BorderTracing((Bitmap)(this.OutputImage));                    
                     this.Cursor = Cursors.Arrow;
               
                     if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_BORDERTRACING, "", "") == DialogResult.OK)

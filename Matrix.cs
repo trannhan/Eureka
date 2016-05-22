@@ -101,6 +101,17 @@ namespace WindowsFormsApplication1
             this.col = ValueArray.GetUpperBound(1)+1;            
             this.MArray = (double[,])ValueArray.Clone();
         }
+
+        public MMatrix(byte[,] ValueArray)
+        {
+            this.row = ValueArray.GetLength(0);
+            this.col = ValueArray.GetLength(1);
+            this.MArray = new double[this.row, this.col];
+            for (int i = 0; i < ValueArray.GetLength(0); ++i)
+                for (int j = 0; j < ValueArray.GetLength(1); ++j)
+                    this.MArray[i, j] = ValueArray[i, j];
+        }
+        
         /*
         ~MMatrix()
         {                     
@@ -128,6 +139,17 @@ namespace WindowsFormsApplication1
         public MMatrix Clone()
         {
             return new MMatrix(this);
+        }
+
+        public byte[,] GetByteArray()
+        {
+            byte[,] BArray = new byte[this.row, this.col];
+
+            for (int i = 0; i < row; ++i)
+                for (int j = 0; j < col; ++j)
+                    BArray[i, j] = (byte)(this.MArray[i, j]);
+
+            return BArray;
         }
 
         public void Copy(MMatrix A, int FromRow, int ToRow, int FromColumn, int ToColumn)
@@ -1352,13 +1374,13 @@ namespace WindowsFormsApplication1
         {
             if (!this.IsSquared())
                 throw new MMatrixException("Matrix must be squared.");
-            return this.QRIterationBasic(100).DiagVector();
+            return this.QRIterationBasic(GlobalMath.MAXITER).DiagVector();
         }
         //This method is not correct enough
         public Vector Eigenvalues_Householder()
         {
             this.Householder();
-            return new Vector(this.QR(1E-16, 100).ToArray());
+            return new Vector(this.QR(GlobalMath.EPSILON, GlobalMath.MAXITER).ToArray());
         }
 
         //Jacobi Cyclic Method is not correct enough
@@ -1530,7 +1552,7 @@ namespace WindowsFormsApplication1
 
             if (!A.IsSquared())
                 throw new MMatrixException("Matrix must be squared.");
-            Eigenvalues = A.QRIterationBasic(10).DiagVector();
+            Eigenvalues = A.QRIterationBasic(GlobalMath.MAXITER).DiagVector();
             Eigenvalues.Sort(true);
             
             return Math.Abs(Eigenvalues[0]);

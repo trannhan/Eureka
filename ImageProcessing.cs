@@ -5,17 +5,18 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication1
 {
     public class ImageProcessing
     {
-        private MMatrix MRed;
-        private MMatrix MGreen;
-        private MMatrix MBlue;
+        private byte[,] MRed;
+        private byte[,] MGreen;
+        private byte[,] MBlue;
         private bool bGrayScale;
 
-        public const int BITMAP_FRACTION_SIZE = 6;
+        public const int BMP_FRAC_SIZE = 6;
         //Algorithm Types:
         public const int A_PIECEWISELINEAR = 0;
         public const int A_PIECEWISESMOOTH = 1;
@@ -38,21 +39,23 @@ namespace WindowsFormsApplication1
         {      
         }
         */
+
         #region Pixel Processing
-        public void MatrixFromBitmap(ref Bitmap bmp)
-        {                        
+        //Very slow
+        public void MatrixFromBitmap1(ref Bitmap bmp)
+        {
             Color PixelColor;
             bGrayScale = IsGrayScale(ref bmp);
-            MRed = new MMatrix(bmp.Width, bmp.Height);
+            MRed = new byte[bmp.Width, bmp.Height];
 
-            if (bGrayScale)                
+            if (bGrayScale)
                 for (int i = 0; i < bmp.Width; ++i)
                     for (int j = 0; j < bmp.Height; ++j)
                         MRed[i, j] = bmp.GetPixel(i, j).R;
             else
             {
-                MGreen = new MMatrix(bmp.Width, bmp.Height);
-                MBlue = new MMatrix(bmp.Width, bmp.Height);
+                MGreen = new byte[bmp.Width, bmp.Height];
+                MBlue = new byte[bmp.Width, bmp.Height];
                 for (int i = 0; i < bmp.Width; ++i)
                     for (int j = 0; j < bmp.Height; ++j)
                     {
@@ -61,18 +64,82 @@ namespace WindowsFormsApplication1
                         MGreen[i, j] = PixelColor.G;
                         MBlue[i, j] = PixelColor.B;
                     }
-            }            
+            }
         }
 
-        public static Bitmap BitmapFromMatrix(ref MMatrix MRed, ref MMatrix MGreen, ref MMatrix MBlue)
+        public void MatrixFromBitmap(ref Bitmap bmp)
         {
-            Bitmap tmpBmp = new Bitmap(MRed.row,MRed.col);
+            int cs, r3;
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            for (int i = 0; i < MRed.row; ++i)
-                for (int j = 0; j < MRed.col; ++j)
-                    tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            MRed = new byte[bmp.Width, bmp.Height];
+            MGreen = new byte[bmp.Width, bmp.Height];
+            MBlue = new byte[bmp.Width, bmp.Height];
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    r3 = row * 3;
+                    MBlue[row, column] = rgbValues[cs + r3];
+                    MGreen[row, column] = rgbValues[cs + r3 + 1];
+                    MRed[row, column] = rgbValues[cs + r3 + 2];
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            //Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+        }
+        //slow
+        public static Bitmap BitmapFromMatrix1(ref byte[,] MRed, ref byte[,] MGreen, ref byte[,] MBlue)
+        {
+            Bitmap tmpBmp = new Bitmap(MRed.GetLength(0), MRed.GetLength(1));
+
+            for (int i = 0; i < MRed.GetLength(0); ++i)
+                for (int j = 0; j < MRed.GetLength(1); ++j)
+                    tmpBmp.SetPixel(i, j, Color.FromArgb(MRed[i, j], MGreen[i, j], MBlue[i, j]));
 
             return tmpBmp;
+        }
+
+        public Bitmap BitmapFromMatrix(ref byte[,] MRed, ref byte[,] MGreen, ref byte[,] MBlue)
+        {
+            int cs, r3;
+            Bitmap bmp = new Bitmap(MRed.GetLength(0), MRed.GetLength(1));
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            //Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    r3 = row * 3;
+                    rgbValues[cs + r3] = MBlue[row, column];
+                    rgbValues[cs + r3 + 1] = MGreen[row, column];
+                    rgbValues[cs + r3 + 2] = MRed[row, column];
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }
 
         public static Bitmap DrawTextToBitmap(ref Bitmap Bmp, string s, int x, int y)
@@ -84,16 +151,21 @@ namespace WindowsFormsApplication1
             return Bmp;
         }
 
-        private void FloorToBitmap(ref MMatrix BitmapMatrix)
+        private byte[,] FloorToBitmap(double[,] BitmapMatrix)
         {
-            for (int i = 0; i < BitmapMatrix.row; ++i)
-                for (int j = 0; j < BitmapMatrix.col; ++j)
+            byte[,] BArray = new byte[BitmapMatrix.GetLength(0), BitmapMatrix.GetLength(1)];
+
+            for (int i = 0; i < BitmapMatrix.GetLength(0); ++i)
+                for (int j = 0; j < BitmapMatrix.GetLength(1); ++j)
                 {
                     if (BitmapMatrix[i, j] < 0)
-                        BitmapMatrix[i, j] = 0;
+                        BArray[i, j] = 0;
                     else if (BitmapMatrix[i, j] > 255)
-                        BitmapMatrix[i, j] = 255;
+                        BArray[i, j] = 255;
+                    else
+                        BArray[i, j] = (byte)BitmapMatrix[i, j];
                 }
+            return BArray;
         }
 
         public static bool IsGrayScale(ref Bitmap bmp)
@@ -104,23 +176,24 @@ namespace WindowsFormsApplication1
             PixelColor = bmp.GetPixel(0, 0);
             if ((PixelColor.R != PixelColor.G) || (PixelColor.R != PixelColor.B) || (PixelColor.G != PixelColor.B))
                 bGrayScale = false;
-            PixelColor = bmp.GetPixel(bmp.Width/2, bmp.Height/2);
+            PixelColor = bmp.GetPixel(bmp.Width / 2, bmp.Height / 2);
             if ((PixelColor.R != PixelColor.G) || (PixelColor.R != PixelColor.B) || (PixelColor.G != PixelColor.B))
-                bGrayScale = false;         
+                bGrayScale = false;
 
             return bGrayScale;
         }
         #endregion
 
         #region Basic Image Processing
-        public Image GrayScale(Bitmap Old)
+        //slow
+        public Image GrayScale1(Bitmap Old)
         {
             Bitmap NewBmp = new Bitmap(Old.Width, Old.Height);
             int NewRGB;
             Color PixelColor;
 
             for (int i = 0; i < NewBmp.Width; ++i)
-            {   
+            {
                 for (int j = 0; j < NewBmp.Height; ++j)
                 {
                     PixelColor = Old.GetPixel(i, j);
@@ -129,9 +202,45 @@ namespace WindowsFormsApplication1
                 }
             }
             return NewBmp;
-        }       
+        }
 
-        public Image BlackWhite(Bitmap Old)
+        public Image GrayScale(Bitmap Old)
+        {
+            int cs, r3;
+            byte GrayColor;
+            Bitmap bmp = new Bitmap(Old);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            MRed = new byte[bmp.Width, bmp.Height];
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    r3 = row * 3;
+                    GrayColor = (byte)((rgbValues[cs + r3] + rgbValues[cs + r3 + 1] + rgbValues[cs + r3 + 2]) / 3);
+                    rgbValues[cs + r3] = GrayColor; //blue
+                    rgbValues[cs + r3 + 1] = GrayColor; //green
+                    rgbValues[cs + r3 + 2] = GrayColor; //red
+                    MRed[row, column] = GrayColor;
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
+        //slow
+        public Image BlackWhite1(Bitmap Old)
         {
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
             Color PixelColor;
@@ -150,7 +259,51 @@ namespace WindowsFormsApplication1
             return NewImage;
         }
 
-        public Image Negate(Bitmap Old)
+        public Image BlackWhite(Bitmap Old)
+        {
+            int cs, r3;
+            Bitmap bmp = new Bitmap(Old);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            MRed = new byte[bmp.Width, bmp.Height];
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    r3 = row * 3;
+                    if ((byte)((rgbValues[cs + r3] + rgbValues[cs + r3 + 1] + rgbValues[cs + r3 + 2]) / 3) < 125)
+                    {
+                        rgbValues[cs + r3] = 0; //blue
+                        rgbValues[cs + r3 + 1] = 0; //green
+                        rgbValues[cs + r3 + 2] = 0; //red
+                        MRed[row, column] = 0;
+                    }
+                    else
+                    {
+                        rgbValues[cs + r3] = 255;
+                        rgbValues[cs + r3 + 1] = 255;
+                        rgbValues[cs + r3 + 2] = 255;
+                        MRed[row, column] = 255;
+                    }
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
+        //slow
+        public Image Negate1(Bitmap Old)
         {
             Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
             Color PixelColor;
@@ -166,9 +319,41 @@ namespace WindowsFormsApplication1
             return NewImage;
         }
 
-        public Image ZoomOut(Bitmap Old, int newWidth, int newHeight)
+        public Image Negate(Bitmap Old)
         {
-            Bitmap New = new Bitmap(newWidth, newHeight);            
+            int cs, r3;
+            Bitmap bmp = new Bitmap(Old);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    r3 = row * 3;                  
+                    rgbValues[cs + r3] = (byte)(255 - rgbValues[cs + r3]); //blue
+                    rgbValues[cs + r3 + 1] = (byte)(255 - rgbValues[cs + r3 + 1]); //green
+                    rgbValues[cs + r3 + 2] = (byte)(255 - rgbValues[cs + r3 + 2]); //red
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
+        }
+        //slow
+        public Image ZoomOut1(Bitmap Old, int newWidth, int newHeight)
+        {
+            Bitmap New = new Bitmap(newWidth, newHeight);
             Color PixelColor;
             double WidthRate, HeightRate;
             int x, y;
@@ -187,6 +372,46 @@ namespace WindowsFormsApplication1
                 }
             }
             return New;
+        }
+
+        public Image ZoomOut(Bitmap Old, int newWidth, int newHeight)
+        {            
+            int cs, r3;
+            Bitmap bmp = new Bitmap(newWidth, newHeight);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            double WidthRate, HeightRate;
+            int x, y;
+
+            MatrixFromBitmap(ref Old);
+            WidthRate = (double)Old.Width / newWidth;
+            HeightRate = (double)Old.Height / newHeight;
+
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            //Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                y = (int)(column * HeightRate);
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {                    
+                    x = (int)(row * WidthRate);
+                    r3 = row * 3;
+                    rgbValues[cs + r3] = MBlue[x, y]; 
+                    rgbValues[cs + r3 + 1] = MGreen[x, y];
+                    rgbValues[cs + r3 + 2] = MRed[x, y];
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }
 
         public static Image Rotate(ref Bitmap Old, double Angle)
@@ -211,112 +436,87 @@ namespace WindowsFormsApplication1
             }
             return NewImage;
         }
-
-        //Very slow if the bitmap is large
-        public Image SVD_nonFraction(ref Bitmap bmp,int newrank)
+        
+        public void SVD(ref MMatrix mat, int newrank)
         {
-            MMatrix newMatrix = new MMatrix();
-            MMatrix newUMatrix = new MMatrix();
-            MMatrix newSMatrix = new MMatrix();
-            MMatrix newVtMatrix = new MMatrix();
-            MMatrix B = new MMatrix();
+            if (newrank >= Math.Min(mat.row, mat.col))
+                return;
+
+            mat.FactorSVD();
+            //MMatrix.FactorSVD_LDLt(mat, mat.row); 
+
+            MMatrix U = new MMatrix(mat.SVD_U, mat.row, newrank);
+            MMatrix S = new MMatrix(mat.SVD_S, newrank, newrank);
+            MMatrix Vt = new MMatrix(mat.SVD_Vt, newrank, mat.col);
+
+            mat = U * S * Vt;
+        }
+
+        //Apply SVD on the whole bitmap. Very slow if the bitmap is large
+        public Image SVD_nonFraction(ref Bitmap bmp, int newrank)
+        {
+            MMatrix tmpMat;
 
             if (newrank >= Math.Min(bmp.Height, bmp.Width))
                 return bmp;
 
-            MatrixFromBitmap(ref bmp);   
-         
-            if (bGrayScale)
-            {
-                newMatrix = MRed;                             
-                newMatrix.FactorSVD();
-                //MMatrix.FactorSVD_LDLt(newMatrix, newMatrix.row);
-                
-                newUMatrix = new MMatrix(newMatrix.SVD_U, newMatrix.row, newrank);
-                newSMatrix = new MMatrix(newMatrix.SVD_S, newrank, newrank);
-                newVtMatrix = new MMatrix(newMatrix.SVD_Vt, newrank, newMatrix.col);                
+            MatrixFromBitmap(ref bmp);
 
-                B = newUMatrix * newSMatrix * newVtMatrix;
-                FloorToBitmap(ref B);
+            tmpMat = new MMatrix(MRed);
+            SVD(ref tmpMat, newrank);
+            MRed = FloorToBitmap(tmpMat.MArray);
 
-                for (int i = 0; i < B.row; ++i)
-                    for (int j = 0; j < B.col; ++j)
-                        bmp.SetPixel(i, j, Color.FromArgb((int)B[i, j], (int)B[i, j], (int)B[i, j]));                                   
-            }
-            else
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)                    
-                        bmp.SetPixel(i, j, Color.FromArgb(255 - (int)MRed[i, j], 255 - (int)MGreen[i, j], 255 - (int)MBlue[i, j]));                    
+            tmpMat = new MMatrix(MGreen);
+            SVD(ref tmpMat, newrank);
+            MGreen = FloorToBitmap(tmpMat.MArray);
 
-            return bmp;
+            tmpMat = new MMatrix(MBlue);
+            SVD(ref tmpMat, newrank);
+            MBlue = FloorToBitmap(tmpMat.MArray);
+
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
         }
-
-        public static void SVD(ref MMatrix matrix, int newrank)
-        {            
-            if (newrank >= Math.Min(matrix.row,matrix.col))
-                return;
-
-            matrix.FactorSVD();
-
-            MMatrix newUMatrix = new MMatrix(matrix.SVD_U, matrix.row, newrank);
-            MMatrix newSMatrix = new MMatrix(matrix.SVD_S, newrank, newrank);
-            MMatrix newVtMatrix = new MMatrix(matrix.SVD_Vt, newrank, matrix.col);
-
-            matrix = newUMatrix * newSMatrix * newVtMatrix;
-        }
-
-        public Image Bitmap_SVD(Bitmap bmp, int newRank, ref double RootMeanSquareError)
+        //Apply SVD on each small piece of the bitmap
+        public Image SVD_Fraction(Bitmap bmp, int newRank, ref double RootMeanSquareError)
         {
-            int numx, numy;
-            int FactorMatrixRank, bestRank;
-            MMatrix newMatrix = new MMatrix(BITMAP_FRACTION_SIZE, BITMAP_FRACTION_SIZE);
-            MMatrix B = new MMatrix();
-            Bitmap TmpBmp = new Bitmap(bmp.Width, bmp.Height);
-            int FromRow, ToRow;
-
-            bestRank = (bmp.Height * bmp.Width) / (1 + bmp.Height + bmp.Width);
+            int bestRank = (bmp.Height * bmp.Width) / (1 + bmp.Height + bmp.Width);
             if (newRank > bestRank)
                 return bmp;
 
-            FactorMatrixRank = (int)Math.Round(BITMAP_FRACTION_SIZE * ((double)newRank / bestRank));
-
+            int FactorRank = (int)Math.Round(BMP_FRAC_SIZE * ((double)newRank / bestRank));
             MatrixFromBitmap(ref bmp);
-            if (bGrayScale)
+
+            int numx = bmp.Width / BMP_FRAC_SIZE;
+            int numy = bmp.Height / BMP_FRAC_SIZE;
+
+            MMatrix[] C = new MMatrix[numx];
+            MMatrix tmpMat = new MMatrix(BMP_FRAC_SIZE, BMP_FRAC_SIZE);
+            int FromRow, ToRow;
+            MMatrix Red = new MMatrix(MRed);
+            for (int k = 0; k < numx; ++k)
             {
-                numx = MRed.row / BITMAP_FRACTION_SIZE;
-                numy = MRed.col / BITMAP_FRACTION_SIZE;
-
-                MMatrix[] C = new MMatrix[numx];
-                for (int k = 0; k < numx; ++k)
+                FromRow = k * BMP_FRAC_SIZE;
+                ToRow = (k + 1) * BMP_FRAC_SIZE;
+                tmpMat.Copy(Red, FromRow, ToRow, 0, BMP_FRAC_SIZE);
+                SVD(ref tmpMat, FactorRank);
+                C[k] = tmpMat;
+                for (int m = 1; m < numy; ++m)
                 {
-                    FromRow = k * BITMAP_FRACTION_SIZE;
-                    ToRow = (k + 1) * BITMAP_FRACTION_SIZE;
-                    newMatrix.Copy(MRed, FromRow, ToRow, 0, BITMAP_FRACTION_SIZE);
-                    SVD(ref newMatrix, FactorMatrixRank);
-                    C[k] = newMatrix;
-                    for (int m = 1; m < numy; ++m)
-                    {
-                        newMatrix.Copy(MRed, FromRow, ToRow, m * BITMAP_FRACTION_SIZE, (m + 1) * BITMAP_FRACTION_SIZE);
-                        SVD(ref newMatrix, FactorMatrixRank);
-                        C[k] = MMatrix.Concat_Horizontal(C[k], newMatrix);
-                    }
+                    tmpMat.Copy(Red, FromRow, ToRow, m * BMP_FRAC_SIZE, (m + 1) * BMP_FRAC_SIZE);
+                    SVD(ref tmpMat, FactorRank);
+                    C[k] = MMatrix.Concat_Horizontal(C[k], tmpMat);
                 }
-                B = C[0];
-                for (int k = 1; k < numx; ++k)
-                    B = MMatrix.Concat_Vertical(B, C[k]);                
+            }            
+            for (int k = 1; k < numx; ++k)
+                C[0] = MMatrix.Concat_Vertical(C[0], C[k]);
+            MRed = FloorToBitmap(C[0].MArray);
+            RootMeanSquareError = MMatrix.RootMeanSquareError(new MMatrix(MRed), C[0]);
 
-                FloorToBitmap(ref B);
-                RootMeanSquareError = MMatrix.RootMeanSquareError(MRed, B);
-
-                for (int i = 0; i < B.row; ++i)
-                    for (int j = 0; j < B.col; ++j)
-                        TmpBmp.SetPixel(i, j, Color.FromArgb((int)B[i, j], (int)B[i, j], (int)B[i, j]));
-            }
-            return TmpBmp;
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
         }
-
+        
         private double f(int x, int y)
-        {        
+        {
             return MRed[x, y];
         }
 
@@ -334,74 +534,73 @@ namespace WindowsFormsApplication1
 
         //Finding discontinuities for piecewise-linear functions
         private Bitmap FindDis_PiecewiseLinear(Bitmap bmp, double delta)
-        {                        
-            int xMax = bmp.Width-1;
-            int yMax = bmp.Height-1;            
+        {
+            int xMax = bmp.Width - 1;
+            int yMax = bmp.Height - 1;
             Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
             Graphics g1 = Graphics.FromImage((Image)tmpBmp);
-            g1.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height); 
+            g1.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);
 
             const int h = 1;
             const int h2 = 2 * h;
             const int h22 = h2 * h;
             double epsilon = (2 * delta) / (h * h);
             //double max = round(1/h);
-            int found = 0;
+            //int found = 0;
 
             //(xj0,xj1), (yj0,yj1): interval containing the discontinuity point
             int xj0, xj, xj1, yj0, yj, yj1;
             double Gm;
 
-            for(int i = 1; i < yMax; ++i)
+            for (int i = 1; i < yMax; ++i)
             {
                 yj0 = (i - 1);
                 yj = i;
                 yj1 = (i + 1);
                 for (int m = 1; m < xMax; ++m)
                 {
-                    xj0 = (m-1);
+                    xj0 = (m - 1);
                     xj = m;
-                    xj1 = (m+1);                                        
-                    Gm = (MRed[xj1, yj1] - 2*MRed[xj, yj] + MRed[xj0, yj0])/(h22);
+                    xj1 = (m + 1);
+                    Gm = (MRed[xj1, yj1] - 2 * MRed[xj, yj] + MRed[xj0, yj0]) / (h22);
 
                     if ((Math.Min(xj1, xj) > h2) && (Math.Min(yj1, yj) > h2))
                     {
                         if (Math.Abs(Gm) > epsilon)
                         {
                             //Discontinuity point found
-                            found++;
+                            //found++;
                             //the jump
                             //pj = MRed[xj1, yj1] - MRed[xj0, yj0];
-        
+
                             //draw an ellipse to keep track the point found
                             //g.DrawEllipse(p,Math.Abs(xj0+xj1)/2, Math.Abs(yj0+yj1)/2, PointWidth, PointHeight); 
-                            tmpBmp.SetPixel((xj0 + xj1)/2, (yj0 + yj1)/2, Color.Black);
+                            tmpBmp.SetPixel((xj0 + xj1) / 2, (yj0 + yj1) / 2, Color.Black);
                         }
                     }
                 }
             }
             return tmpBmp;
-
         }
 
         //Finding discontinuities for piecewise-smooth functions
         private Bitmap FindDis_PiecewiseSmooth(Bitmap bmp, double delta)
-        {            
-            int xMax = bmp.Width-2;
-            int yMax = bmp.Height-2;
+        {
+            int xMax = bmp.Width - 2;
+            int yMax = bmp.Height - 2;
             Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
             Graphics g1 = Graphics.FromImage((Image)tmpBmp);
             g1.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);
 
             //(x1,x2), (y1,y2): interval containing the discontinuity point                            
-            int x1, x2, y1, y2;            
+            int x1, x2, y1, y2;
 
             const int h = 1;
             const int h3 = 3 * h;
             const int M2 = 255;
             double epsilon = Math.Sqrt(2 * M2 * delta);
             double fj0, fj1;
-            int found = 0;                       
+            //int found = 0;
 
             for (int i = 1; i < yMax; ++i)
             {
@@ -411,19 +610,19 @@ namespace WindowsFormsApplication1
                 {
                     fj0 = fj(j, i, h);
                     fj1 = fj(j + 1, i + 1, h);
-                   
-                    if (Math.Min(Math.Abs(fj0), Math.Abs(fj1)) > epsilon) 
+
+                    if (Math.Min(Math.Abs(fj0), Math.Abs(fj1)) > epsilon)
                     {
                         if (Math.Abs(fj1 - fj0) > 2 * epsilon)
                         {
                             //Discontinuity point found
-                            found++;
+                            //found++;
                             //the jump
                             //P = 2 * (fj1 - fj0) + 5 * epsilon;
 
                             //(x1,x2), (y1,y2): interval containing the discontinuity point                            
                             x1 = j * h - h;
-                            x2 = x1 + h3;                           
+                            x2 = x1 + h3;
                             //g.DrawLine(p, x1, y1, x2, y2);
                             tmpBmp.SetPixel(Convert.ToInt16((x1 + x2) * 0.5), Convert.ToInt16((y1 + y2) * 0.5), Color.Black);
                         }
@@ -433,37 +632,34 @@ namespace WindowsFormsApplication1
             return tmpBmp;
         }
 
-        public Image Bitmap_FindingDiscontinuities(Bitmap bmp, double Noise,int Method)
+        public Image Bitmap_FindingDiscontinuities(Bitmap bmp, double Noise, int Method)
         {
-            //if (!IsGrayScale(ref bmp))
-            //    bmp = (Bitmap)GrayScale(bmp);
+            //GrayScale(bmp);
             MatrixFromBitmap(ref bmp);
 
             switch (Method)
             {
                 case A_PIECEWISELINEAR:
-                    return FindDis_PiecewiseLinear(bmp, Noise);                    
+                    return FindDis_PiecewiseLinear(bmp, Noise);
                 case A_PIECEWISESMOOTH:
-                    return FindDis_PiecewiseSmooth(bmp, Noise);                    
+                    return FindDis_PiecewiseSmooth(bmp, Noise);
             }
 
-            return bmp;           
+            return bmp;
         }
 
         public Image Bitmap_InnerBorderTracing(Graphics g, Bitmap bmp)
         {
             Bitmap tmpBmp = (Bitmap)BlackWhite(bmp);
 
-            MatrixFromBitmap(ref tmpBmp);
-
-            int xMax = bmp.Width; //colume wrt to matrix
-            int yMax = bmp.Height; //row wrt to matrix
+            int xMax = bmp.Width; //colume wrt to mat
+            int yMax = bmp.Height; //row wrt to mat
             int Max = Math.Min(xMax, yMax);
 
             Pen p = new Pen(Color.Red);
             //detect the first point whose color is diferent from 
             //the color of the first top most and left most point of the bitmap
-            int detectingColor = (int)Math.Abs(MRed[0, 0] - 255);  
+            int detectingColor = Math.Abs(MRed[0, 0] - 255);
             int PointWidth = 1;
             int PointHeight = 1;
 
@@ -487,12 +683,12 @@ namespace WindowsFormsApplication1
             //the next point
             int nextX = 0;
             int nextY = 0;
-            
+
             int count = 0;
 
             //search for the first white pixel
             for (int i = 0; i < Max; ++i)
-            {                
+            {
                 if (MRed[i, i] >= detectingColor)
                 {
                     FirstX = i;
@@ -507,7 +703,7 @@ namespace WindowsFormsApplication1
             count++;
 
             //from the first white pixel, trace in 8 directions to find the next pixel having the same color
-            while(true)
+            while (true)
             {
                 //search all directions               
                 for (int i = 0; i < DirMax; ++i)
@@ -535,7 +731,7 @@ namespace WindowsFormsApplication1
                             break;
                         }
                     }
-                }                
+                }
                 //update the direction
                 if (Dir % 2 == 0)
                 {
@@ -550,16 +746,16 @@ namespace WindowsFormsApplication1
                 if ((curX == SecondX) && (curY == SecondY) && (preX == FirstX) && (preY == FirstY) && (count > 2))
                 {
                     break;
-                }                
-            }                        
+                }
+            }
             return bmp;
         }
-
-        public Bitmap Bitmap_BorderTracing(Graphics g, Bitmap bmp)
-        {            
+        //slow
+        public Bitmap Bitmap_BorderTracing1(Bitmap bmp)
+        {
             Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
             Graphics g1 = Graphics.FromImage((Image)tmpBmp);
-            g1.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);         
+            g1.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);
 
             const int DirMax = 8; //search in 8 directions
             int[] xDir = new int[8] { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
@@ -568,7 +764,6 @@ namespace WindowsFormsApplication1
             int nextX = 0;
             int nextY = 0;
             Bitmap BlackWhiteBmp = (Bitmap)BlackWhite(bmp);
-            MatrixFromBitmap(ref BlackWhiteBmp);
 
             //trace in 8 directions to find the next pixel having the same color
             for (int i = 0; i < bmp.Width; ++i)
@@ -583,7 +778,7 @@ namespace WindowsFormsApplication1
                         {
                             //if the point around point (i,j) has different color, point (i,j) is the boundary point
                             if (MRed[nextX, nextY] != MRed[i, j])
-                            {                              
+                            {
                                 //draw an ellipse to keep track the point found
                                 //g.DrawEllipse(p, i, j, PointWidth, PointHeight); 
                                 tmpBmp.SetPixel(i, j, Color.FromArgb(0, 0, 0));
@@ -596,14 +791,20 @@ namespace WindowsFormsApplication1
             return tmpBmp;
         }
 
+        public Bitmap Bitmap_BorderTracing(Bitmap bmp)
+        {
+            BlackWhite(bmp);
+            return FindDis_PiecewiseLinear(bmp, 5);
+        }
+
         public Image Bitmap_Skeleton(Bitmap bmp, Color color, int SkeletonDifference)
-        {                        
-            int xMax = bmp.Width; //colume wrt to matrix
-            int yMax = bmp.Height; //row wrt to matrix
+        {
+            int xMax = bmp.Width; //colume wrt to mat
+            int yMax = bmp.Height; //row wrt to mat
             Bitmap tmpBmp = new Bitmap(bmp);
 
             const int DirMax = 8; //search in 8 directions
-            int[] xDir =  { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
+            int[] xDir = { 1, 1, 0, -1, -1, -1, 0, 1 }; //colume direction
             int[] yDir = new int[8] { 0, -1, -1, -1, 0, 1, 1, 1 }; //row direction            
 
             //the next point
@@ -626,7 +827,7 @@ namespace WindowsFormsApplication1
                             //if the point around point (i,j) has different color, point (i,j) is the boundary point
                             if (Math.Abs(MRed[nextX, nextY] - MRed[i, j]) > SkeletonDifference)
                             {
-                                tmpBmp.SetPixel(i, j, Color.FromArgb(color.ToArgb()));
+                                tmpBmp.SetPixel(i, j, color);
                                 break;
                             }
                         }
@@ -634,121 +835,58 @@ namespace WindowsFormsApplication1
                 }
             }
             return tmpBmp;
-        }
+        }     
 
-        public Bitmap CreateNoise(Bitmap bmp, double Noise)
+        public Bitmap CreateNoise(Bitmap Old, double Noise)
         {
-            Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
-            MMatrix RandMatrix = MMatrix.RandomMatrix(bmp.Width, bmp.Height, 0, (int)(255*Noise));
-            int NewRGB;                        
-            
-            MatrixFromBitmap(ref bmp);      
-            MRed += RandMatrix;
-            FloorToBitmap(ref MRed);
+            Bitmap bmp = new Bitmap(Old);
 
-            if (this.bGrayScale)
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)
-                    {
-                        NewRGB = (int)MRed[i, j];
-                        tmpBmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
-                    }
-            else
-            {   
-                MGreen += RandMatrix;
-                FloorToBitmap(ref MGreen);
-                MBlue += RandMatrix;
-                FloorToBitmap(ref MBlue);
-                
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)
-                        tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
-            }
-            
-            return tmpBmp;
-        }        
+            MatrixFromBitmap(ref bmp);
+            MMatrix RandMatrix = MMatrix.RandomMatrix(bmp.Width, bmp.Height, 0, (int)(255 * Noise));
+            MRed = FloorToBitmap(((new MMatrix(MRed)) + RandMatrix).MArray);
+            MGreen = FloorToBitmap(((new MMatrix(MGreen)) + RandMatrix).MArray);
+            MBlue = FloorToBitmap(((new MMatrix(MBlue)) + RandMatrix).MArray);
 
-        public Bitmap Sharpen(Bitmap bmp, int Threshold_High, int Threshold_Low, int ChangeStep)
-        { 
-            Bitmap NewBmp = new Bitmap(bmp.Width, bmp.Height);            
-            int NewR, NewG, NewB;            
-            Color PixelColor;
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+        }      
 
-            if (IsGrayScale(ref bmp))
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)
-                    {
-                        PixelColor = bmp.GetPixel(i, j);
-                        NewR = PixelColor.R;
-                        if ((PixelColor.R > Threshold_High) && (PixelColor.R < 255 - ChangeStep))
-                            NewR += ChangeStep;
-                        else
-                            if ((PixelColor.R < Threshold_Low) && (PixelColor.R > ChangeStep))
-                            NewR -= ChangeStep;
-                        NewBmp.SetPixel(i, j, Color.FromArgb(NewR, NewR, NewR));
-                    }
-            else
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)
-                    {
-                        PixelColor = bmp.GetPixel(i, j);
+        public Bitmap Sharpen(Bitmap bmp, int Threshold_High, int Threshold_Low, byte ChangeStep)
+        {
+            MatrixFromBitmap(ref bmp);
 
-                        NewR = PixelColor.R;
-                        if ((PixelColor.R > Threshold_High) && (PixelColor.R < 255 - ChangeStep))
-                            NewR += ChangeStep;
-                        else if ((PixelColor.R < Threshold_Low) && (PixelColor.R > ChangeStep))
-                            NewR -= ChangeStep;
+            for (int i = 0; i < bmp.Width; ++i)
+                for (int j = 0; j < bmp.Height; ++j)
+                {
+                    if ((MRed[i, j] > Threshold_High) && (MRed[i, j] < 255 - ChangeStep))
+                        MRed[i, j] += ChangeStep;
+                    else if ((MRed[i, j] < Threshold_Low) && (MRed[i, j] > ChangeStep))
+                        MRed[i, j] -= ChangeStep;
 
-                        NewG = PixelColor.G;
-                        if ((PixelColor.G > Threshold_High) && (PixelColor.G < 255 - ChangeStep))
-                            NewG += ChangeStep;
-                        else if ((PixelColor.G < Threshold_Low) && (PixelColor.G > ChangeStep))
-                            NewG -= ChangeStep;
+                    if ((MGreen[i, j] > Threshold_High) && (MGreen[i, j] < 255 - ChangeStep))
+                        MGreen[i, j] += ChangeStep;
+                    else if ((MGreen[i, j] < Threshold_Low) && (MGreen[i, j] > ChangeStep))
+                        MGreen[i, j] -= ChangeStep;
 
-                        NewB = PixelColor.B;
-                        if ((PixelColor.B > Threshold_High) && (PixelColor.B < 255 - ChangeStep))
-                            NewB += ChangeStep;
-                        else if ((PixelColor.B < Threshold_Low) && (PixelColor.B > ChangeStep))
-                            NewB -= ChangeStep;
+                    if ((MBlue[i, j] > Threshold_High) && (MBlue[i, j] < 255 - ChangeStep))
+                        MBlue[i, j] += ChangeStep;
+                    else if ((MBlue[i, j] < Threshold_Low) && (MBlue[i, j] > ChangeStep))
+                        MBlue[i, j] -= ChangeStep;
+                }
 
-                        NewBmp.SetPixel(i, j, Color.FromArgb(NewR, NewG, NewB));
-                    }                               
-                
-            return NewBmp;            
-        }
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+        }       
 
-        //Blur Image
         public Bitmap Gauss_Convolution(Bitmap bmp, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
         {
-            Bitmap tmpBmp = new Bitmap(bmp.Width, bmp.Height);
             int NewRGB;
 
             MatrixFromBitmap(ref bmp);
-            MRed = MMatrix.Gauss_Convolution(MRed, bCanny, rows, sigma1, cols, sigma2, theta);
-            FloorToBitmap(ref MRed);
+            MRed = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MRed), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
+            MGreen = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MGreen), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
+            MBlue = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MBlue), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
 
-            if (this.bGrayScale)
-            {                
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)
-                    {
-                        NewRGB = (int)MRed[i, j];
-                        tmpBmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
-                    }
-            }
-            else
-            {
-                MGreen = MMatrix.Gauss_Convolution(MGreen, bCanny, rows, sigma1, cols, sigma2, theta);
-                FloorToBitmap(ref MGreen);
-                MBlue = MMatrix.Gauss_Convolution(MBlue, bCanny, rows, sigma1, cols, sigma2, theta);
-                FloorToBitmap(ref MBlue);
-                for (int i = 0; i < bmp.Width; ++i)
-                    for (int j = 0; j < bmp.Height; ++j)
-                        tmpBmp.SetPixel(i, j, Color.FromArgb((int)MRed[i, j], (int)MGreen[i, j], (int)MBlue[i, j]));
-            }
-
-            return tmpBmp;
-        }
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+        }        
 
         public Bitmap Canny(Bitmap bmp)
         {
@@ -769,82 +907,81 @@ namespace WindowsFormsApplication1
             //2. The thresholding parameter alfa:
             //double alfa=0.1;                             
 
-            Bitmap Bmp = new Bitmap(bmp);
             //if (!IsGrayScale(Bmp))
             //    Bmp = (Bitmap)GrayScale(Bmp);            
-            MatrixFromBitmap(ref Bmp);
+            MatrixFromBitmap(ref bmp);
 
-            MMatrix Mx = MMatrix.Gauss_Convolution(MRed, true, Nx1, Sigmax1, Nx2, Sigmax2, Theta1);
+            MMatrix Mx = MMatrix.Gauss_Convolution(new MMatrix(MRed), true, Nx1, Sigmax1, Nx2, Sigmax2, Theta1);
             //MMatrix My = MMatrix.Gauss_Convolution(MRed, true, Ny1, Sigmay1, Ny2, Sigmay2, Theta2);
             //My = My / MMatrix.Sum(My);
             //My = My + MMatrix.ScalarMatrix(My.row, My.col, 125);
-            //MMatrix Norm = MMatrix.PowEntry(MMatrix.PowEntry(Mx, 2) + MMatrix.PowEntry(My, 2), 0.5);
-            //Bmp = BitmapFromMatrix(Norm, Norm, Norm);
+            //MMatrix MNorm = MMatrix.PowEntry(MMatrix.PowEntry(Mx, 2) + MMatrix.PowEntry(My, 2), 0.5);
+            //Bmp = BitmapFromMatrix(MNorm, MNorm, MNorm);
 
             Mx = MMatrix.PowEntry(6 * MMatrix.PowEntry(Mx, 2), 0.5);
-            FloorToBitmap(ref Mx);
-            int NewRGB;
-            for (int i = 0; i < Bmp.Width; ++i)
-                for (int j = 0; j < Bmp.Height; ++j)
+            byte[,] MNorm = FloorToBitmap(Mx.MArray);
+            for (int i = 0; i < bmp.Width; ++i)
+                for (int j = 0; j < bmp.Height; ++j)
                     if (MRed[i, j] < 50)
                     {
-                        NewRGB = (int)Mx[i, j];
-                        Bmp.SetPixel(i, j, Color.FromArgb(NewRGB, NewRGB, NewRGB));
+                        MRed[i, j] = MNorm[i, j];
+                        MGreen[i, j] = MNorm[i, j];
+                        MBlue[i, j] = MNorm[i, j];
                     }
-            return Bmp;
-        }
 
-        //Very slow
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+        }        
+
         public Bitmap BitmapBitwise(Bitmap Bmp1, Bitmap Bmp2, string Operation)
-        {                        
-            int xMax = Bmp1.Width;
-            int yMax = Bmp1.Height;
-            Color P1, P2;           
-            Bitmap tmpBmp = new Bitmap(xMax, yMax);
+        {
+            MatrixFromBitmap(ref Bmp1);
+            ImageProcessing IP = new ImageProcessing();
+            IP.MatrixFromBitmap(ref Bmp2);
 
             if (Operation == "&")
-                for (int i = 0; i < xMax; ++i)
-                    for (int j = 0; j < yMax; ++j)
+                for (int i = 0; i < Bmp1.Width; ++i)
+                    for (int j = 0; j < Bmp1.Height; ++j)
                     {
-                        P1 = Bmp1.GetPixel(i, j);
-                        P2 = Bmp2.GetPixel(i, j);
-                        tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R & P2.R, P1.G & P2.G, P1.B & P2.B));
+                        MRed[i, j] &= IP.MRed[i, j];
+                        MGreen[i, j] &= IP.MGreen[i, j];
+                        MBlue[i, j] &= IP.MBlue[i, j];
                     }
             else if (Operation == "|")
-                for (int i = 0; i < xMax; ++i)
-                    for (int j = 0; j < yMax; ++j)
+                for (int i = 0; i < Bmp1.Width; ++i)
+                    for (int j = 0; j < Bmp1.Height; ++j)
                     {
-                        P1 = Bmp1.GetPixel(i, j);
-                        P2 = Bmp2.GetPixel(i, j);
-                        tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R | P2.R, P1.G | P2.G, P1.B | P2.B));
+                        MRed[i, j] |= IP.MRed[i, j];
+                        MGreen[i, j] |= IP.MGreen[i, j];
+                        MBlue[i, j] |= IP.MBlue[i, j];
                     }
             else //if (Operation == "^")
-                for (int i = 0; i < xMax; ++i)
-                    for (int j = 0; j < yMax; ++j)
+                for (int i = 0; i < Bmp1.Width; ++i)
+                    for (int j = 0; j < Bmp1.Height; ++j)
                     {
-                        P1 = Bmp1.GetPixel(i, j);
-                        P2 = Bmp2.GetPixel(i, j);
-                        tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R ^ P2.R, P1.G ^ P2.G, P1.B ^ P2.B));
+                        MRed[i, j] ^= IP.MRed[i, j];
+                        MGreen[i, j] ^= IP.MGreen[i, j];
+                        MBlue[i, j] ^= IP.MBlue[i, j];
                     }
-            return tmpBmp;
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
         }
 
-        public static Bitmap BitmapMix(Bitmap Bmp1, Bitmap Bmp2)
+        public Bitmap BitmapMix(Bitmap Bmp1, Bitmap Bmp2)
         {
-            int xMax = Bmp1.Width;
-            int yMax = Bmp1.Height;
-            Color P1, P2;
-            Bitmap tmpBmp = new Bitmap(xMax, yMax);
+            Bitmap tmpBmp = new Bitmap(Bmp1.Width, Bmp1.Height);
 
-            for (int i = 0; i < xMax; ++i)
-                for (int j = 0; j < yMax; ++j)
+            MatrixFromBitmap(ref Bmp1);
+            ImageProcessing IP = new ImageProcessing();
+            IP.MatrixFromBitmap(ref Bmp2);
+
+            for (int i = 0; i < Bmp1.Width; ++i)
+                for (int j = 0; j < Bmp1.Height; ++j)
                 {
-                    P1 = Bmp1.GetPixel(i, j);
-                    P2 = Bmp2.GetPixel(i, j);
-                    tmpBmp.SetPixel(i, j, Color.FromArgb(P1.R & P2.R, P1.G | P2.G, P1.B ^ P2.B));
+                    MRed[i, j] ^= IP.MRed[i, j];
+                    MGreen[i, j] |= IP.MGreen[i, j];
+                    MBlue[i, j] &= IP.MBlue[i, j];
                 }
-            return tmpBmp;
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
         }
-            #endregion
-        }
+        #endregion
+    }
 }
