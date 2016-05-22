@@ -6,6 +6,7 @@ using System.Text;
 
 namespace WindowsFormsApplication1
 {
+    [Serializable()]
     public class MMatrixException: Exception
     {
         public MMatrixException()

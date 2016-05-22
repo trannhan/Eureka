@@ -42,42 +42,9 @@ namespace WindowsFormsApplication1
 
         private Bitmap UpdateRGB(Bitmap Old)
         {
-            int R = 0, G = 0, B = 0;
-            Color P;      
-            Bitmap NewImage = new Bitmap(Old.Width, Old.Height);
-
-            for (int i = 0; i < Old.Width; ++i)
-            {
-                for (int j = 0; j < Old.Height; ++j)
-                {
-                    P = Old.GetPixel(i, j);
-                    R = P.R + (int)this.numericUpDownR.Value;
-                    if (R > 255)
-                        R = 255;
-                    else
-                        if (R < 0)
-                            R = 0;
-
-                    G = P.G + (int)this.numericUpDownG.Value;
-                    if (G > 255)
-                        G = 255;
-                    else
-                        if (G < 0)
-                            G = 0;
-
-                    B = P.B + (int)this.numericUpDownB.Value;
-                    if (B > 255)
-                        B = 255;
-                    else
-                        if (B < 0)
-                            B = 0;
-
-                    NewImage.SetPixel(i, j, Color.FromArgb(R, G, B));
-                }
-            }
-            return NewImage;  
+            return ImgProcess.UpdateRGB(Old, (int)this.numericUpDownR.Value, (int)this.numericUpDownG.Value, (int)this.numericUpDownB.Value);
         }
-     
+
         private void trackBarR_MouseUp(object sender, MouseEventArgs e)
         {
             this.pictureBox1.Image = UpdateRGB(OldPic);

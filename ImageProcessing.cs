@@ -878,8 +878,6 @@ namespace WindowsFormsApplication1
 
         public Bitmap Gauss_Convolution(Bitmap bmp, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
         {
-            int NewRGB;
-
             MatrixFromBitmap(ref bmp);
             MRed = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MRed), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
             MGreen = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MGreen), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
@@ -980,6 +978,43 @@ namespace WindowsFormsApplication1
                     MGreen[i, j] |= IP.MGreen[i, j];
                     MBlue[i, j] &= IP.MBlue[i, j];
                 }
+            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+        }
+
+        public Bitmap UpdateRGB(Bitmap Old, int Red, int Green, int Blue)
+        {
+            int R = 0, G = 0, B = 0;
+            MatrixFromBitmap(ref Old); 
+
+            for (int i = 0; i < Old.Width; ++i)
+            {
+                for (int j = 0; j < Old.Height; ++j)
+                {
+                    R = MRed[i, j] + Red;
+                    if (R > 255)
+                        R = 255;
+                    else
+                        if (R < 0)
+                        R = 0;
+                    MRed[i, j] = (byte)R;
+
+                    G = MGreen[i, j] + Green;
+                    if (G > 255)
+                        G = 255;
+                    else
+                        if (G < 0)
+                        G = 0;
+                    MGreen[i, j] = (byte)G;
+
+                    B = MBlue[i, j] + Blue;
+                    if (B > 255)
+                        B = 255;
+                    else
+                        if (B < 0)
+                        B = 0;
+                    MBlue[i, j] = (byte)B;
+                }
+            }
             return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
         }
         #endregion

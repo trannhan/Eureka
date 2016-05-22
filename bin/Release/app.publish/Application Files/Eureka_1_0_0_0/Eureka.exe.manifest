@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Eureka.exe" version="1.0.0.0" publicKeyToken="236fb7372b41d77e" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="App.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Eureka" version="2.0.1.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Eureka.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Eureka.exe" size="2126256">
+      <assemblyIdentity name="Eureka" version="2.0.1.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>wlWM/iEk19J38u0no8arjUaMCPQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="App.ico" size="161862">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>W68QqN6gr3k91XDAKstgFODuCPo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Document.xml" size="9040" writeableType="applicationData">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>csmcGlZwDlwwYrFOMBvM/jsF6uY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Eureka.exe.config" size="77">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>w7WNgu5MxCvL4DAgISBxgwmhDzU=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=INNOVATION\creative" issuerKeyHash="668705376382c4ccb8be569b84ac5f17b0db15de" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>nbyuMhr2lDbNA1wJ6WOmOjeDyHs=</DigestValue></Reference></SignedInfo><SignatureValue>VKu6/z/ymtOAFUH83sRC4oBfl9ipOtxug7dOjfqbsm6hTcA6C2hLwO6xw2FTE8GKHCr0Y04iZLyK6GzkAOcy9d8AUXddy9cJA8VaV/GIsi8Ge5g0q6lzBE0i9NSL3CPyarlLK2GvHqJ2qiMv19jB0mY6ZNaJNS7pHnJRyRnmNBY=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>yWjRoZXpfcyi8Kt5irnhrOnSs/LEjkF1XDIUIJjuZ8tYUzcqNna9P3sS1Jq8fKxcIBD+e6W41rvCulLMyxqfQpibZ8hWPkYWt3Evp/oqy2UqzK8Z/VKymr//Yd+P0P/iLkEmqNk6SEmmlu/JZ025RGNOkRgReZMFX3eNb2xAUgM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="7bc883373aa663e9095c03cd3694f61a32aebc9d" Description="" Url=""><as:assemblyIdentity name="Eureka.exe" version="1.0.0.0" publicKeyToken="236fb7372b41d77e" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=INNOVATION\creative</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>9li7XKXl/IQk98UDim2Yq6Q1jis=</DigestValue></Reference></SignedInfo><SignatureValue>b7U0nfL+HjymZLakS3s2Ikteexwwv6dl9+xT1GfQAE82ySYYDzJqAB62wKlzeLHxhKX55CdQpOq0g+hp5cLV3bBC8gYeLiKCsmv5wKdgu8pEH8dWG0noqoXMjyEtQrPLMUKWLnF96NaxHW4PK3yKPFcuFCTOTD0kAis0kXpkdoQ=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>yWjRoZXpfcyi8Kt5irnhrOnSs/LEjkF1XDIUIJjuZ8tYUzcqNna9P3sS1Jq8fKxcIBD+e6W41rvCulLMyxqfQpibZ8hWPkYWt3Evp/oqy2UqzK8Z/VKymr//Yd+P0P/iLkEmqNk6SEmmlu/JZ025RGNOkRgReZMFX3eNb2xAUgM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB5TCCAU6gAwIBAgIQOUQQ63/uSa1N35Jj9VszZTANBgkqhkiG9w0BAQUFADAxMS8wLQYDVQQDHiYASQBOAE4ATwBWAEEAVABJAE8ATgBcAGMAcgBlAGEAdABpAHYAZTAeFw0xNjA1MjIyMDQ1NTlaFw0xNzA1MjMwMjQ1NTlaMDExLzAtBgNVBAMeJgBJAE4ATgBPAFYAQQBUAEkATwBOAFwAYwByAGUAYQB0AGkAdgBlMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJaNGhlel9zKLwq3mKueGs6dKz8sSOQXVcMhQgmO5ny1hTNyo2dr0/exLUmrx8rFwgEP57pbjWu8K6UszLGp9CmJtnyFY+Rha3cS+n+irLZSrMrxn9UrKav/9h34/Q/+IuQSao2TpISaaW78lnTblEY06RGBF5kwVfd41vbEBSAwIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAIC38UfLkBFP5ErlmN69iF4uP2NIByOGFTip5n7j0PwgSF/Pd76XtyVYm4c5CcN2eaPY6a9DpXgg/JQfsswzHRcdq0uYe2d2gPB7ClVgYCCQMhBhwGRmaaGxylTM21XWs3E0uLmf/+fe0+IjctZrF+TfCgF6p9h77idkMyZQrvY6</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
