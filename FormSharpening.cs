@@ -73,7 +73,7 @@ namespace WindowsFormsApplication1
             {
                 if ((Picture.Width > pictureBox1.Width) && (Picture.Height > pictureBox1.Height))
                 {
-                    OldPic = ImgProcess.ZoomOut((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
+                    OldPic = ImgProcess.Zoom((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
                 }
                 else
                     OldPic = (Image)Picture.Clone();

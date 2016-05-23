@@ -222,7 +222,7 @@ namespace WindowsFormsApplication1
         private static MMatrix Add(MMatrix matrix1, MMatrix matrix2)
         {
             if (matrix1.row != matrix2.row || matrix1.col != matrix2.col)
-                throw new MMatrixException("Addition not impossible. Two matrices are different size");
+                throw new MMatrixException("Addition not impossible. Two matrices are of different sizes");
             MMatrix result = new MMatrix(matrix1.row, matrix1.col);
             for (int i = 0; i < result.row; ++i)
                 for (int j = 0; j < result.col; ++j)
@@ -233,7 +233,7 @@ namespace WindowsFormsApplication1
         private static MMatrix Multiply(MMatrix matrix1, MMatrix matrix2)
         {
             if (matrix1.col != matrix2.row)
-                throw new MMatrixException("Multiplication not impossible. Two matrices are different size");
+                throw new MMatrixException("Multiplication not impossible. Two matrices are of different sizes");
 
             MMatrix result = new MMatrix(matrix1.row, matrix2.col);
             for (int i = 0; i < result.row; ++i)
@@ -313,7 +313,7 @@ namespace WindowsFormsApplication1
         public Vector DiagVector()
         {
             if (!this.IsSquared())
-                throw new MMatrixException("Cannot get diagonal of non-square matrix.");
+                throw new MMatrixException("Cannot get diagonal of a non-square matrix.");
 
             Vector v = new Vector(this.col);
             for (int i = 0; i < this.col; ++i)
@@ -337,7 +337,7 @@ namespace WindowsFormsApplication1
         public static MMatrix Concat_Horizontal(MMatrix A,MMatrix B)
         {
             if (A.row != B.row)
-                throw new MMatrixException("Horizontal concat impossible. Two matrices are not the same rows.");
+                throw new MMatrixException("Horizontal concat impossible. Two matrices are not of the same rows.");
 
             MMatrix C = new MMatrix(A.row, A.col + B.col);
 
@@ -354,7 +354,7 @@ namespace WindowsFormsApplication1
         public static MMatrix Concat_Vertical(MMatrix A, MMatrix B)
         {
             if (A.col != B.col)
-                throw new MMatrixException("Vertical concat impossible. Two matrices are not the same columns.");
+                throw new MMatrixException("Vertical concat impossible. Two matrices are not of the same columns.");
 
             MMatrix C = new MMatrix(A.row + B.row, A.col);
 
@@ -1771,6 +1771,44 @@ namespace WindowsFormsApplication1
 
             //Copy back to the original-size matrix
             MMatrix newMatrix = new MMatrix(Matrix.row, Matrix.col);
+            for (int i = halfKernelRows; i < xMax; ++i)
+                for (int j = halfKernelCols; j < yMax; ++j)
+                    newMatrix[i - halfKernelRows, j - halfKernelCols] = conMatrix[i, j];
+
+            return newMatrix;
+        }
+
+        public static double[,] Gauss_Convolution(byte[,] Matrix, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
+        {
+            int halfKernelRows = rows / 2;
+            int halfKernelCols = cols / 2;
+            int xMax = Matrix.GetLength(0) + halfKernelRows;
+            int yMax = Matrix.GetLength(1) + halfKernelCols;
+            double tmpBit;
+            MMatrix Filter;
+            double[,] conMatrix = new double[Matrix.GetLength(0) + rows, Matrix.GetLength(1) + cols];
+
+            //Create Gaussian matrix
+            Filter = (bCanny) ? D2Gauss_Canny(rows, sigma1, cols, sigma2, theta) : D2Gauss(rows, sigma1, cols, sigma2, theta);
+
+            //Create a larger matrix to do convolution
+            for (int i = halfKernelRows; i < xMax; ++i)
+                for (int j = halfKernelCols; j < yMax; ++j)
+                    conMatrix[i, j] = Matrix[i - halfKernelRows, j - halfKernelCols];
+
+            //Do convolution on the bigger matrix
+            for (int i = halfKernelRows; i < xMax; ++i)
+                for (int j = halfKernelCols; j < yMax; ++j)
+                {
+                    tmpBit = 0;
+                    for (int k = 0; k < rows; ++k)
+                        for (int l = 0; l < cols; ++l)
+                            tmpBit += conMatrix[i - halfKernelRows + k, j - halfKernelCols + l] * Filter[k, l];
+                    conMatrix[i, j] = tmpBit;
+                }
+
+            //Copy back to the original-size matrix
+            double[,] newMatrix = new double[Matrix.GetLength(0), Matrix.GetLength(1)];
             for (int i = halfKernelRows; i < xMax; ++i)
                 for (int j = halfKernelCols; j < yMax; ++j)
                     newMatrix[i - halfKernelRows, j - halfKernelCols] = conMatrix[i, j];

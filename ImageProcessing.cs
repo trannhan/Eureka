@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1
 
         #region Pixel Processing
         //Very slow
-        public void MatrixFromBitmap1(ref Bitmap bmp)
+        private void MatrixFromBitmap1(ref Bitmap bmp)
         {
             Color PixelColor;
             bGrayScale = IsGrayScale(ref bmp);
@@ -67,7 +67,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public void MatrixFromBitmap(ref Bitmap bmp)
+        private void MatrixFromBitmap(ref Bitmap bmp)
         {
             int cs, r3;
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -99,7 +99,7 @@ namespace WindowsFormsApplication1
             bmp.UnlockBits(bmpData);
         }
         //slow
-        public static Bitmap BitmapFromMatrix1(ref byte[,] MRed, ref byte[,] MGreen, ref byte[,] MBlue)
+        private Bitmap BitmapFromMatrix1(ref byte[,] MRed, ref byte[,] MGreen, ref byte[,] MBlue)
         {
             Bitmap tmpBmp = new Bitmap(MRed.GetLength(0), MRed.GetLength(1));
 
@@ -110,7 +110,7 @@ namespace WindowsFormsApplication1
             return tmpBmp;
         }
 
-        public Bitmap BitmapFromMatrix(ref byte[,] MRed, ref byte[,] MGreen, ref byte[,] MBlue)
+        private Bitmap BitmapFromMatrix(ref byte[,] MRed, ref byte[,] MGreen, ref byte[,] MBlue)
         {
             int cs, r3;
             Bitmap bmp = new Bitmap(MRed.GetLength(0), MRed.GetLength(1));
@@ -145,10 +145,14 @@ namespace WindowsFormsApplication1
         public static Bitmap DrawTextToBitmap(ref Bitmap Bmp, string s, int x, int y)
         {
             Graphics g = Graphics.FromImage((Image)Bmp);
-
             g.DrawString(s, SystemFonts.DefaultFont, Brushes.Black, new Point(x, y));
 
             return Bmp;
+        }
+
+        private byte FloorToBitmap(double value)
+        {
+            return (byte)((value < 0) ? 0 : ((value > 255) ? 255 : value));
         }
 
         private byte[,] FloorToBitmap(double[,] BitmapMatrix)
@@ -169,18 +173,8 @@ namespace WindowsFormsApplication1
         }
 
         public static bool IsGrayScale(ref Bitmap bmp)
-        {
-            Color PixelColor;
-            bool bGrayScale = true;
-
-            PixelColor = bmp.GetPixel(0, 0);
-            if ((PixelColor.R != PixelColor.G) || (PixelColor.R != PixelColor.B) || (PixelColor.G != PixelColor.B))
-                bGrayScale = false;
-            PixelColor = bmp.GetPixel(bmp.Width / 2, bmp.Height / 2);
-            if ((PixelColor.R != PixelColor.G) || (PixelColor.R != PixelColor.B) || (PixelColor.G != PixelColor.B))
-                bGrayScale = false;
-
-            return bGrayScale;
+        {            
+            return bmp.PixelFormat == PixelFormat.Format16bppGrayScale;
         }
         #endregion
 
@@ -351,7 +345,7 @@ namespace WindowsFormsApplication1
             return bmp;
         }
         //slow
-        public Image ZoomOut1(Bitmap Old, int newWidth, int newHeight)
+        public Image Zoom1(Bitmap Old, int newWidth, int newHeight)
         {
             Bitmap New = new Bitmap(newWidth, newHeight);
             Color PixelColor;
@@ -374,7 +368,7 @@ namespace WindowsFormsApplication1
             return New;
         }
 
-        public Image ZoomOut(Bitmap Old, int newWidth, int newHeight)
+        public Image Zoom(Bitmap Old, int newWidth, int newHeight)
         {            
             int cs, r3;
             Bitmap bmp = new Bitmap(newWidth, newHeight);
@@ -436,15 +430,14 @@ namespace WindowsFormsApplication1
             }
             return NewImage;
         }
-        
-        public void SVD(ref MMatrix mat, int newrank)
+
+        private void SVD(ref MMatrix mat, int newrank)
         {
             if (newrank >= Math.Min(mat.row, mat.col))
                 return;
 
             mat.FactorSVD();
             //MMatrix.FactorSVD_LDLt(mat, mat.row); 
-
             MMatrix U = new MMatrix(mat.SVD_U, mat.row, newrank);
             MMatrix S = new MMatrix(mat.SVD_S, newrank, newrank);
             MMatrix Vt = new MMatrix(mat.SVD_Vt, newrank, mat.col);
@@ -636,7 +629,6 @@ namespace WindowsFormsApplication1
         {
             //GrayScale(bmp);
             MatrixFromBitmap(ref bmp);
-
             switch (Method)
             {
                 case A_PIECEWISELINEAR:
@@ -644,7 +636,6 @@ namespace WindowsFormsApplication1
                 case A_PIECEWISESMOOTH:
                     return FindDis_PiecewiseSmooth(bmp, Noise);
             }
-
             return bmp;
         }
 
@@ -835,53 +826,97 @@ namespace WindowsFormsApplication1
                 }
             }
             return tmpBmp;
-        }     
+        }        
 
         public Bitmap CreateNoise(Bitmap Old, double Noise)
         {
             Bitmap bmp = new Bitmap(Old);
-
-            MatrixFromBitmap(ref bmp);
             MMatrix RandMatrix = MMatrix.RandomMatrix(bmp.Width, bmp.Height, 0, (int)(255 * Noise));
-            MRed = FloorToBitmap(((new MMatrix(MRed)) + RandMatrix).MArray);
-            MGreen = FloorToBitmap(((new MMatrix(MGreen)) + RandMatrix).MArray);
-            MBlue = FloorToBitmap(((new MMatrix(MBlue)) + RandMatrix).MArray);
+            int cs, r3;
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
+                {
+                    r3 = row * 3;
+                    rgbValues[cs + r3] = FloorToBitmap((double)rgbValues[cs + r3] + RandMatrix[row, column]);//blue
+                    rgbValues[cs + r3 + 1] = FloorToBitmap((double)rgbValues[cs + r3 + 1] + RandMatrix[row, column]);//green
+                    rgbValues[cs + r3 + 2] = FloorToBitmap((double)rgbValues[cs + r3 + 2] + RandMatrix[row, column]);//red
+                }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }      
 
-        public Bitmap Sharpen(Bitmap bmp, int Threshold_High, int Threshold_Low, byte ChangeStep)
+        public Bitmap Sharpen(Bitmap Old, int Threshold_High, int Threshold_Low, byte ChangeStep)
         {
-            MatrixFromBitmap(ref bmp);
+            Bitmap bmp = new Bitmap(Old);            
+            int cs, r3;
+            byte Intensity;
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            for (int i = 0; i < bmp.Width; ++i)
-                for (int j = 0; j < bmp.Height; ++j)
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
                 {
-                    if ((MRed[i, j] > Threshold_High) && (MRed[i, j] < 255 - ChangeStep))
-                        MRed[i, j] += ChangeStep;
-                    else if ((MRed[i, j] < Threshold_Low) && (MRed[i, j] > ChangeStep))
-                        MRed[i, j] -= ChangeStep;
+                    r3 = row * 3;
+                    Intensity = rgbValues[cs + r3];//blue
+                    if ((Intensity > Threshold_High) && (Intensity < 255 - ChangeStep))
+                        Intensity += ChangeStep;
+                    else if ((Intensity < Threshold_Low) && (Intensity > ChangeStep))
+                        Intensity -= ChangeStep;
+                    rgbValues[cs + r3] = Intensity;
 
-                    if ((MGreen[i, j] > Threshold_High) && (MGreen[i, j] < 255 - ChangeStep))
-                        MGreen[i, j] += ChangeStep;
-                    else if ((MGreen[i, j] < Threshold_Low) && (MGreen[i, j] > ChangeStep))
-                        MGreen[i, j] -= ChangeStep;
+                    Intensity = rgbValues[cs + r3 + 1];//green
+                    if ((Intensity > Threshold_High) && (Intensity < 255 - ChangeStep))
+                        Intensity += ChangeStep;
+                    else if ((Intensity < Threshold_Low) && (Intensity > ChangeStep))
+                        Intensity -= ChangeStep;
+                    rgbValues[cs + r3 + 1] = Intensity;
 
-                    if ((MBlue[i, j] > Threshold_High) && (MBlue[i, j] < 255 - ChangeStep))
-                        MBlue[i, j] += ChangeStep;
-                    else if ((MBlue[i, j] < Threshold_Low) && (MBlue[i, j] > ChangeStep))
-                        MBlue[i, j] -= ChangeStep;
+                    Intensity = rgbValues[cs + r3 + 2];//red
+                    if ((Intensity > Threshold_High) && (Intensity < 255 - ChangeStep))
+                        Intensity += ChangeStep;
+                    else if ((Intensity < Threshold_Low) && (Intensity > ChangeStep))
+                        Intensity -= ChangeStep;
+                    rgbValues[cs + r3 + 2] = Intensity;
                 }
+            }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
 
-            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+            return bmp;            
         }       
 
-        public Bitmap Gauss_Convolution(Bitmap bmp, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
+        public Bitmap GaussSmooth(Bitmap bmp, bool bCanny, int rows, double sigma1, int cols, double sigma2, double theta)
         {
             MatrixFromBitmap(ref bmp);
-            MRed = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MRed), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
-            MGreen = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MGreen), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
-            MBlue = FloorToBitmap(MMatrix.Gauss_Convolution(new MMatrix(MBlue), bCanny, rows, sigma1, cols, sigma2, theta).MArray);
+            MRed = FloorToBitmap(MMatrix.Gauss_Convolution(MRed, bCanny, rows, sigma1, cols, sigma2, theta));
+            MGreen = FloorToBitmap(MMatrix.Gauss_Convolution(MGreen, bCanny, rows, sigma1, cols, sigma2, theta));
+            MBlue = FloorToBitmap(MMatrix.Gauss_Convolution(MBlue, bCanny, rows, sigma1, cols, sigma2, theta));
 
             return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
         }        
@@ -909,15 +944,16 @@ namespace WindowsFormsApplication1
             //    Bmp = (Bitmap)GrayScale(Bmp);            
             MatrixFromBitmap(ref bmp);
 
-            MMatrix Mx = MMatrix.Gauss_Convolution(new MMatrix(MRed), true, Nx1, Sigmax1, Nx2, Sigmax2, Theta1);
-            //MMatrix My = MMatrix.Gauss_Convolution(MRed, true, Ny1, Sigmay1, Ny2, Sigmay2, Theta2);
+            double[,] Mx = MMatrix.Gauss_Convolution(MRed, true, Nx1, Sigmax1, Nx2, Sigmax2, Theta1);
+            //MMatrix My = MMatrix.GaussSmooth(MRed, true, Ny1, Sigmay1, Ny2, Sigmay2, Theta2);
             //My = My / MMatrix.Sum(My);
             //My = My + MMatrix.ScalarMatrix(My.row, My.col, 125);
-            //MMatrix MNorm = MMatrix.PowEntry(MMatrix.PowEntry(Mx, 2) + MMatrix.PowEntry(My, 2), 0.5);
-            //Bmp = BitmapFromMatrix(MNorm, MNorm, MNorm);
+            //MMatrix Norm = MMatrix.PowEntry(MMatrix.PowEntry(Mx, 2) + MMatrix.PowEntry(My, 2), 0.5);
+            //Bmp = BitmapFromMatrix(Norm, Norm, Norm);
 
-            Mx = MMatrix.PowEntry(6 * MMatrix.PowEntry(Mx, 2), 0.5);
-            byte[,] MNorm = FloorToBitmap(Mx.MArray);
+            MMatrix Norm = new MMatrix(Mx);
+            Norm = MMatrix.PowEntry(6 * MMatrix.PowEntry(Norm, 2), 0.5);
+            byte[,] MNorm = FloorToBitmap(Norm.MArray);
             for (int i = 0; i < bmp.Width; ++i)
                 for (int j = 0; j < bmp.Height; ++j)
                     if (MRed[i, j] < 50)
@@ -932,90 +968,127 @@ namespace WindowsFormsApplication1
 
         public Bitmap BitmapBitwise(Bitmap Bmp1, Bitmap Bmp2, string Operation)
         {
-            MatrixFromBitmap(ref Bmp1);
             ImageProcessing IP = new ImageProcessing();
             IP.MatrixFromBitmap(ref Bmp2);
+            Bitmap bmp = new Bitmap(Bmp1);            
+            int cs, r3;
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
 
             if (Operation == "&")
-                for (int i = 0; i < Bmp1.Width; ++i)
-                    for (int j = 0; j < Bmp1.Height; ++j)
+                for (int column = 0; column < bmpData.Height; column++)
+                {
+                    cs = column * bmpData.Stride;
+                    for (int row = 0; row < bmpData.Width; row++)
                     {
-                        MRed[i, j] &= IP.MRed[i, j];
-                        MGreen[i, j] &= IP.MGreen[i, j];
-                        MBlue[i, j] &= IP.MBlue[i, j];
+                        r3 = row * 3;
+                        rgbValues[cs + r3] &= IP.MBlue[row, column];
+                        rgbValues[cs + r3 + 1] &= IP.MGreen[row, column];
+                        rgbValues[cs + r3 + 2] &= IP.MRed[row, column];
                     }
+                }
             else if (Operation == "|")
-                for (int i = 0; i < Bmp1.Width; ++i)
-                    for (int j = 0; j < Bmp1.Height; ++j)
+                for (int column = 0; column < bmpData.Height; column++)
+                {
+                    cs = column * bmpData.Stride;
+                    for (int row = 0; row < bmpData.Width; row++)
                     {
-                        MRed[i, j] |= IP.MRed[i, j];
-                        MGreen[i, j] |= IP.MGreen[i, j];
-                        MBlue[i, j] |= IP.MBlue[i, j];
+                        r3 = row * 3;
+                        rgbValues[cs + r3] |= IP.MBlue[row, column];
+                        rgbValues[cs + r3 + 1] |= IP.MGreen[row, column];
+                        rgbValues[cs + r3 + 2] |= IP.MRed[row, column];
                     }
+                }
             else //if (Operation == "^")
-                for (int i = 0; i < Bmp1.Width; ++i)
-                    for (int j = 0; j < Bmp1.Height; ++j)
+                for (int column = 0; column < bmpData.Height; column++)
+                {
+                    cs = column * bmpData.Stride;
+                    for (int row = 0; row < bmpData.Width; row++)
                     {
-                        MRed[i, j] ^= IP.MRed[i, j];
-                        MGreen[i, j] ^= IP.MGreen[i, j];
-                        MBlue[i, j] ^= IP.MBlue[i, j];
+                        r3 = row * 3;
+                        rgbValues[cs + r3] ^= IP.MBlue[row, column];
+                        rgbValues[cs + r3 + 1] ^= IP.MGreen[row, column];
+                        rgbValues[cs + r3 + 2] ^= IP.MRed[row, column];
                     }
-            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+                }
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;            
         }
 
         public Bitmap BitmapMix(Bitmap Bmp1, Bitmap Bmp2)
-        {
-            Bitmap tmpBmp = new Bitmap(Bmp1.Width, Bmp1.Height);
-
-            MatrixFromBitmap(ref Bmp1);
+        {            
             ImageProcessing IP = new ImageProcessing();
             IP.MatrixFromBitmap(ref Bmp2);
+            Bitmap bmp = new Bitmap(Bmp1);
+            int cs, r3;
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            for (int i = 0; i < Bmp1.Width; ++i)
-                for (int j = 0; j < Bmp1.Height; ++j)
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
+            {
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
                 {
-                    MRed[i, j] ^= IP.MRed[i, j];
-                    MGreen[i, j] |= IP.MGreen[i, j];
-                    MBlue[i, j] &= IP.MBlue[i, j];
+                    r3 = row * 3;
+                    rgbValues[cs + r3] &= IP.MBlue[row, column];
+                    rgbValues[cs + r3 + 1] |= IP.MGreen[row, column];
+                    rgbValues[cs + r3 + 2] &= IP.MRed[row, column];
                 }
-            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+            }            
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }
 
         public Bitmap UpdateRGB(Bitmap Old, int Red, int Green, int Blue)
         {
-            int R = 0, G = 0, B = 0;
-            MatrixFromBitmap(ref Old); 
+            Bitmap bmp = new Bitmap(Old);            
+            int cs, r3;
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            for (int i = 0; i < Old.Width; ++i)
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = bmpData.Stride * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+
+            // Copy the RGB values into the array. bmpData.Scan0 returns the address of the first line.
+            Marshal.Copy(bmpData.Scan0, rgbValues, 0, bytes);
+
+            for (int column = 0; column < bmpData.Height; column++)
             {
-                for (int j = 0; j < Old.Height; ++j)
+                cs = column * bmpData.Stride;
+                for (int row = 0; row < bmpData.Width; row++)
                 {
-                    R = MRed[i, j] + Red;
-                    if (R > 255)
-                        R = 255;
-                    else
-                        if (R < 0)
-                        R = 0;
-                    MRed[i, j] = (byte)R;
-
-                    G = MGreen[i, j] + Green;
-                    if (G > 255)
-                        G = 255;
-                    else
-                        if (G < 0)
-                        G = 0;
-                    MGreen[i, j] = (byte)G;
-
-                    B = MBlue[i, j] + Blue;
-                    if (B > 255)
-                        B = 255;
-                    else
-                        if (B < 0)
-                        B = 0;
-                    MBlue[i, j] = (byte)B;
+                    r3 = row * 3;
+                    rgbValues[cs + r3] = FloorToBitmap((double)rgbValues[cs + r3] + Blue);
+                    rgbValues[cs + r3 + 1] = FloorToBitmap((double)rgbValues[cs + r3 + 1] + Green);
+                    rgbValues[cs + r3 + 2] = FloorToBitmap((double)rgbValues[cs + r3 + 2] + Red);
                 }
             }
-            return BitmapFromMatrix(ref MRed, ref MGreen, ref MBlue);
+            // Copy the RGB values back to the bitmap
+            Marshal.Copy(rgbValues, 0, bmpData.Scan0, bytes);
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }
         #endregion
     }

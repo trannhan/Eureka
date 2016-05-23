@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
             this.Cursor = Cursors.WaitCursor;
             rows = (int)numericUpDownRow.Value;
             cols = (int)numericUpDownCol.Value;
-            Picture = ImgProcess.Gauss_Convolution((Bitmap)Picture, false, rows, sigma1, cols, sigma2, theta);
+            Picture = ImgProcess.GaussSmooth((Bitmap)Picture, false, rows, sigma1, cols, sigma2, theta);
             this.Cursor = Cursors.Arrow;
 
             this.Close();                       
@@ -53,7 +53,7 @@ namespace WindowsFormsApplication1
             sigma1 += Convert.ToDouble(textBoxSigma1.Text)/50;
             sigma2 += Convert.ToDouble(textBoxSigma2.Text)/50;
             theta += Convert.ToDouble(textBoxTheta.Text)/50;
-            this.pictureBox1.Image = ImgProcess.Gauss_Convolution((Bitmap)pictureBox1.Image, false,
+            this.pictureBox1.Image = ImgProcess.GaussSmooth((Bitmap)pictureBox1.Image, false,
                 (int)numericUpDownRow.Value, Convert.ToDouble(textBoxSigma1.Text),
                 (int)numericUpDownCol.Value, Convert.ToDouble(textBoxSigma2.Text), 
                 Convert.ToDouble(textBoxTheta.Text));
@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
             {
                 if ((Picture.Width > pictureBox1.Width) && (Picture.Height > pictureBox1.Height))
                 {
-                    OldPic = ImgProcess.ZoomOut((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
+                    OldPic = ImgProcess.Zoom((Bitmap)Picture, pictureBox1.Width, pictureBox1.Height);
                 }
                 else
                     OldPic = (Image)Picture.Clone();

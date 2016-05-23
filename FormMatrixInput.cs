@@ -25,8 +25,9 @@ namespace WindowsFormsApplication1
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (MainMatrix != null)
+            if (MainMatrix != null)//ALready click Generate
             {
+                MainMatrix = new MMatrix(MainMatrix.row, MainMatrix.col);
                 try
                 {
                     for (int i = 0; i < MainMatrix.row; ++i)

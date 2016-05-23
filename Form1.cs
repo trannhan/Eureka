@@ -35,7 +35,7 @@ namespace WindowsFormsApplication1
         FormNoise CreateNoiseForm;
         FormGaussianSmooth GaussForm;
         FormSharpening SharpenForm;
-        FormSVDBitmapDisplay ImageForm;
+        FormBitmapDisplay ImageForm;
         FormHistogram FormHis;
         ImageProcessing ImgProcess;
         ColorDialog colordlg;
@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
             CreateNoiseForm = new FormNoise();
             GaussForm = new FormGaussianSmooth();
             SharpenForm = new FormSharpening();
-            ImageForm = new FormSVDBitmapDisplay();
+            ImageForm = new FormBitmapDisplay();
             FormHis = new FormHistogram();
             colordlg = new ColorDialog();
             ImgProcess = new ImageProcessing();
@@ -509,7 +509,7 @@ namespace WindowsFormsApplication1
                         {
                             newW = OutputImage.Width * Ratio / 100;
                             newH = OutputImage.Height * Ratio / 100;
-                            pictureBox1.Image = ImgProcess.ZoomOut((Bitmap)OutputImage, newW, newH);
+                            pictureBox1.Image = ImgProcess.Zoom((Bitmap)OutputImage, newW, newH);
                         }
                     }
                     break;
@@ -1008,9 +1008,7 @@ namespace WindowsFormsApplication1
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-
+        {            
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
@@ -1038,8 +1036,6 @@ namespace WindowsFormsApplication1
 
         private void substractionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
@@ -1067,8 +1063,6 @@ namespace WindowsFormsApplication1
 
         private void multiplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-
             if (InputMatrixForm.ShowDialog() == DialogResult.OK)
             {
                 if (InputMatrixForm.MainMatrix != null)
@@ -1245,7 +1239,7 @@ namespace WindowsFormsApplication1
             }
         }            
 
-        private void findingDiscontToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CeramicToolStripMenuItem_Click(object sender, EventArgs e)
         {                        
             double Noise = 0;
             int Method = -1;
@@ -1298,7 +1292,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void singularValueDecompositionToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void OldImageToolStripMenuItem1_Click(object sender, EventArgs e)
         {            
             this.richTextBox1.Visible = false;
             if (this.OutputImage != null)
@@ -1314,10 +1308,7 @@ namespace WindowsFormsApplication1
                     this.Cursor = Cursors.Arrow;
                 }
                 */
-                this.Cursor = Cursors.WaitCursor;
-                //These 2 lines are slow:
-                //MMatrix RandMatrix = MMatrix.RandomMatrix(OutputImage.Width, OutputImage.Height, 0, 100);
-                //tmpImage = ImageProcessing.BitmapBitwise((Bitmap)(OutputImage), ImageProcessing.BitmapFromMatrix(ref RandMatrix, ref RandMatrix, ref RandMatrix), "|");
+                this.Cursor = Cursors.WaitCursor;                
                 tmpImage = ImgProcess.CreateNoise((Bitmap)(OutputImage), 0.3);
                 this.Cursor = Cursors.Arrow;
               
@@ -1339,7 +1330,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void borderTracingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void borderSketchingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.richTextBox1.Visible = false;            
             try
@@ -1390,7 +1381,7 @@ namespace WindowsFormsApplication1
             }                     
         }
 
-        private void rGEdgeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PencilSketchingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             double Noise = 0;
             int Method = -1;
@@ -1490,7 +1481,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void cannyEdgeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EvapotranspirationIcingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.richTextBox1.Visible = false;
             try
@@ -1544,7 +1535,7 @@ namespace WindowsFormsApplication1
             GlobalMath.DIGITS = Convert.ToInt16(toolStripComboBoxDigits.SelectedItem.ToString());
         }
 
-        private void amazingEffectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AshingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             double Noise = 0;
             int Method = -1;
@@ -1577,7 +1568,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void colorPaintingEffectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void colorPaintingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             double Noise = 0;
             int Method = -1;
@@ -1619,30 +1610,7 @@ namespace WindowsFormsApplication1
 
         private void toolStripComboBoxSkeletonDiff_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                SkeletonDifference = toolStripComboBoxSkeletonDiff.SelectedIndex + 1;
-                toolStripComboBoxSkeletonDiff.PerformClick();
-                if (this.OutputImage != null)
-                {
-                    Color color = Color.Black;                    
-                    if (colordlg.ShowDialog() == DialogResult.OK)
-                    {
-                        color = colordlg.Color;
-
-                        this.Cursor = Cursors.WaitCursor;
-                        tmpImage = ImgProcess.Bitmap_Skeleton((Bitmap)this.OutputImage, color, SkeletonDifference);
-                        this.Cursor = Cursors.Arrow;
-
-                        if (ImageForm.ShowImage(tmpImage, ImageProcessing.A_SKELETON, "", "") == DialogResult.OK)
-                            SetNewImage(tmpImage);
-                    }
-                }
-            }
-            catch (Exception exp)
-            {
-                MessageBox.Show("INFO: " + exp.Message, sProjectTile, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            toolStripSkeletonDiff_SelectedIndexChanged(sender, e);
         }
     }
 }

@@ -1,4 +1,6 @@
 e:\GitHub\Eureka\bin\Release\Eureka.exe.config
+e:\GitHub\Eureka\bin\Release\Eureka.exe.manifest
+e:\GitHub\Eureka\bin\Release\Eureka.application
 e:\GitHub\Eureka\bin\Release\Eureka.exe
 e:\GitHub\Eureka\bin\Release\Eureka.pdb
 e:\GitHub\Eureka\bin\Release\Eureka.exe.CodeAnalysisLog.xml
@@ -13,14 +15,12 @@ e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormNoise.resources
 e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormNoiseInput.resources
 e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormScalarInput.resources
 e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormSharpening.resources
-e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormSVDBitmapDisplay.resources
+e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormBitmapDisplay.resources
 e:\GitHub\Eureka\obj\x86\Release\WindowsFormsApplication1.FormSystemOfEquationsInput.resources
 e:\GitHub\Eureka\obj\x86\Release\Eureka.Properties.Resources.resources
 e:\GitHub\Eureka\obj\x86\Release\MATHEX.csproj.GenerateResource.Cache
-e:\GitHub\Eureka\obj\x86\Release\Eureka.exe
-e:\GitHub\Eureka\obj\x86\Release\Eureka.pdb
-e:\GitHub\Eureka\bin\Release\Eureka.exe.manifest
-e:\GitHub\Eureka\bin\Release\Eureka.application
-e:\GitHub\Eureka\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache
 e:\GitHub\Eureka\obj\x86\Release\Eureka.exe.manifest
 e:\GitHub\Eureka\obj\x86\Release\Eureka.application
+e:\GitHub\Eureka\obj\x86\Release\Eureka.exe
+e:\GitHub\Eureka\obj\x86\Release\Eureka.pdb
+e:\GitHub\Eureka\obj\x86\Release\MATHEX.csprojResolveAssemblyReference.cache

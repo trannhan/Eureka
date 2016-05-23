@@ -28,15 +28,12 @@ namespace WindowsFormsApplication1
             {
                 if ((Picture.Width > pictureBox1.Width) && (Picture.Height > pictureBox1.Height))
                 {                    
-                    OldPic = (Bitmap)ImgProcess.ZoomOut(Picture, pictureBox1.Width, pictureBox1.Height);
+                    OldPic = (Bitmap)ImgProcess.Zoom(Picture, pictureBox1.Width, pictureBox1.Height);
                 }
                 else
                     OldPic = (Bitmap)Picture.Clone();
 
-                this.pictureBox1.Image = OldPic;
-                this.trackBarR.Value = 255;
-                this.trackBarG.Value = 255;
-                this.trackBarB.Value = 255;
+                buttonReset_Click(sender, e);
             }
         }
 

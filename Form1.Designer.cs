@@ -72,22 +72,22 @@
             this.reducedSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.solutionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.bitmapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToGrayScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToBackWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GrayScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BackWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noiseGeneratorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.smoothingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSharpeningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redGreenBlueHistogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HistogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderSketchingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cartoonEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBoxSkeletonDiff = new System.Windows.Forms.ToolStripComboBox();
             this.pencilSketchingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.evaportranpirationIcingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.singularValueDecompositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zombieEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oldImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ashingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorPaintingEffectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.findingDiscontinuitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ceramicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -135,22 +135,22 @@
             this.solutionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripBitmap = new System.Windows.Forms.ToolStripSplitButton();
-            this.grayScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greyScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blackWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.negatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noiseGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gaussianSmoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sharpeningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RGBhistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderTracingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.skeletonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSkeletonDiff = new System.Windows.Forms.ToolStripComboBox();
-            this.rGEdgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cannyEdgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.singularValueDecompositionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.amazingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pencilSketchingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EvapotranspirationIcingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oldImageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ashingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorPaintingEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findingDiscontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ceramicEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxPicMode = new System.Windows.Forms.ToolStripComboBox();
@@ -504,39 +504,39 @@
             // bitmapToolStripMenuItem
             // 
             this.bitmapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.convertToGrayScaleToolStripMenuItem,
-            this.convertToBackWhiteToolStripMenuItem,
+            this.GrayScaleToolStripMenuItem,
+            this.BackWhiteToolStripMenuItem,
             this.lightingEffectToolStripMenuItem,
             this.noiseGeneratorToolStripMenuItem1,
             this.smoothingToolStripMenuItem,
             this.colorSharpeningToolStripMenuItem,
-            this.redGreenBlueHistogramToolStripMenuItem,
+            this.HistogramToolStripMenuItem,
             this.borderSketchingEffectToolStripMenuItem,
             this.cartoonEffectToolStripMenuItem,
             this.pencilSketchingEffectToolStripMenuItem,
             this.evaportranpirationIcingEffectToolStripMenuItem,
-            this.singularValueDecompositionToolStripMenuItem,
-            this.zombieEffectToolStripMenuItem,
+            this.oldImageToolStripMenuItem,
+            this.ashingEffectToolStripMenuItem,
             this.colorPaintingEffectToolStripMenuItem1,
-            this.findingDiscontinuitiesToolStripMenuItem});
+            this.ceramicToolStripMenuItem});
             this.bitmapToolStripMenuItem.Name = "bitmapToolStripMenuItem";
             this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
             this.bitmapToolStripMenuItem.Text = "Bitmap Operations";
             this.bitmapToolStripMenuItem.Click += new System.EventHandler(this.bitmapToolStripMenuItem_Click);
             // 
-            // convertToGrayScaleToolStripMenuItem
+            // GrayScaleToolStripMenuItem
             // 
-            this.convertToGrayScaleToolStripMenuItem.Name = "convertToGrayScaleToolStripMenuItem";
-            this.convertToGrayScaleToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.convertToGrayScaleToolStripMenuItem.Text = "Gray Scale";
-            this.convertToGrayScaleToolStripMenuItem.Click += new System.EventHandler(this.grayscale_Click);
+            this.GrayScaleToolStripMenuItem.Name = "GrayScaleToolStripMenuItem";
+            this.GrayScaleToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.GrayScaleToolStripMenuItem.Text = "Gray Scale";
+            this.GrayScaleToolStripMenuItem.Click += new System.EventHandler(this.grayscale_Click);
             // 
-            // convertToBackWhiteToolStripMenuItem
+            // BackWhiteToolStripMenuItem
             // 
-            this.convertToBackWhiteToolStripMenuItem.Name = "convertToBackWhiteToolStripMenuItem";
-            this.convertToBackWhiteToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.convertToBackWhiteToolStripMenuItem.Text = "Back White";
-            this.convertToBackWhiteToolStripMenuItem.Click += new System.EventHandler(this.toolStripBlackWhite_Click);
+            this.BackWhiteToolStripMenuItem.Name = "BackWhiteToolStripMenuItem";
+            this.BackWhiteToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.BackWhiteToolStripMenuItem.Text = "Back White";
+            this.BackWhiteToolStripMenuItem.Click += new System.EventHandler(this.toolStripBlackWhite_Click);
             // 
             // lightingEffectToolStripMenuItem
             // 
@@ -566,19 +566,19 @@
             this.colorSharpeningToolStripMenuItem.Text = "Color Sharpening";
             this.colorSharpeningToolStripMenuItem.Click += new System.EventHandler(this.sharpeningToolStripMenuItem_Click);
             // 
-            // redGreenBlueHistogramToolStripMenuItem
+            // HistogramToolStripMenuItem
             // 
-            this.redGreenBlueHistogramToolStripMenuItem.Name = "redGreenBlueHistogramToolStripMenuItem";
-            this.redGreenBlueHistogramToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.redGreenBlueHistogramToolStripMenuItem.Text = "Lighting Effect";
-            this.redGreenBlueHistogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
+            this.HistogramToolStripMenuItem.Name = "HistogramToolStripMenuItem";
+            this.HistogramToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.HistogramToolStripMenuItem.Text = "Lighting Effect";
+            this.HistogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // borderSketchingEffectToolStripMenuItem
             // 
             this.borderSketchingEffectToolStripMenuItem.Name = "borderSketchingEffectToolStripMenuItem";
             this.borderSketchingEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
             this.borderSketchingEffectToolStripMenuItem.Text = "Border Sketching Effect";
-            this.borderSketchingEffectToolStripMenuItem.Click += new System.EventHandler(this.borderTracingToolStripMenuItem_Click);
+            this.borderSketchingEffectToolStripMenuItem.Click += new System.EventHandler(this.borderSketchingToolStripMenuItem_Click);
             // 
             // cartoonEffectToolStripMenuItem
             // 
@@ -601,42 +601,42 @@
             this.pencilSketchingEffectToolStripMenuItem.Name = "pencilSketchingEffectToolStripMenuItem";
             this.pencilSketchingEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
             this.pencilSketchingEffectToolStripMenuItem.Text = "Pencil Sketching Effect";
-            this.pencilSketchingEffectToolStripMenuItem.Click += new System.EventHandler(this.rGEdgeDetectionToolStripMenuItem_Click);
+            this.pencilSketchingEffectToolStripMenuItem.Click += new System.EventHandler(this.PencilSketchingToolStripMenuItem_Click);
             // 
             // evaportranpirationIcingEffectToolStripMenuItem
             // 
             this.evaportranpirationIcingEffectToolStripMenuItem.Name = "evaportranpirationIcingEffectToolStripMenuItem";
             this.evaportranpirationIcingEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
             this.evaportranpirationIcingEffectToolStripMenuItem.Text = "Evapotranspiration-Icing Effect";
-            this.evaportranpirationIcingEffectToolStripMenuItem.Click += new System.EventHandler(this.cannyEdgeDetectionToolStripMenuItem_Click);
+            this.evaportranpirationIcingEffectToolStripMenuItem.Click += new System.EventHandler(this.EvapotranspirationIcingToolStripMenuItem_Click);
             // 
-            // singularValueDecompositionToolStripMenuItem
+            // oldImageToolStripMenuItem
             // 
-            this.singularValueDecompositionToolStripMenuItem.Name = "singularValueDecompositionToolStripMenuItem";
-            this.singularValueDecompositionToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.singularValueDecompositionToolStripMenuItem.Text = "Old Image Effect";
-            this.singularValueDecompositionToolStripMenuItem.Click += new System.EventHandler(this.singularValueDecompositionToolStripMenuItem1_Click);
+            this.oldImageToolStripMenuItem.Name = "oldImageToolStripMenuItem";
+            this.oldImageToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.oldImageToolStripMenuItem.Text = "Old Image Effect";
+            this.oldImageToolStripMenuItem.Click += new System.EventHandler(this.OldImageToolStripMenuItem1_Click);
             // 
-            // zombieEffectToolStripMenuItem
+            // ashingEffectToolStripMenuItem
             // 
-            this.zombieEffectToolStripMenuItem.Name = "zombieEffectToolStripMenuItem";
-            this.zombieEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.zombieEffectToolStripMenuItem.Text = "Zombie Effect";
-            this.zombieEffectToolStripMenuItem.Click += new System.EventHandler(this.amazingEffectToolStripMenuItem_Click);
+            this.ashingEffectToolStripMenuItem.Name = "ashingEffectToolStripMenuItem";
+            this.ashingEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.ashingEffectToolStripMenuItem.Text = "Zombie Effect";
+            this.ashingEffectToolStripMenuItem.Click += new System.EventHandler(this.AshingToolStripMenuItem_Click);
             // 
             // colorPaintingEffectToolStripMenuItem1
             // 
             this.colorPaintingEffectToolStripMenuItem1.Name = "colorPaintingEffectToolStripMenuItem1";
             this.colorPaintingEffectToolStripMenuItem1.Size = new System.Drawing.Size(289, 26);
             this.colorPaintingEffectToolStripMenuItem1.Text = "Color Painting Effect";
-            this.colorPaintingEffectToolStripMenuItem1.Click += new System.EventHandler(this.colorPaintingEffectToolStripMenuItem_Click);
+            this.colorPaintingEffectToolStripMenuItem1.Click += new System.EventHandler(this.colorPaintingToolStripMenuItem_Click);
             // 
-            // findingDiscontinuitiesToolStripMenuItem
+            // ceramicToolStripMenuItem
             // 
-            this.findingDiscontinuitiesToolStripMenuItem.Name = "findingDiscontinuitiesToolStripMenuItem";
-            this.findingDiscontinuitiesToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.findingDiscontinuitiesToolStripMenuItem.Text = "Ceramic Effect";
-            this.findingDiscontinuitiesToolStripMenuItem.Click += new System.EventHandler(this.findingDiscontToolStripMenuItem_Click);
+            this.ceramicToolStripMenuItem.Name = "ceramicToolStripMenuItem";
+            this.ceramicToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.ceramicToolStripMenuItem.Text = "Ceramic Effect";
+            this.ceramicToolStripMenuItem.Click += new System.EventHandler(this.CeramicToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1016,21 +1016,21 @@
             // toolStripBitmap
             // 
             this.toolStripBitmap.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.grayScaleToolStripMenuItem,
+            this.greyScaleToolStripMenuItem,
             this.blackWhiteToolStripMenuItem,
             this.negatingToolStripMenuItem,
             this.noiseGeneratorToolStripMenuItem,
             this.gaussianSmoothToolStripMenuItem,
             this.sharpeningToolStripMenuItem,
-            this.histogramToolStripMenuItem,
+            this.RGBhistToolStripMenuItem,
             this.borderTracingToolStripMenuItem,
             this.skeletonToolStripMenuItem,
-            this.rGEdgeDetectionToolStripMenuItem,
-            this.cannyEdgeDetectionToolStripMenuItem,
-            this.singularValueDecompositionToolStripMenuItem1,
-            this.amazingEffectToolStripMenuItem,
+            this.pencilSketchingToolStripMenuItem,
+            this.EvapotranspirationIcingToolStripMenuItem,
+            this.oldImageToolStripMenuItem1,
+            this.ashingToolStripMenuItem,
             this.colorPaintingEffectToolStripMenuItem,
-            this.findingDiscontToolStripMenuItem});
+            this.ceramicEToolStripMenuItem});
             this.toolStripBitmap.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBitmap.Image")));
             this.toolStripBitmap.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBitmap.Name = "toolStripBitmap";
@@ -1039,12 +1039,12 @@
             this.toolStripBitmap.ButtonClick += new System.EventHandler(this.toolStripBitmap_Click);
             this.toolStripBitmap.MouseEnter += new System.EventHandler(this.toolStripBitmap_Click);
             // 
-            // grayScaleToolStripMenuItem
+            // greyScaleToolStripMenuItem
             // 
-            this.grayScaleToolStripMenuItem.Name = "grayScaleToolStripMenuItem";
-            this.grayScaleToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.grayScaleToolStripMenuItem.Text = "Gray Scale Image";
-            this.grayScaleToolStripMenuItem.Click += new System.EventHandler(this.grayscale_Click);
+            this.greyScaleToolStripMenuItem.Name = "greyScaleToolStripMenuItem";
+            this.greyScaleToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.greyScaleToolStripMenuItem.Text = "Gray Scale Image";
+            this.greyScaleToolStripMenuItem.Click += new System.EventHandler(this.grayscale_Click);
             // 
             // blackWhiteToolStripMenuItem
             // 
@@ -1081,19 +1081,19 @@
             this.sharpeningToolStripMenuItem.Text = "Color Sharpening";
             this.sharpeningToolStripMenuItem.Click += new System.EventHandler(this.sharpeningToolStripMenuItem_Click);
             // 
-            // histogramToolStripMenuItem
+            // RGBhistToolStripMenuItem
             // 
-            this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.histogramToolStripMenuItem.Text = "Lighting Effect";
-            this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
+            this.RGBhistToolStripMenuItem.Name = "RGBhistToolStripMenuItem";
+            this.RGBhistToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.RGBhistToolStripMenuItem.Text = "Lighting Effect";
+            this.RGBhistToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // borderTracingToolStripMenuItem
             // 
             this.borderTracingToolStripMenuItem.Name = "borderTracingToolStripMenuItem";
             this.borderTracingToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
             this.borderTracingToolStripMenuItem.Text = "Border Sketching Effect";
-            this.borderTracingToolStripMenuItem.Click += new System.EventHandler(this.borderTracingToolStripMenuItem_Click);
+            this.borderTracingToolStripMenuItem.Click += new System.EventHandler(this.borderSketchingToolStripMenuItem_Click);
             // 
             // skeletonToolStripMenuItem
             // 
@@ -1111,48 +1111,48 @@
             this.toolStripSkeletonDiff.ToolTipText = "Light";
             this.toolStripSkeletonDiff.SelectedIndexChanged += new System.EventHandler(this.toolStripSkeletonDiff_SelectedIndexChanged);
             // 
-            // rGEdgeDetectionToolStripMenuItem
+            // pencilSketchingToolStripMenuItem
             // 
-            this.rGEdgeDetectionToolStripMenuItem.Name = "rGEdgeDetectionToolStripMenuItem";
-            this.rGEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.rGEdgeDetectionToolStripMenuItem.Text = "Pencil Sketching Effect";
-            this.rGEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.rGEdgeDetectionToolStripMenuItem_Click);
+            this.pencilSketchingToolStripMenuItem.Name = "pencilSketchingToolStripMenuItem";
+            this.pencilSketchingToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.pencilSketchingToolStripMenuItem.Text = "Pencil Sketching Effect";
+            this.pencilSketchingToolStripMenuItem.Click += new System.EventHandler(this.PencilSketchingToolStripMenuItem_Click);
             // 
-            // cannyEdgeDetectionToolStripMenuItem
+            // EvapotranspirationIcingToolStripMenuItem
             // 
-            this.cannyEdgeDetectionToolStripMenuItem.Name = "cannyEdgeDetectionToolStripMenuItem";
-            this.cannyEdgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.cannyEdgeDetectionToolStripMenuItem.Text = "Evapotranspiration-Icing Effect";
-            this.cannyEdgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.cannyEdgeDetectionToolStripMenuItem_Click);
+            this.EvapotranspirationIcingToolStripMenuItem.Name = "EvapotranspirationIcingToolStripMenuItem";
+            this.EvapotranspirationIcingToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.EvapotranspirationIcingToolStripMenuItem.Text = "Evapotranspiration-Icing Effect";
+            this.EvapotranspirationIcingToolStripMenuItem.Click += new System.EventHandler(this.EvapotranspirationIcingToolStripMenuItem_Click);
             // 
-            // singularValueDecompositionToolStripMenuItem1
+            // oldImageToolStripMenuItem1
             // 
-            this.singularValueDecompositionToolStripMenuItem1.Name = "singularValueDecompositionToolStripMenuItem1";
-            this.singularValueDecompositionToolStripMenuItem1.Size = new System.Drawing.Size(289, 26);
-            this.singularValueDecompositionToolStripMenuItem1.Text = "Old Image Effect";
-            this.singularValueDecompositionToolStripMenuItem1.Click += new System.EventHandler(this.singularValueDecompositionToolStripMenuItem1_Click);
+            this.oldImageToolStripMenuItem1.Name = "oldImageToolStripMenuItem1";
+            this.oldImageToolStripMenuItem1.Size = new System.Drawing.Size(289, 26);
+            this.oldImageToolStripMenuItem1.Text = "Old Image Effect";
+            this.oldImageToolStripMenuItem1.Click += new System.EventHandler(this.OldImageToolStripMenuItem1_Click);
             // 
-            // amazingEffectToolStripMenuItem
+            // ashingToolStripMenuItem
             // 
-            this.amazingEffectToolStripMenuItem.Name = "amazingEffectToolStripMenuItem";
-            this.amazingEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.amazingEffectToolStripMenuItem.Text = "Zombie Effect";
-            this.amazingEffectToolStripMenuItem.Click += new System.EventHandler(this.amazingEffectToolStripMenuItem_Click);
+            this.ashingToolStripMenuItem.Name = "ashingToolStripMenuItem";
+            this.ashingToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.ashingToolStripMenuItem.Text = "Ashing Effect";
+            this.ashingToolStripMenuItem.Click += new System.EventHandler(this.AshingToolStripMenuItem_Click);
             // 
             // colorPaintingEffectToolStripMenuItem
             // 
             this.colorPaintingEffectToolStripMenuItem.Name = "colorPaintingEffectToolStripMenuItem";
             this.colorPaintingEffectToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
             this.colorPaintingEffectToolStripMenuItem.Text = "Color Painting-Printing Effect";
-            this.colorPaintingEffectToolStripMenuItem.Click += new System.EventHandler(this.colorPaintingEffectToolStripMenuItem_Click);
+            this.colorPaintingEffectToolStripMenuItem.Click += new System.EventHandler(this.colorPaintingToolStripMenuItem_Click);
             // 
-            // findingDiscontToolStripMenuItem
+            // ceramicEToolStripMenuItem
             // 
-            this.findingDiscontToolStripMenuItem.Name = "findingDiscontToolStripMenuItem";
-            this.findingDiscontToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.findingDiscontToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.findingDiscontToolStripMenuItem.Text = "Ceramic Effect";
-            this.findingDiscontToolStripMenuItem.Click += new System.EventHandler(this.findingDiscontToolStripMenuItem_Click);
+            this.ceramicEToolStripMenuItem.Name = "ceramicEToolStripMenuItem";
+            this.ceramicEToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ceramicEToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.ceramicEToolStripMenuItem.Text = "Ceramic Effect";
+            this.ceramicEToolStripMenuItem.Click += new System.EventHandler(this.CeramicToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1388,9 +1388,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem18;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem19;
         private System.Windows.Forms.ToolStripMenuItem bitmapToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem singularValueDecompositionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertToGrayScaleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertToBackWhiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem oldImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem GrayScaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BackWhiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem spectralRadiusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem l2NormToolStripMenuItem;
@@ -1417,29 +1417,29 @@
         private System.Windows.Forms.ToolStripMenuItem reduceSystemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem solutionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem34;
-        private System.Windows.Forms.ToolStripMenuItem findingDiscontToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem singularValueDecompositionToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem grayScaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ceramicEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem oldImageToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem greyScaleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blackWhiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem findingDiscontinuitiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ceramicToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem35;
         private System.Windows.Forms.ToolStripMenuItem systemOfEquationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inputSystemToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem36;
         private System.Windows.Forms.ToolStripMenuItem reducedSystemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem solutionsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem histogramToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem redGreenBlueHistogramToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RGBhistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HistogramToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem borderTracingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem skeletonToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripSkeletonDiff;
-        private System.Windows.Forms.ToolStripMenuItem rGEdgeDetectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pencilSketchingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem noiseGeneratorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gaussianSmoothToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sharpeningToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem negatingToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxZoom;
-        private System.Windows.Forms.ToolStripMenuItem cannyEdgeDetectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EvapotranspirationIcingToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxPicMode;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxDigits;
@@ -1448,7 +1448,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripMenuItem amazingEffectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ashingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorPaintingEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem noiseGeneratorToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem smoothingToolStripMenuItem;
@@ -1458,7 +1458,7 @@
         private System.Windows.Forms.ToolStripMenuItem cartoonEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pencilSketchingEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem evaportranpirationIcingEffectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zombieEffectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ashingEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorPaintingEffectToolStripMenuItem1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSkeletonDiff;
     }

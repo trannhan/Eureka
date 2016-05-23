@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public partial class FormSVDBitmapDisplay : Form
+    public partial class FormBitmapDisplay : Form
     {
         public Image Picture;
 
-        public FormSVDBitmapDisplay()
+        public FormBitmapDisplay()
         {
-            InitializeComponent();                                   
+            InitializeComponent();                             
         }
 
         public Graphics GetGraphics()

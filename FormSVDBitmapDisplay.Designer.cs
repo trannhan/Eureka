@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1
 {
-    partial class FormSVDBitmapDisplay
+    partial class FormBitmapDisplay
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSVDBitmapDisplay));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBitmapDisplay));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
@@ -165,7 +165,7 @@
             this.buttonApply.UseVisualStyleBackColor = true;
             this.buttonApply.Click += new System.EventHandler(this.buttonApply_Click);
             // 
-            // FormSVDBitmapDisplay
+            // FormBitmapDisplay
             // 
             this.AcceptButton = this.buttonApply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -177,7 +177,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "FormSVDBitmapDisplay";
+            this.Name = "FormBitmapDisplay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Algorithm:";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
